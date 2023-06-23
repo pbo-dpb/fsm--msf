@@ -5,12 +5,12 @@ import useStore from '../Store.js'
 export class Capability {
     constructor(payload) {
 
-        this.id = payload.capability_id;
+        this.id = payload.capability_id.replace(/[^a-zA-Z0-9]+/g, "");
         this.display_name_en = payload.display_name_en;
         this.display_name_fr = payload.display_name_fr;
 
         this.environment = useStore().environments[payload.environment_id];
-        this.user_editable = payload.user_editable ? true : false;
+        this.user_editable = payload.user_editable == 1 ? true : false;
 
         this.personnel = {
             direct: payload.personnel_direct,
@@ -28,22 +28,29 @@ export class Capability {
             total: payload.cost_total,
         }
         this.current = payload.current;
-        this.range_min = payload.range_min;
-        this.range_max = payload.range_max;
+        this.current_unit = payload.current_unit;
+        this.user_editable = payload.user_editable_range_min || payload.user_editable_range_max ? {
+            range_min: payload.user_editable_range_min,
+            range_max: payload.user_editable_range_max,
+            step: payload.user_editable_step ? payload.user_editable_step : 1
+        } : false;
 
-        this.description = { en: '⚠️', fr: '⚠️' };
+        this.description = undefined;
 
-        this.getDescription();
+        this.state = {
+            user_target: payload.current
+        }
     }
 
     async getDescription(language) {
 
         if (!this.description) {
             try {
-                const verboseContentUrl = `${this.id}.yaml`;
+                const verboseContentUrl = `capability_descriptions/${this.id}.yaml`;
                 const response = await fetch(verboseContentUrl).then(response => response.text())
 
                 const verboseContent = yaml.load(response, 'utf8');
+
                 this.description = verboseContent.description;
             } catch (error) {
 
