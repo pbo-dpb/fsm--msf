@@ -4,22 +4,29 @@
 
     <legend>Select custom force structure model data (.tsv)<br><input type="file" name="file"
         @change="handleDebugTsvFile" /></legend>
+
   </section>
 
-  <div class="flex flex-col justify-center items-center gap-8">
+  <div class="flex flex-col lg:grid lg:grid-cols-3 gap-8 my-8 w-full">
 
-    <section class="flex flex-col gap-2">
-      <div v-for="capability in capabilities" class="">{{ capability.name_en }}</div>
-    </section>
+    <div class="col-span-2 flex flex-col gap-8">
+      <CapabilityList v-if="capabilities"></CapabilityList>
+    </div>
+
+    <div class="lg:border-l border-gray-100 lg:pl-8">
+      Summary
+    </div>
 
   </div>
 </template>
 
 <script>
-import WrapperEventDispatcher from "./WrapperEventDispatcher.js"
-import PayloadTsvUrl from "./assets/payload.tsv?url"
-import { mapState } from 'pinia'
 import store from './Store'
+
+import WrapperEventDispatcher from "./WrapperEventDispatcher.js"
+import PayloadCsvUrl from "./assets/payload.csv?url"
+import { mapState } from 'pinia'
+import CapabilityList from "./ui/CapabilityList.vue";
 
 
 const language = document.documentElement.lang;
@@ -31,31 +38,33 @@ export default {
     };
   },
   computed: {
-    ...mapState(store, ['strings', 'capabilities']),
+    ...mapState(store, ['strings', 'capabilities', 'environments']),
     debug() {
       return this.$root.debug;
     }
   },
   components: {
+    CapabilityList
   },
   mounted() {
     const pageTitle = this.language === 'fr' ? 'MSF' : 'FSM';
     (new WrapperEventDispatcher(pageTitle, null)).dispatch();
-
-    if (!this.debug) {
-      fetch(PayloadTsvUrl)
+    if (true || !this.debug) {
+      fetch(PayloadCsvUrl)
         .then(response => response.text())
         .then(data => {
-          store().instanciateCapabilitiesFromTsv(data)
+          store().instanciateCapabilitiesFromCsv(data)
         })
     }
   },
+
   methods: {
     async handleDebugTsvFile(e) {
 
       let rawText = await e.target.files[0].text();
-      store().instanciateCapabilitiesFromTsv(rawText)
-    }
+      store().instanciateCapabilitiesFromCsv(rawText)
+    },
+
   }
 };
 </script>

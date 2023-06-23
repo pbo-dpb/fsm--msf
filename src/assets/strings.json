@@ -1,0 +1,22 @@
+{
+    "debug_notice": {
+        "en": "This tool is running in debug mode.",
+        "fr": "Cet outil est en mode debug."
+    },
+    "group_CA": {
+        "en": "Army",
+        "fr": "Armée"
+    },
+    "group_RCAF": {
+        "en": "Royal Canadian Air Force",
+        "fr": "Aviation royale canadienne"
+    },
+    "group_Joint": {
+        "en": "Joint",
+        "fr": "Interarmées"
+    },
+    "group_RCN": {
+        "en": "Royal Canadian Navy",
+        "fr": "Marine royale canadienne"
+    }
+}

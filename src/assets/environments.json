@@ -1,0 +1,22 @@
+[
+    {
+        "id": "CA",
+        "display_name_en": "Army",
+        "display_name_fr": "Armée"
+    },
+    {
+        "id": "Joint",
+        "display_name_en": "Joint",
+        "display_name_fr": "Interarmées"
+    },
+    {
+        "id": "RCAF",
+        "display_name_en": "Air Force",
+        "display_name_fr": "Aviation"
+    },
+    {
+        "id": "RCN",
+        "display_name_en": "Navy",
+        "display_name_fr": "Marine"
+    }
+]

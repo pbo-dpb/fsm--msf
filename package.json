@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "js-yaml": "^4.1.0",
     "papaparse": "^5.4.1",
     "pinia": "^2.1.4",
     "vue": "^3.2.47"
