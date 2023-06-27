@@ -1,27 +1,31 @@
 <template>
-    <!--<div class="h-[50vh] w-full">
-        <Bar :options="chartOptions" :data="chartData" />
-    </div>-->
+    <div class="w-full flex flex-col gap-2">
+        <div class="flex flex-row">
+            <ChartAspectSelectorTabsButton @click="aspect = 'cost'" :active="aspect === 'cost'">{{
+                strings.impact_personnel_title }}
+            </ChartAspectSelectorTabsButton>
+            <ChartAspectSelectorTabsButton @click="aspect = 'personnel'" :active="aspect === 'personnel'">{{
+                strings.impact_cost_title }}
+            </ChartAspectSelectorTabsButton>
+        </div>
+        <AspectChart :aspect="aspect"></AspectChart>
+    </div>
 </template>
   
 <script>
-import { Bar } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
-
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+import { mapState } from 'pinia'
+import store from '../../Store';
+import AspectChart from './AspectChart.vue';
+import ChartAspectSelectorTabsButton from './ChartAspectSelectorTabsButton.vue';
 
 export default {
-    name: 'BarChart',
-    components: { Bar },
+    components: { AspectChart, ChartAspectSelectorTabsButton },
+    computed: {
+        ...mapState(store, ["strings"]),
+    },
     data() {
         return {
-            chartData: {
-                labels: ['January', 'February', 'March'],
-                datasets: [{ data: [40, 20, 12] }]
-            },
-            chartOptions: {
-                responsive: true
-            }
+            aspect: "cost"
         }
     }
 }

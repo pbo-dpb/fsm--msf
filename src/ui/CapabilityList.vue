@@ -13,19 +13,9 @@ export default {
         CapabilityGroup,
     },
     computed: {
-        ...mapState(store, ['strings', 'capabilities', 'environments']),
+        ...mapState(store, ['strings', 'capabilities', 'environments', "groupedCapabilities"]),
         groups() {
-            if (!this.capabilities || this.capabilities.length === 0) return [];
-            let groups = {};
-            this.capabilities.forEach((capability) => {
-                const key = capability.environment?.id ?? null;
-                if (!groups[key]) {
-                    groups[key] = [];
-                }
-                groups[key].push(capability);
-                return groups;
-            })
-            return groups
+            return this.groupedCapabilities;
         },
     },
 

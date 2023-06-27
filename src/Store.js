@@ -37,6 +37,23 @@ export default defineStore('fsm', {
 
     getters: {
 
+
+        groupedCapabilities(state) {
+
+            if (!state.capabilities || state.capabilities.length === 0) return [];
+            let groups = {};
+            state.capabilities.forEach((capability) => {
+                const key = capability.environment?.id ?? null;
+                if (!groups[key]) {
+                    groups[key] = [];
+                }
+                groups[key].push(capability);
+                return groups;
+            })
+            return groups
+
+        },
+
         currentAspects(state) {
 
             return state.capabilities.reduce((acc, capability) => {
