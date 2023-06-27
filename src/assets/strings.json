@@ -50,5 +50,9 @@
     "impact_facet_label_total": {
         "en": "Total",
         "fr": "Total"
+    },
+    "summary_title": {
+        "en": "Summary",
+        "fr": "Sommaire"
     }
 }
