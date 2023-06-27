@@ -27,7 +27,7 @@ export default defineStore('fsm', {
             // Unpack the tsv/csv into an array of objects using papaparse
             const parsed = Papa.parse(rawCsv, { header: true, skipEmptyLines: true })
             if (parsed.errors.length > 0) {
-                console.error("Failed parsing TSV.") // TODO handle error with UI feedback
+                console.error("Failed parsing CSV.") // TODO handle error with UI feedback
                 window.alert(JSON.stringify(parsed.errors))
                 throw new Error(parsed.errors)
             }

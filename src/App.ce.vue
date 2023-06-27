@@ -2,10 +2,14 @@
   <section class="bg-red-900 text-white font-semibold p-4 flex flex-col gap-4 rounded mb-4" v-if="debug">{{
     strings.debug_notice }}
 
-    <legend>Select custom force structure model data (.tsv)<br><input type="file" name="file"
+    <legend>Select custom force structure model data (.csv)<br><input type="file" name="file"
         @change="handleDebugTsvFile" /></legend>
 
   </section>
+
+
+  <Charts></Charts>
+
 
   <div class="flex flex-col lg:grid lg:grid-cols-3 gap-8 my-8 w-full">
 
@@ -14,7 +18,9 @@
     </div>
 
     <div class="lg:border-l border-gray-100 lg:pl-8">
-      Summary
+
+      <Summary></Summary>
+
     </div>
 
   </div>
@@ -27,6 +33,8 @@ import WrapperEventDispatcher from "./WrapperEventDispatcher.js"
 import PayloadCsvUrl from "./assets/payload.csv?url"
 import { mapState } from 'pinia'
 import CapabilityList from "./ui/CapabilityList.vue";
+import Summary from './ui/Summary/Summary.vue';
+import Charts from './ui/Charts/Charts.vue';
 
 
 const language = document.documentElement.lang;
@@ -44,7 +52,9 @@ export default {
     }
   },
   components: {
-    CapabilityList
+    CapabilityList,
+    Summary,
+    Charts
   },
   mounted() {
     const pageTitle = this.language === 'fr' ? 'MSF' : 'FSM';

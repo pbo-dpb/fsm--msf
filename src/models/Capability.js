@@ -64,9 +64,13 @@ export class Capability {
         }
     }
 
+    get userTargetDiff() {
+        return -(this.current - this.state.user_target);
+    }
+
     get userTargetImpact() {
         let impact = {};
-        let userTargetDiff = -(this.current - this.state.user_target);
+        let userTargetDiff = this.userTargetDiff;
         for (const [aspect, aspectFacets] of Object.entries(this.impactPerUnit)) {
             if (!impact[aspect]) {
                 impact[aspect] = {};

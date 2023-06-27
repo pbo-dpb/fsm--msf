@@ -1,14 +1,19 @@
 <template>
     <div
-        class="flex flex-col lg:grid grid-cols-3 justify-between odd:bg-gray-50 odd:dark:bg-gray-900 py-2 -mx-2 px-2 items-center">
+        class="flex flex-col lg:grid grid-cols-12 justify-between odd:bg-gray-50 odd:dark:bg-gray-900 py-2 gap-2 -mx-2 px-2 items-center">
         <button @click="expanded = !expanded"
-            class="col-span-2 text-lg font-thin inline-flex gap-2 items-center text-blue-800 select-none">
+            class="col-span-6 text-lg font-thin inline-flex gap-2 items-center text-blue-800 select-none text-left ">
 
             <ChevronDownIcon class="h-4 w-4 " v-if="expanded"></ChevronDownIcon>
             <ChevronRightIcon class="h-4 w-4" v-else></ChevronRightIcon>
-            {{ displayName }}
+            <div class="overflow-x-ellipsis w-full">{{ displayName }}</div>
         </button>
-        <CapabilityRowRange v-if="capability.user_editable" :capability="capability" />
+        <div class="col-span-4">
+            <CapabilityRowRange :capability="capability" v-if="capability.user_editable" />
+        </div>
+        <div class="col-span-2 text-right">
+            <CapabilityRowTarget :capability="capability"></CapabilityRowTarget>
+        </div>
     </div>
     <div class="pl-4 flex flex-col gap-2" v-if="expanded">
         <CapabilityRowBreakdown :capability="capability"></CapabilityRowBreakdown>
@@ -20,6 +25,7 @@ import { Capability } from '../../models/Capability';
 import CapabilityRowRange from './CapabilityRowRange.vue';
 import CapabilityRowDetails from './CapabilityRowDetails.vue';
 import CapabilityRowBreakdown from './CapabilityRowBreakdown.vue';
+import CapabilityRowTarget from './CapabilityRowTarget.vue';
 import { ChevronRightIcon, ChevronDownIcon } from '@heroicons/vue/24/solid'
 
 export default {
@@ -44,7 +50,8 @@ export default {
         ChevronRightIcon,
         ChevronDownIcon,
         CapabilityRowDetails,
-        CapabilityRowBreakdown
+        CapabilityRowBreakdown,
+        CapabilityRowTarget
     }
 }
 </script>
