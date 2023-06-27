@@ -12,7 +12,6 @@
     </div>
     <div class="pl-4 flex flex-col gap-2" v-if="expanded">
         <CapabilityRowBreakdown :capability="capability"></CapabilityRowBreakdown>
-
         <CapabilityRowDetails :capability="capability"></CapabilityRowDetails>
     </div>
 </template>

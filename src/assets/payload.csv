@@ -1,27 +1,27 @@
-capability_id,display_name_en,display_name_fr,environment_id,personnel_direct,personnel_indirect,personnel_env_overhead,personnel_inst_overhead,personnel_total,cost_direct,cost_indirect,cost_env_overhead,cost_inst_overhead,cost_total,current,current_unit,user_editable_range_min,user_editable_range_max,user_editable_step
-DF Regt,Direct Fire Regiments - Leopard II,Régiments à tir direct - Leopard II,CA," 2,916 "," 3,712 "," 3,584 "," 2,544 "," 3,731 ",86424737,262190375,260921674,165893396,267891169,1,countable,0,2,1
-IDF Regts,Indirect Fire Regiments - Artillery,Régiments de tir indirect - Artillerie,CA," 4,901 "," 4,167 "," 4,080 ", 675 ," 1,648 ",121075842,123314677,60252498,100493102,332278155,1,countable,0,2,1
-Lt Inf Bns,Light Infantry Battalions,Bataillons d'infanterie légère,CA," 3,863 ", 640 , 353 ," 4,341 "," 2,190 ",292181,272831420,342068812,219053563,344803496,1,countable,0,2,1
-Mech Inf Bns,Mechanized Infantry Battalions,Bataillons d'infanterie mécanisée,CA," 1,197 "," 3,644 "," 2,200 ", 892 ," 2,015 ",324604810,7642261,344793162,114876007,348389252,1,countable,0,2,1
-Rangers,Canadian Rangers,Rangers canadiens,CA," 3,550 "," 1,749 ", 46 ," 3,676 "," 1,241 ",217656496,221336271,14328160,49748190,202567157,1,countable,,,
-,,,,,,,,,,,,,,,,,,
-CF IOG,CF Information Operations Group,Groupe des opérations d'information des FC,Joint," 3,884 "," 3,462 "," 4,701 ", 165 ," 4,359 ",179425186,160110596,88060061,32567826,90144560,1,countable,0,2,1
-SOF,Special Operations,Opérations spéciales,Joint," 3,706 "," 3,622 ", 372 ," 3,446 "," 4,146 ",293764183,59699517,148165611,52777321,78987012,100,percentage,0,200,10
-,,,,,,,,,,,,,,,,,,
-FWSAR,Fixed-Wing Search and Rescue Aircraft,Aéronefs de recherche et de sauvetage à voilure fixe,RCAF," 4,024 ", 26 , 911 ," 4,596 ", 408 ,16272760,118994153,46637975,147069583,310526895,1,countable,0,2,1
-Mar Helo,Maritime Helicopter (Sea King -> Cyclone),Hélicoptère maritime (Sea King -> Cyclone),RCAF, 747 ," 3,304 ", 509 ," 4,728 ", 857 ,96955989,337615911,51171704,351160695,251513450,1,countable,0,2,1
-MHelo,Medium/Heavy Lift Helicopter (CH-147),Hélicoptère de transport moyen/lourd (CH-147),RCAF," 2,915 ", 163 ," 4,170 "," 2,346 "," 2,117 ",313238191,22863715,300520008,235330587,13103665,1,countable,0,2,1
-MPA,Maritime Patrol Aircraft (CP-140 Aurora),Avion de patrouille maritime (CP-140 Aurora),RCAF, 133 , 757 ," 1,019 "," 3,698 "," 4,694 ",206643793,287464643,25201938,163882880,26034530,1,countable,,,
-NORAD,North American Aerospace Defence,Défense aérospatiale nord-américaine,RCAF," 2,795 "," 2,657 "," 2,098 "," 4,508 "," 4,600 ",90313235,207728864,114101917,326535716,165334946,1,countable,,,
-SAR Helo,Search and Rescue Helicopter (CH-149),Hélicoptère de recherche et de sauvetage (CH-149),RCAF, 494 ," 4,978 "," 4,325 "," 3,586 "," 4,086 ",145218503,315152307,118279333,174046907,27831648,1,countable,,,
-StratL,Strategic Airlift (C-17),Transport aérien stratégique (C-17),RCAF," 1,531 "," 1,547 "," 4,054 "," 4,288 "," 1,786 ",165657063,88437535,332637231,143177454,255773549,1,countable,,,
-Tact Avn,Tactical Aviation,Aviation tactique,RCAF," 3,723 "," 1,883 "," 2,939 "," 2,793 "," 2,829 ",350934272,334328489,274567880,302103614,127346000,1,countable,,,
-Tact Ftr,Tactical Fighter,Chasseur tactique,RCAF, 22 ," 4,319 ", 757 ," 4,876 "," 2,761 ",241025830,131181900,77651808,111834177,86232177,1,countable,,,
-Transport,"Air Transport (C-130, C-150)","Transport aérien (C-130, C-150)",RCAF," 3,677 "," 1,738 "," 4,968 "," 2,270 "," 2,634 ",37787475,246061064,236643271,343335941,172003485,1,countable,0,2,1
-,,,,,,,,,,,,,,,,,,
-AOPV,Arctic Offshore Patrol Vessel,Patrouilleur hauturier pour l'Arctique,RCN," 4,773 "," 1,068 "," 3,675 ", 323 ," 3,108 ",168080531,17663069,290212476,58134452,314027122,1,countable,,,
-MCDV,Coastal Defence Vessel,Navire de défense côtière,RCN," 1,630 "," 4,989 "," 4,982 ", 101 ," 3,794 ",230268817,49200078,308361042,221311780,142017906,1,countable,,,
-SCSC - FFH,Halifax-Class Frigate,Frégate de classe Halifax,RCN," 2,072 "," 4,126 ", 254 ," 3,220 ", 659 ,276633443,236832979,96016709,233635745,68809536,1,countable,,,
-SSK,Victoria-Class Submarine,Sous-marin de classe Victoria,RCN," 1,635 ", 697 ," 4,190 "," 3,635 "," 3,713 ",136013602,253104648,119192186,50313816,222563646,1,countable,,,
-,,,,,,,,,,,,,,,,,,
-Compliance,Compliance,Conformité,," 2,379 ", 552 ," 4,113 "," 3,219 "," 1,838 ",243951074,310025606,346390153,48733308,53481905,100,percentage,,,
+capability_id,display_name_en,display_name_fr,environment_id,personnel_direct,personnel_indirect,personnel_env_overhead,personnel_inst_overhead,personnel_total,cost_direct,cost_indirect,cost_env_overhead,cost_inst_overhead,cost_total,current,current_unit,user_editable_range,user_editable_step
+DF Regt,Direct Fire Regiments - Leopard II,Régiments à tir direct - Leopard II,CA," 3,740 "," 2,180 "," 3,716 "," 3,165 "," 4,923 ",160929665,195856380,221903467,177934936,120738581,18,countable,5,1
+IDF Regts,Indirect Fire Regiments - Artillery,Régiments de tir indirect - Artillerie,CA," 4,000 "," 4,592 "," 2,044 "," 3,674 "," 4,233 ",242766628,118346101,90996519,291572240,39274991,22,countable,3,1
+Lt Inf Bns,Light Infantry Battalions,Bataillons d'infanterie légère,CA," 4,524 "," 2,749 "," 2,186 ", 218 , 207 ,280257540,287096654,316088223,53202712,341930304,24,countable,5,1
+Mech Inf Bns,Mechanized Infantry Battalions,Bataillons d'infanterie mécanisée,CA," 1,863 "," 4,731 ", 830 ," 2,379 "," 3,843 ",288356439,166869,257391508,226818013,7384473,20,countable,3,1
+Rangers,Canadian Rangers,Rangers canadiens,CA," 3,711 "," 4,635 "," 4,392 "," 3,664 "," 2,699 ",226765564,51728822,3981859,33873783,100656906,20,countable,4,
+,,,,,,,,,,,,,,,,,
+CF IOG,CF Information Operations Group,Groupe des opérations d'information des FC,Joint," 2,275 ", 700 ," 4,393 ", 862 , 179 ,253464824,291639378,112856033,126726003,165033915,21,countable,5,1
+SOF,Special Operations,Opérations spéciales,Joint," 1,967 "," 4,817 "," 1,195 "," 3,635 "," 2,958 ",72720810,136932604,278460885,143080591,25425342,23,percentage,4,2
+,,,,,,,,,,,,,,,,,
+FWSAR,Fixed-Wing Search and Rescue Aircraft,Aéronefs de recherche et de sauvetage à voilure fixe,RCAF," 4,474 "," 3,173 ", 689 ," 3,382 "," 2,095 ",31778535,76797028,16716602,299075829,226528916,14,countable,1,1
+Mar Helo,Maritime Helicopter (Sea King -> Cyclone),Hélicoptère maritime (Sea King -> Cyclone),RCAF," 4,410 "," 2,376 "," 1,245 "," 3,227 "," 1,972 ",114090061,224377105,75364933,271913960,347311485,19,countable,4,1
+MHelo,Medium/Heavy Lift Helicopter (CH-147),Hélicoptère de transport moyen/lourd (CH-147),RCAF," 3,018 ", 930 ," 4,756 "," 2,568 "," 3,022 ",208243533,227637923,19810222,255619665,204522741,12,countable,4,1
+MPA,Maritime Patrol Aircraft (CP-140 Aurora),Avion de patrouille maritime (CP-140 Aurora),RCAF," 4,405 "," 3,115 "," 1,380 "," 2,035 "," 3,322 ",350564198,100109643,66993007,266447411,235183141,14,countable,3,
+NORAD,North American Aerospace Defence,Défense aérospatiale nord-américaine,RCAF," 4,322 "," 1,039 "," 4,815 "," 4,441 "," 2,254 ",34291138,35270360,257683763,104682202,134631882,22,countable,3,
+SAR Helo,Search and Rescue Helicopter (CH-149),Hélicoptère de recherche et de sauvetage (CH-149),RCAF," 4,878 "," 3,941 "," 2,836 "," 2,956 "," 2,571 ",235109517,104697930,271967334,82267844,279757990,23,countable,2,
+StratL,Strategic Airlift (C-17),Transport aérien stratégique (C-17),RCAF," 3,805 "," 3,551 "," 3,215 "," 3,661 "," 1,908 ",166582341,280532475,178947237,328700175,259422907,18,countable,4,
+Tact Avn,Tactical Aviation,Aviation tactique,RCAF, 405 ," 4,746 "," 4,896 "," 1,776 "," 4,387 ",84844842,197209921,166964581,197440292,219349645,17,countable,5,
+Tact Ftr,Tactical Fighter,Chasseur tactique,RCAF," 3,544 "," 4,927 ", 356 , 491 ," 1,801 ",66092388,317136870,74217728,102046261,96007648,16,countable,2,
+Transport,"Air Transport (C-130, C-150)","Transport aérien (C-130, C-150)",RCAF," 3,617 "," 2,247 "," 2,522 "," 1,804 "," 2,424 ",185265244,17774853,117772746,318300798,249693594,13,countable,5,1
+,,,,,,,,,,,,,,,,,
+AOPV,Arctic Offshore Patrol Vessel,Patrouilleur hauturier pour l'Arctique,RCN," 3,711 "," 2,340 "," 2,999 "," 2,734 ", 296 ,24760122,166106648,343061546,304943433,249575693,18,countable,,
+MCDV,Coastal Defence Vessel,Navire de défense côtière,RCN," 4,694 "," 4,903 ", 650 ," 3,675 ", 639 ,4091069,21239148,34009337,290458266,61123177,10,countable,,
+SCSC - FFH,Halifax-Class Frigate,Frégate de classe Halifax,RCN," 2,403 "," 2,346 ", 190 ," 3,216 "," 1,272 ",244188485,98245788,332549726,148821708,129391794,14,countable,,
+SSK,Victoria-Class Submarine,Sous-marin de classe Victoria,RCN, 240 ," 1,934 "," 3,981 ", 308 ," 3,691 ",128966186,229179780,13299510,146921561,186187714,10,countable,,
+,,,,,,,,,,,,,,,,,
+Compliance,Compliance,Conformité,, 463 , 527 , 182 , 526 ," 2,231 ",7903276,210555439,41568116,40907144,139209260,25,percentage,,

@@ -15,6 +15,7 @@ export default class Localizer {
     }
 
     static formatNumber(number, style = "countable") {
+
         const locale = `${document.documentElement.lang}-CA`;
         switch (style) {
             case 'currency':
@@ -25,6 +26,10 @@ export default class Localizer {
 
         // countable
         return new Intl.NumberFormat(locale).format(number);
+    }
+
+    static cleanupNumber(number) {
+        return +number.replace(/[^\d.-]/g, '');
     }
 
 

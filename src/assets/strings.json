@@ -18,5 +18,37 @@
     "group_RCN": {
         "en": "Royal Canadian Navy",
         "fr": "Marine royale canadienne"
+    },
+    "impact_per_unit_toggle": {
+        "en": "Per unit",
+        "fr": "Par unité"
+    },
+    "impact_cost_title": {
+        "en": "Cost Impact",
+        "fr": "Impact sur les coûts"
+    },
+    "impact_personnel_title": {
+        "en": "Personnel Impact",
+        "fr": "Impact sur le personnel"
+    },
+    "impact_facet_label_direct": {
+        "en": "Direct",
+        "fr": "Direct"
+    },
+    "impact_facet_label_indirect": {
+        "en": "Indirect",
+        "fr": "Indirect"
+    },
+    "impact_facet_label_env_overhead": {
+        "en": "Env. Overhead",
+        "fr": "Surcharge environement"
+    },
+    "impact_facet_label_inst_overhead": {
+        "en": "Inst. Overhead",
+        "fr": "???? Inst Overhead"
+    },
+    "impact_facet_label_total": {
+        "en": "Total",
+        "fr": "Total"
     }
 }

@@ -1,9 +1,9 @@
 <template>
     <div class="w-full flex flex-col">
         <input type="range" :min="capability.user_editable.range_min" :max="capability.user_editable.range_max"
-            :step="capability" class="w-full" :id="uid" v-model="capability.state.user_target" />
+            :step="capability.user_editable.step" class="w-full" :id="uid" v-model="capability.state.user_target" />
 
-        <div class="flex flex-row justify-between text-sm text-gray-600 dark:text-gray-400" aria-hidden="true">
+        <div class="flex flex-row justify-between text-sm text-gray-600 dark:text-gray-400 select-none" aria-hidden="true">
             <span>{{ capability.user_editable.range_min }}</span>
             <span>{{ capability.current }}</span>
             <span>{{ capability.user_editable.range_max }}</span>

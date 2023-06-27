@@ -17,6 +17,7 @@ export default defineStore('fsm', {
         capabilities: [],
         strings: loc,
         environments: Object.fromEntries(environments.map(i => [i.id, new Environment(i)])),
+        settings_perUnitDisplay: false,
     }),
     actions: {
         instanciateCapabilities(capabilities) {
