@@ -1,5 +1,5 @@
 <template>
-    <div role="img" :aria-labelledby="`${uid}-description`" class="h-screen lg:h-[60vh] w-full">
+    <div role="img" :aria-labelledby="`${uid}-description`" class="h-[48rem] w-full">
         <Bar v-if="datasets" :options="chartOptions" :data="chartData" />
     </div>
     <AspectChartTextualDescription :data="chartData" :id="`${uid}-description`"></AspectChartTextualDescription>
