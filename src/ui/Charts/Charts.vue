@@ -2,10 +2,10 @@
     <div class="w-full flex flex-col gap-2">
         <div class="flex flex-row">
             <ChartAspectSelectorTabsButton @click="aspect = 'cost'" :active="aspect === 'cost'">{{
-                strings.impact_personnel_title }}
+                strings.impact_cost_title }}
             </ChartAspectSelectorTabsButton>
             <ChartAspectSelectorTabsButton @click="aspect = 'personnel'" :active="aspect === 'personnel'">{{
-                strings.impact_cost_title }}
+                strings.impact_personnel_title }}
             </ChartAspectSelectorTabsButton>
         </div>
         <AspectChart :aspect="aspect"></AspectChart>

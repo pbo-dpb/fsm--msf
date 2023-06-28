@@ -1,8 +1,9 @@
 <template>
-  <section class="bg-red-900 text-white font-semibold p-4 flex flex-col gap-4 rounded mb-4" v-if="debug">{{
-    strings.debug_notice }}
+  <section class="bg-blue-100 text-blue-800 font-semibold border border-blue-300 p-4 flex flex-col gap-4 rounded mb-16"
+    v-if="debug">{{
+      strings.debug_notice }}
 
-    <legend>Select custom force structure model data (.csv)<br><input type="file" name="file"
+    <legend>Select custom force structure model data (.csv).<br><input type="file" name="file"
         @change="handleDebugTsvFile" /></legend>
 
   </section>

@@ -3,6 +3,10 @@
         "en": "This tool is running in debug mode.",
         "fr": "Cet outil est en mode debug."
     },
+    "capability_label": {
+        "en": "Capability",
+        "fr": "Capacité"
+    },
     "group_CA": {
         "en": "Army",
         "fr": "Armée"
@@ -54,5 +58,9 @@
     "summary_title": {
         "en": "Summary",
         "fr": "Sommaire"
+    },
+    "chart_alt_text_label": {
+        "en": "Text version",
+        "fr": "Version textuelle"
     }
 }

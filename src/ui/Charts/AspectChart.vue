@@ -1,15 +1,18 @@
 <template>
-    <div class="h-[50vh] w-full">
+    <div role="img" :aria-labelledby="`${uid}-description`" class="h-screen lg:h-[60vh] w-full">
         <Bar v-if="datasets" :options="chartOptions" :data="chartData" />
     </div>
+    <AspectChartTextualDescription :data="chartData" :id="`${uid}-description`"></AspectChartTextualDescription>
 </template>
   
 <script>
+import AspectChartTextualDescription from './AspectChartTextualDescription.vue';
 import { mapState } from 'pinia'
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 import { colorForIndex } from "./ColorPalettes";
 import store from '../../Store';
+import { v4 as uuidv4 } from 'uuid';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
@@ -24,8 +27,12 @@ export default {
         },
 
     },
-    name: 'BarChart',
-    components: { Bar },
+    data() {
+        return {
+            uid: `aspectchart-${uuidv4()}`
+        }
+    },
+    components: { Bar, AspectChartTextualDescription },
     computed: {
         ...mapState(store, ["strings", "userTargets", 'capabilities', 'groupedCapabilities']),
 
