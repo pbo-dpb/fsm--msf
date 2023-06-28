@@ -24,8 +24,8 @@
         "fr": "Marine royale canadienne"
     },
     "impact_per_unit_toggle": {
-        "en": "Per unit",
-        "fr": "Par unité"
+        "en": "Per step",
+        "fr": "Par étape"
     },
     "impact_cost_title": {
         "en": "Cost Impact",
