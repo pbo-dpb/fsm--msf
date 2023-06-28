@@ -75,11 +75,13 @@ export default {
 
 
                 for (const [facet, impactForFacet] of Object.entries(capability.userTargetImpact[this.aspect])) {
+                    if (facet === 'total') continue;
+
                     if (!datasets[facet]) {
                         datasets[facet] = {
                             label: this.strings[`impact_facet_label_${facet}`],
                             backgroundColor: colorForIndex(i),
-                            data: []
+                            data: [],
                         };
                     }
                     datasets[facet].data.push(impactForFacet);
