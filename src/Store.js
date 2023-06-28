@@ -56,57 +56,70 @@ export default defineStore('fsm', {
 
         currentAspects(state) {
 
-            return state.capabilities.reduce((acc, capability) => {
+            return (group) => {
 
-                for (const [facet, impactForFacet] of Object.entries(capability.personnel)) {
-                    if (!acc.personnel[facet]) {
-                        acc.personnel[facet] = 0;
+
+                let capabilities = group ? group : state.capabilities;
+
+                return capabilities.reduce((acc, capability) => {
+
+                    for (const [facet, impactForFacet] of Object.entries(capability.personnel)) {
+                        if (!acc.personnel[facet]) {
+                            acc.personnel[facet] = 0;
+                        }
+                        acc.personnel[facet] = acc.personnel[facet] + capability.personnel[facet];
                     }
-                    acc.personnel[facet] = acc.personnel[facet] + capability.personnel[facet];
-                }
 
-                for (const [facet, impactForFacet] of Object.entries(capability.cost)) {
-                    if (!acc.cost[facet]) {
-                        acc.cost[facet] = 0;
+                    for (const [facet, impactForFacet] of Object.entries(capability.cost)) {
+                        if (!acc.cost[facet]) {
+                            acc.cost[facet] = 0;
+                        }
+                        acc.cost[facet] = acc.cost[facet] + capability.cost[facet];
                     }
-                    acc.cost[facet] = acc.cost[facet] + capability.cost[facet];
-                }
 
-                return acc;
-            }, {
-                personnel: {},
-                cost: {}
-            });
-
+                    return acc;
+                }, {
+                    personnel: {},
+                    cost: {}
+                });
+            }
         },
 
         hasCustomUserTargets(state) {
-            return state.capabilities.some(capability => capability.hasUserTarget);
+            return (group) => {
+                let capabilities = group ? group : state.capabilities;
+                return capabilities.some(capability => capability.hasUserTarget)
+            };
         },
 
         userTargets(state) {
 
-            return state.capabilities.reduce((acc, capability) => {
+            return (group) => {
 
-                for (const [facet, impactForFacet] of Object.entries(capability.userTargetImpact.personnel)) {
-                    if (!acc.personnel[facet]) {
-                        acc.personnel[facet] = 0;
+                let capabilities = group ? group : state.capabilities;
+
+                return capabilities.reduce((acc, capability) => {
+
+                    for (const [facet, impactForFacet] of Object.entries(capability.userTargetImpact.personnel)) {
+                        if (!acc.personnel[facet]) {
+                            acc.personnel[facet] = 0;
+                        }
+                        acc.personnel[facet] = acc.personnel[facet] + capability.userTargetImpact.personnel[facet];
                     }
-                    acc.personnel[facet] = acc.personnel[facet] + capability.userTargetImpact.personnel[facet];
-                }
 
-                for (const [facet, impactForFacet] of Object.entries(capability.userTargetImpact.cost)) {
-                    if (!acc.cost[facet]) {
-                        acc.cost[facet] = 0;
+                    for (const [facet, impactForFacet] of Object.entries(capability.userTargetImpact.cost)) {
+                        if (!acc.cost[facet]) {
+                            acc.cost[facet] = 0;
+                        }
+                        acc.cost[facet] = acc.cost[facet] + capability.userTargetImpact.cost[facet];
                     }
-                    acc.cost[facet] = acc.cost[facet] + capability.userTargetImpact.cost[facet];
-                }
 
-                return acc;
-            }, {
-                personnel: {},
-                cost: {}
-            });
+                    return acc;
+                }, {
+                    personnel: {},
+                    cost: {}
+                });
+            }
 
         }
 

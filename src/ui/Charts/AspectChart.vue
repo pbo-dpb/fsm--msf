@@ -34,7 +34,7 @@ export default {
     },
     components: { Bar, AspectChartTextualDescription },
     computed: {
-        ...mapState(store, ["strings", "userTargets", 'capabilities', 'groupedCapabilities']),
+        ...mapState(store, ["strings", 'capabilities', 'groupedCapabilities']),
 
 
 

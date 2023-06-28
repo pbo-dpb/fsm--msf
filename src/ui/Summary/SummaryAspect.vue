@@ -1,21 +1,39 @@
 <template>
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-2 border-gray-300 dark:border-gray-700 " :class="{
+        'border-l-2 pl-2': group,
+    }">
 
-        <h4 class="font-thin">{{ strings[`impact_${aspect}_title`] }}</h4>
+        <div class="flex flex-row justify-between items-center">
+            <h4 class="font-thin">
+                {{ strings[`impact_${aspect}_title`] }}
+            </h4>
 
-        <dl class="grid grid-cols-3 gap-1">
-            <template v-for="(facet, key) in currentAspects[aspect]">
-                <dt class="font-semibold text-gray-800 dark:text-gray-200 overflow-x-hidden">{{
-                    strings[`impact_facet_label_${key}`] }}</dt>
-                <dd class="col-span-2 lining-nums inline-flex gap-2">
-                    <span :class="{ 'line-through decoration-gray-500': shouldDisplayImpactDiff }">{{
-                        getValForFacet(key, false)
-                    }}</span>
-                    <span v-if="shouldDisplayImpactDiff" class="text-red-800 dark:text-red-200">
-                        {{ getValForFacet(key, true) }}
-                    </span>
+            <div v-if="facetsOfInterest.length === 1" class="col-span-2 lining-nums inline-flex gap-2">
+                <span :class="{ 'line-through decoration-gray-500': shouldDisplayImpactDiff }">{{
+                    getValForFacet(facetsOfInterest[0], false)
+                }}</span>
+                <span v-if="shouldDisplayImpactDiff" class="text-red-800 dark:text-red-200">
+                    {{ getValForFacet(facetsOfInterest[0], true) }}
+                </span>
+            </div>
+        </div>
 
-                </dd>
+        <dl class="grid grid-cols-3 gap-1" v-if="facetsOfInterest.length > 1">
+            <template v-for="(facet, key) in summaryCurrentAspects[aspect]">
+                <template v-if="facetsOfInterest.includes(key)">
+                    <dt class="font-semibold text-gray-800 dark:text-gray-200 overflow-x-hidden">{{
+                        strings[`impact_facet_label_${key}`] }}</dt>
+                    <dd class="col-span-2 lining-nums inline-flex gap-2">
+                        <span :class="{ 'line-through decoration-gray-500': shouldDisplayImpactDiff }">{{
+                            getValForFacet(key, false)
+                        }}</span>
+                        <span v-if="shouldDisplayImpactDiff" class="text-red-800 dark:text-red-200">
+                            {{ getValForFacet(key, true) }}
+                        </span>
+
+                    </dd>
+                </template>
+
             </template>
         </dl>
     </div>
@@ -32,13 +50,29 @@ export default {
             validator: (value) => {
                 return ['personnel', 'cost'].includes(value);
             }
+        },
+        group: {
+            type: Array,
+            required: false
+        },
+        facetsOfInterest: {
+            type: Array,
+            required: true,
         }
     },
     computed: {
         ...mapState(store, ['strings', 'currentAspects', 'hasCustomUserTargets', 'userTargets']),
 
         shouldDisplayImpactDiff() {
-            return this.hasCustomUserTargets;
+            return this.hasCustomUserTargets(this.group);
+        },
+
+        summaryCurrentAspects() {
+            return this.currentAspects(this.group);
+        },
+
+        summaryUserTargets() {
+            return this.userTargets(this.group);
         }
     },
     methods: {
@@ -49,8 +83,8 @@ export default {
             return Localizer.formatNumber(value);
         },
         getValForFacet(facet, userTarget = false) {
-            return this.formatValue(userTarget ? this.userTargets[this.aspect][facet] :
-                this.currentAspects[this.aspect][facet])
+            return this.formatValue(userTarget ? this.summaryUserTargets[this.aspect][facet] :
+                this.summaryCurrentAspects[this.aspect][facet])
         }
     }
 }
