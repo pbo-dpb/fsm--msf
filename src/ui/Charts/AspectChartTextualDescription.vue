@@ -4,7 +4,7 @@
             class="cursor-pointer text-blue-900 hover:text-blue-800 dark:text-blue-100 dark:hover:text-blue-200 text-sm font-semibold  select-none">
             {{ strings.chart_alt_text_label }}</summary>
         <div>
-            <div class="overflow-x-auto prose max-w-none">
+            <div class="overflow-x-auto prose dark:prose-invert max-w-none">
 
                 <table>
 

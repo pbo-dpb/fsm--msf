@@ -2,7 +2,7 @@
     <div
         class="flex flex-col lg:grid grid-cols-12 justify-between odd:bg-gray-50 odd:dark:bg-gray-900 py-2 gap-2 -mx-2 px-2 items-center">
         <button @click="expanded = !expanded"
-            class="col-span-6 text-lg font-thin inline-flex gap-2 items-center text-blue-800 select-none text-left ">
+            class="col-span-6 text-lg font-thin inline-flex gap-2 items-center text-blue-800 dark:text-blue-200 select-none text-left ">
 
             <ChevronDownIcon class="h-4 w-4 " v-if="expanded"></ChevronDownIcon>
             <ChevronRightIcon class="h-4 w-4" v-else></ChevronRightIcon>
@@ -16,8 +16,9 @@
         </div>
     </div>
     <div class="pl-4 flex flex-col gap-2" v-if="expanded">
-        <CapabilityRowBreakdown :capability="capability"></CapabilityRowBreakdown>
         <CapabilityRowDetails :capability="capability"></CapabilityRowDetails>
+        <CapabilityRowBreakdown :capability="capability"></CapabilityRowBreakdown>
+
     </div>
 </template>
 <script>
