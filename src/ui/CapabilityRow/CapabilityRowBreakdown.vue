@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <!--<div>
         <Switch v-model="settings_perUnitDisplay">{{ strings.impact_per_unit_toggle }}</Switch>
-    </div>
+    </div>-->
 
     <figure class="flex flex-col lg:grid grid-cols-2">
 

@@ -6,16 +6,16 @@
         <div>
             <div class="overflow-x-auto prose dark:prose-invert max-w-none">
 
-                <table>
+                <table class="table">
 
                     <tr>
                         <th scope="column">{{ strings.capability_label }}</th>
                         <th scope="column" v-for="header in columnHeaders">{{ header }}</th>
                     </tr>
 
-                    <tr v-for="(label, index) in data.labels">
+                    <tr v-for="(label, index) in data.labels" class="even:bg-gray-50 dark:even:bg-gray-950">
 
-                        <th>{{ label }}</th>
+                        <th scope="row">{{ label }}</th>
 
                         <td v-for="dataset in data.datasets">{{ dataset.data[index] }}</td>
 
@@ -30,7 +30,7 @@
     </details>
 </template>
 <script>
-import store from '../../Store';
+import store from '../../../Store';
 import { mapState } from 'pinia'
 
 export default {

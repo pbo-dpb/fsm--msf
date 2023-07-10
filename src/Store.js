@@ -18,6 +18,7 @@ export default defineStore('fsm', {
         strings: loc,
         environments: Object.fromEntries(environments.map(i => [i.id, new Environment(i)])),
         settings_perUnitDisplay: false,
+        settings_selectedAspect: "cost",
     }),
     actions: {
         instanciateCapabilities(capabilities) {
@@ -41,14 +42,18 @@ export default defineStore('fsm', {
         groupedCapabilities(state) {
 
             if (!state.capabilities || state.capabilities.length === 0) return [];
+
             let groups = {};
+
             state.capabilities.forEach((capability) => {
+                if (!capability.environment) return;
                 const key = capability.environment?.id ?? null;
                 if (!groups[key]) {
                     groups[key] = [];
                 }
                 groups[key].push(capability);
                 return groups;
+
             })
             return groups
 

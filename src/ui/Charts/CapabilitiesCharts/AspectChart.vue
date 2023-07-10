@@ -10,8 +10,8 @@ import AspectChartTextualDescription from './AspectChartTextualDescription.vue';
 import { mapState } from 'pinia'
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
-import { colorForIndex } from "./ColorPalettes";
-import store from '../../Store';
+import { colorForIndex } from "../ColorPalettes";
+import store from '../../../Store';
 import { v4 as uuidv4 } from 'uuid';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
@@ -49,7 +49,13 @@ export default {
                 },
                 scales: {
                     x: {
-                        stacked: true
+                        stacked: true,
+                        ticks: {
+                            callback: function (value, index, ticks) {
+                                const formatter = Intl.NumberFormat(document.documentElement.lang, { notation: 'compact' });
+                                return formatter.format(value);
+                            }
+                        }
                     },
                     y: {
                         stacked: true
@@ -61,7 +67,6 @@ export default {
 
 
         sortedCapabilities() {
-
             let stack = Object.values(this.groupedCapabilities).map(caps => {
                 return caps.sort((a, b) => a[`display_name_${document.documentElement.lang}`].localeCompare(b[`display_name_${document.documentElement.lang}`]))
             }).flat();
@@ -73,9 +78,8 @@ export default {
             let i = 0;
             this.sortedCapabilities.forEach(capability => {
 
-
                 for (const [facet, impactForFacet] of Object.entries(capability.userTargetImpact[this.aspect])) {
-                    if (facet === 'total') continue;
+                    if (['total', 'env_overhead', 'inst_overhead'].includes(facet)) continue;
 
                     if (!datasets[facet]) {
                         datasets[facet] = {

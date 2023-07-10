@@ -23,17 +23,13 @@
         "en": "Royal Canadian Navy",
         "fr": "Marine royale canadienne"
     },
-    "impact_per_unit_toggle": {
-        "en": "Per step",
-        "fr": "Par étape"
-    },
     "impact_cost_title": {
-        "en": "Cost Impact",
-        "fr": "Impact sur les coûts"
+        "en": "Cost ",
+        "fr": "Coûts"
     },
     "impact_personnel_title": {
-        "en": "Personnel Impact",
-        "fr": "Impact sur le personnel"
+        "en": "Personnel",
+        "fr": "Personnel"
     },
     "impact_facet_label_direct": {
         "en": "Direct",
@@ -44,12 +40,16 @@
         "fr": "Indirect"
     },
     "impact_facet_label_env_overhead": {
-        "en": "Env. Overhead",
+        "en": "Environment Overhead",
         "fr": "Surcharge environement"
     },
     "impact_facet_label_inst_overhead": {
-        "en": "Inst. Overhead",
-        "fr": "???? Inst Overhead"
+        "en": "Institutional Overhead",
+        "fr": "Surcharge institutionnelle"
+    },
+    "per_environment_env_overhead_label": {
+        "en": ":environment overhead",
+        "fr": "Surcharge : :environment"
     },
     "impact_facet_label_total": {
         "en": "Total",
@@ -58,6 +58,10 @@
     "summary_title": {
         "en": "Summary",
         "fr": "Sommaire"
+    },
+    "general_overhead_label": {
+        "en": "General overhead",
+        "fr": "Surcharge générale"
     },
     "chart_alt_text_label": {
         "en": "Text version",

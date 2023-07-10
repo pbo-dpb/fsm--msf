@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col gap-4 ">
+    <div class="flex flex-col gap-4 " v-if="environment">
 
         <h2 v-if="environment" class="text-2xl font-thin">{{ environment?.display_name_en }}</h2>
         <section class="flex flex-col gap-1 w-full">

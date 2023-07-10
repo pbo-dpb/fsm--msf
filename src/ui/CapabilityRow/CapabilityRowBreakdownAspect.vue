@@ -5,16 +5,19 @@
 
         <dl class="grid grid-cols-2 gap-1 text-sm">
             <template v-for="(facet, key) in capability[aspect]">
-                <dt class="font-semibold text-gray-800 dark:text-gray-200">{{ strings[`impact_facet_label_${key}`] }}</dt>
-                <dd class="lining-nums inline-flex gap-2">
-                    <span :class="{ 'line-through decoration-gray-500': shouldDisplayImpactDiff }">{{
-                        getValForFacet(key, false)
-                    }}</span>
-                    <span v-if="shouldDisplayImpactDiff" class="text-red-800 dark:text-red-200">
-                        {{ getValForFacet(key, true) }}
-                    </span>
+                <template v-if="['direct', 'indirect', 'total'].includes(key)">
+                    <dt class="font-semibold text-gray-800 dark:text-gray-200">{{ strings[`impact_facet_label_${key}`] }}
+                    </dt>
+                    <dd class="lining-nums inline-flex gap-2">
+                        <span :class="{ 'line-through decoration-gray-500': shouldDisplayImpactDiff }">{{
+                            getValForFacet(key, false)
+                        }}</span>
+                        <span v-if="shouldDisplayImpactDiff" class="text-red-800 dark:text-red-200">
+                            {{ getValForFacet(key, true) }}
+                        </span>
 
-                </dd>
+                    </dd>
+                </template>
             </template>
         </dl>
     </div>

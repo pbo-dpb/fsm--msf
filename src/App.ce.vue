@@ -8,6 +8,10 @@
 
   </section>
 
+  <div class="flex flex-row justify-center border-2 border-blue-100 dark:border-blue-900 rounded p-2 mb-8">
+    <AspectSelector></AspectSelector>
+  </div>
+
 
   <Charts></Charts>
 
@@ -35,7 +39,8 @@ import PayloadCsvUrl from "./assets/payload.csv?url"
 import { mapState } from 'pinia'
 import CapabilityList from "./ui/CapabilityList.vue";
 import Summary from './ui/Summary/Summary.vue';
-import Charts from './ui/Charts/Charts.vue';
+import Charts from './ui/Charts/CapabilitiesCharts/Charts.vue';
+import AspectSelector from "./ui/AspectSelector/AspectSelector.vue"
 
 
 const language = document.documentElement.lang;
@@ -55,7 +60,8 @@ export default {
   components: {
     CapabilityList,
     Summary,
-    Charts
+    Charts,
+    AspectSelector
   },
   mounted() {
     const pageTitle = this.language === 'fr' ? 'MSF' : 'FSM';
