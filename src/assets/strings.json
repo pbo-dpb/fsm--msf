@@ -40,8 +40,8 @@
         "fr": "Indirect"
     },
     "impact_facet_label_env_overhead": {
-        "en": "Environment Overhead",
-        "fr": "Surcharge environement"
+        "en": "Overhead",
+        "fr": "Surcharge"
     },
     "impact_facet_label_inst_overhead": {
         "en": "Institutional Overhead",
@@ -56,12 +56,12 @@
         "fr": "Total"
     },
     "summary_title": {
-        "en": "Summary",
-        "fr": "Sommaire"
+        "en": "Impact",
+        "fr": "Impact"
     },
     "general_overhead_label": {
-        "en": "General overhead",
-        "fr": "Surcharge générale"
+        "en": "Institutional Overhead",
+        "fr": "Surcharge institutionnelle"
     },
     "chart_alt_text_label": {
         "en": "Text version",

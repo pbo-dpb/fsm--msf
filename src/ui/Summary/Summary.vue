@@ -1,23 +1,32 @@
 <template>
-    <div class="bg-gray-100 dark:bg-gray-900 flex flex-col gap-4 w-full h-full p-4">
+    <div class="flex flex-col gap-4">
 
-
-        <h2 class="text-2xl font-thin text-center flex flex-col gap-1">{{
-            strings[`impact_facet_label_${facetsOfInterest[0]}`] }}
+        <h2 class="text-2xl font-thin flex flex-col gap-1 -mt-4">{{
+            strings[`summary_title`] }}
         </h2>
 
-        <OverheadChart></OverheadChart>
+        <Charts></Charts>
 
         <div>
-            <SummaryAspect aspect="cost" :facets-of-interest="facetsOfInterest"></SummaryAspect>
-            <SummaryAspect aspect="personnel" :facets-of-interest="facetsOfInterest"></SummaryAspect>
+            <SummaryAspect :aspect="settings_selectedAspect" :facets-of-interest="facetsOfInterest">
+                <h3 class="text-xl font-thin ">{{
+                    strings[`impact_facet_label_${facetsOfInterest[0]}`] }}
+                </h3>
+            </SummaryAspect>
+
         </div>
 
-        <div class="border-gray-300 dark:border-gray-700 border-t-2 pt-4">
+        <div class="pl-4">
             <ForcesBreakdown :facets-of-interest="facetsOfInterest"></ForcesBreakdown>
         </div>
 
 
+
+
+        <h2 class="text-2xl font-thin flex flex-col gap-1 pt-4">{{
+            strings[`impact_facet_label_env_overhead`] }}
+        </h2>
+        <OverheadChart></OverheadChart>
 
 
     </div>
@@ -28,19 +37,19 @@ import { mapState } from 'pinia'
 import store from '../../Store';
 import SummaryAspect from './SummaryAspect.vue';
 import ForcesBreakdown from './ForcesBreakdown.vue';
-
+import Charts from "../Charts/CapabilitiesCharts/Charts.vue"
 import OverheadChart from '../Charts/OverheadChart/OverheadChart.vue';
 
 export default {
     computed: {
-        ...mapState(store, ["strings"]),
+        ...mapState(store, ["strings", "settings_selectedAspect"]),
     },
     data() {
         return {
-            facetsOfInterest: ['env_overhead']
+            facetsOfInterest: ['total']
         }
     },
-    components: { SummaryAspect, ForcesBreakdown, OverheadChart }
+    components: { SummaryAspect, ForcesBreakdown, OverheadChart, Charts }
 }
 
 </script>

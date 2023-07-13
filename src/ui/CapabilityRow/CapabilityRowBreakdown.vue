@@ -3,7 +3,7 @@
         <Switch v-model="settings_perUnitDisplay">{{ strings.impact_per_unit_toggle }}</Switch>
     </div>-->
 
-    <figure class="flex flex-col lg:grid grid-cols-2">
+    <figure class="flex flex-col gap-4">
 
         <div>
             <CapabilityRowBreakdownAspect :capability="capability" aspect="cost">

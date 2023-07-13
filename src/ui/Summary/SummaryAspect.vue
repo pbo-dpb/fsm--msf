@@ -4,9 +4,9 @@
     }">
 
         <div class="flex flex-row justify-between items-center">
-            <h4 class="font-thin">
-                {{ strings[`impact_${aspect}_title`] }}
-            </h4>
+
+
+            <slot></slot>
 
             <div v-if="facetsOfInterest.length === 1" class="col-span-2 lining-nums inline-flex gap-2">
                 <span :class="{ 'line-through decoration-gray-500': shouldDisplayImpactDiff }">{{

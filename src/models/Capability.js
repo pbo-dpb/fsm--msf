@@ -34,7 +34,8 @@ export class Capability {
         this.user_editable = userEditableRange ? {
             range_min: (this.current - userEditableRange >= 0) ? this.current - userEditableRange : 0,
             range_max: this.current + userEditableRange,
-            step: payload.user_editable_step ? Localizer.cleanupNumber(payload.user_editable_step) : 1
+            step: payload.user_editable_step ? Localizer.cleanupNumber(payload.user_editable_step) : 1,
+            range: userEditableRange
         } : false;
 
         this.description = undefined;
@@ -49,7 +50,7 @@ export class Capability {
     }
 
     async getDescription(language) {
-
+        return;// TODO write descriptions
         if (!this.description) {
             try {
                 const verboseContentUrl = `capability_descriptions/${this.id}.yaml`;

@@ -1,25 +1,34 @@
 <template>
     <div class="flex flex-col justify-center items-center">
-        <div class="bordered text-white print:text-black font-semibold text-sm px-1 py-.5 rounded-sm" :class="{
-            'bg-gray-500': capability.userTargetDiff === 0,
-            'bg-red-800': capability.userTargetDiff < 0,
-            'bg-green-800': capability.userTargetDiff > 0,
-        }">
+        <div v-if="capability.userTargetDiff"
+            class="bordered text-white print:text-black font-semibold text-sm px-1 py-.5 rounded-sm" :class="{
+                'bg-gray-500': capability.userTargetDiff === 0,
+                'bg-red-800': capability.userTargetDiff < 0,
+                'bg-green-800': capability.userTargetDiff > 0,
+            }">
 
-            <span>{{ capability.current }}</span>
-            <span v-if="capability.userTargetDiff"><span v-if="capability.userTargetDiff > 0">+</span>{{
-                capability.userTargetDiff }}
+            <span v-if="capability.userTargetDiff">{{
+                userTargetDiff }}
             </span>
         </div>
     </div>
 </template>
 <script>
+import Localizer from '../../Localizer';
 import { Capability } from '../../models/Capability';
 export default {
     props: {
         capability: {
             type: Capability,
             required: true
+        }
+    },
+    computed: {
+        currentTarget() {
+            return this.capability.userTargetDiff ? Localizer.formatNumber(this.capability.current) : Localizer.formatNumber(this.capability.current, this.capability.current_unit)
+        },
+        userTargetDiff() {
+            return (this.capability.userTargetDiff > 0 ? '+' : '') + Localizer.formatNumber(this.capability.userTargetDiff, this.capability.current_unit)
         }
     }
 }

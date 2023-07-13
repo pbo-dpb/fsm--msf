@@ -1,11 +1,11 @@
 <template>
     <div class="flex flex-col gap-2">
 
-        <h4 class="font-thin">{{ strings[`impact_${aspect}_title`] }}</h4>
+        <h4 class="font-semibold">{{ strings[`impact_${aspect}_title`] }}</h4>
 
-        <dl class="grid grid-cols-2 gap-1 text-sm">
+        <dl class="grid grid-cols-2 gap-1 text-sm pl-4">
             <template v-for="(facet, key) in capability[aspect]">
-                <template v-if="['direct', 'indirect', 'total'].includes(key)">
+                <template v-if="['direct', 'indirect'].includes(key)">
                     <dt class="font-semibold text-gray-800 dark:text-gray-200">{{ strings[`impact_facet_label_${key}`] }}
                     </dt>
                     <dd class="lining-nums inline-flex gap-2">

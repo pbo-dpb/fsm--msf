@@ -1,5 +1,7 @@
 <template>
-  <Bar id="my-chart-id" :options="chartOptions" :data="chartData" />
+  <div class="h-32">
+    <Bar :id="uid" :options="chartOptions" :data="chartData" />
+  </div>
 </template>
 <script>
 import store from '../../../Store';
@@ -39,6 +41,7 @@ export default {
     },
     chartOptions() {
       return {
+        maintainAspectRatio: false,
         indexAxis: 'y',
         plugins: {
           legend: {

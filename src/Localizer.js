@@ -19,9 +19,9 @@ export default class Localizer {
         const locale = `${document.documentElement.lang}-CA`;
         switch (style) {
             case 'currency':
-                return new Intl.NumberFormat(locale, { style: 'currency', "currency": "CAD", maximumFractionDigits: 0 }).format(number);
+                return new Intl.NumberFormat(locale, { style: 'currency', "currency": "CAD", maximumFractionDigits: 0, notation: 'compact' }).format(number);
             case 'percent':
-                return new Intl.NumberFormat(locale, { style: 'percent', maximumFractionDigits: 2 }).format(number / 100);
+                return new Intl.NumberFormat(locale, { style: 'percent', maximumFractionDigits: 2, notation: 'compact' }).format(number / 100);
         }
 
         // countable

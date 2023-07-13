@@ -1,10 +1,7 @@
 <template>
     <section class="flex flex-col gap-4 w-full ">
-
         <ForcesBreakdownEnvironment v-for="group in groupedCapabilities" :group="group"
             :facets-of-interest="facetsOfInterest"></ForcesBreakdownEnvironment>
-
-
     </section>
 </template>
 <script>

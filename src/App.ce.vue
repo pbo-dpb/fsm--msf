@@ -8,23 +8,23 @@
 
   </section>
 
-  <div class="flex flex-row justify-center border-2 border-blue-100 dark:border-blue-900 rounded p-2 mb-8">
-    <AspectSelector></AspectSelector>
-  </div>
 
+  <div class="flex flex-col lg:grid lg:grid-cols-3 gap-8 my-8 w-full ">
 
-  <Charts></Charts>
-
-
-  <div class="flex flex-col lg:grid lg:grid-cols-3 gap-8 my-8 w-full">
-
-    <div class="col-span-2 flex flex-col gap-8">
+    <div class="col-span-1 flex flex-col gap-8">
       <CapabilityList v-if="capabilities"></CapabilityList>
     </div>
 
-    <div class="lg:border-l border-gray-100 lg:pl-8">
+    <div
+      class="col-span-2 lg:border-l border-gray-100 bg-gray-100 dark:bg-gray-900 flex flex-col gap-4 w-full h-full border border-gray-300">
 
-      <Summary></Summary>
+      <div class="flex flex-row justify-center bg-gray-50 p-4 border-b border-gray-300">
+        <AspectSelector></AspectSelector>
+      </div>
+
+      <div class="p-4">
+        <Summary></Summary>
+      </div>
 
     </div>
 
@@ -39,7 +39,6 @@ import PayloadCsvUrl from "./assets/payload.csv?url"
 import { mapState } from 'pinia'
 import CapabilityList from "./ui/CapabilityList.vue";
 import Summary from './ui/Summary/Summary.vue';
-import Charts from './ui/Charts/CapabilitiesCharts/Charts.vue';
 import AspectSelector from "./ui/AspectSelector/AspectSelector.vue"
 
 
@@ -60,7 +59,6 @@ export default {
   components: {
     CapabilityList,
     Summary,
-    Charts,
     AspectSelector
   },
   mounted() {
