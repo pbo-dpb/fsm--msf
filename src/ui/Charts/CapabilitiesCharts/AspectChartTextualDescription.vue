@@ -17,7 +17,9 @@
 
                         <th scope="row">{{ label }}</th>
 
-                        <td v-for="dataset in data.datasets">{{ dataset.data[index] }}</td>
+                        <td v-for="dataset in data.datasets" class="lining-nums tabular-nums">{{ new
+                            Intl.NumberFormat(language).format(dataset.data[index])
+                        }}</td>
 
 
                     </tr>
@@ -41,7 +43,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(store, ["strings"]),
+        ...mapState(store, ["strings", "language"]),
 
         columnHeaders() {
             return this.data.datasets.map((dataset) => dataset.label);

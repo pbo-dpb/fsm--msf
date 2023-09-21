@@ -45,6 +45,13 @@ export default {
                 plugins: {
                     legend: {
                         position: "bottom"
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => {
+                                return new Intl.NumberFormat(`${this.language}-CA`).format(context.parsed.x)
+                            }
+                        }
                     }
                 },
                 scales: {
