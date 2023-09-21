@@ -50,21 +50,7 @@ export class Capability {
         return this.state.user_target != this.current;
     }
 
-    async getDescription(language) {
-        return;// TODO write descriptions
-        if (!this.description) {
-            try {
-                const verboseContentUrl = `capability_descriptions/${this.id}.yaml`;
-                const response = await fetch(verboseContentUrl).then(response => response.text())
 
-                const verboseContent = yaml.load(response, 'utf8');
-
-                this.description = verboseContent.description;
-            } catch (error) {
-
-            }
-        }
-    }
 
     get userTargetDiff() {
         return -(this.current - this.state.user_target);
@@ -207,9 +193,52 @@ export class Capability {
         let parsed = await readXlsxFile(blob, { sheet: 'CAPABILITIES', schema });
 
 
+        const descSchema = {
+            'capability_id': {
+                prop: 'id',
+                required: true,
+                type: (value) => {
+                    const id = value.replace(/[^a-zA-Z0-9]+/g, "")
+                    if (!id) {
+                        throw new Error('Invalid id')
+                    }
+                    return id
+                }
+            },
+            'en': {
+                prop: 'en',
+            },
+            'fr': {
+                prop: 'fr'
+            }
+        }
+
+
+
+        let descriptions = await readXlsxFile(blob, { sheet: 'DESCRIPTIONS', schema: descSchema });
+
+
+        const capabilities = parsed.errors.length ? null : parsed.rows.map(x => {
+            let cap = new Capability(x);
+
+            const desc = descriptions.rows.find(x => x.id == cap.id);
+            if (desc)
+                cap.description = {
+                    en: desc.en,
+                    fr: desc.fr
+                }
+            return cap;
+        })
+
+
+
         return {
             ...parsed,
-            capabilities: parsed.errors.length ? null : parsed.rows.map(x => new Capability(x)),
+            errors: [
+                ...parsed.errors,
+                ...descriptions.errors
+            ],
+            capabilities,
         }
     }
 }

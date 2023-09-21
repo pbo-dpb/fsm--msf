@@ -22,13 +22,7 @@ export default {
     computed: {
         ...mapState(store, ['language']),
         description() {
-
-            if (this.capability.description === undefined) {
-                this.capability.getDescription();
-                return null;
-            }
-            if (this.capability.description === false) return null;
-            return this.capability.description[this.language];
+            return this.capability.description?.[this.language] ?? null;
         }
     }
 
