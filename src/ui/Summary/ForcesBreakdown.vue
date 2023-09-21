@@ -11,7 +11,7 @@ import ForcesBreakdownEnvironment from './ForcesBreakdownEnvironment.vue';
 
 export default {
     computed: {
-        ...mapState(store, ["strings", "groupedCapabilities"]),
+        ...mapState(store, ["strings", "groupedCapabilities", "language", "vars", "settings_selectedAspect"]),
     },
     props: {
         facetsOfInterest: {

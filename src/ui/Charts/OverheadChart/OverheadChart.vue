@@ -1,6 +1,14 @@
 <template>
-  <div class="h-32">
-    <Bar :id="uid" :options="chartOptions" :data="chartData" />
+  <div class="flex flex-col gap-4">
+    <div class="h-32">
+      <Bar :id="uid" :options="chartOptions" :data="chartData" />
+
+
+    </div>
+    <p class="border-l-2 border-gray-200 dark:border-gray-700 dark:border-blue-700 pl-2 text-gray-700 text-sm">{{
+      vars[`overhead_and_totals_rounding_note_${settings_selectedAspect}`][language]
+    }}
+    </p>
   </div>
 </template>
 <script>
@@ -14,7 +22,7 @@ export default {
   name: 'BarChart',
   components: { Bar },
   computed: {
-    ...mapState(store, ["strings", 'capabilities', 'groupedCapabilities', 'settings_selectedAspect', 'language']),
+    ...mapState(store, ["strings", 'capabilities', 'groupedCapabilities', 'settings_selectedAspect', 'language', 'vars']),
     labels() {
       return [
         this.strings.general_overhead_label,

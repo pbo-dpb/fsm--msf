@@ -3,6 +3,11 @@
         <Bar v-if="datasets" :options="chartOptions" :data="chartData" />
     </div>
     <AspectChartTextualDescription :data="chartData" :id="`${uid}-description`"></AspectChartTextualDescription>
+
+    <p class="border-l-2 border-gray-200 dark:border-gray-700 dark:border-blue-700 pl-2 text-gray-700 text-sm">{{
+        vars[`capabilities_rounding_note_${aspect}`][language]
+    }}
+    </p>
 </template>
   
 <script>
@@ -34,7 +39,7 @@ export default {
     },
     components: { Bar, AspectChartTextualDescription },
     computed: {
-        ...mapState(store, ["strings", 'capabilities', 'groupedCapabilities', 'language']),
+        ...mapState(store, ["strings", 'capabilities', 'groupedCapabilities', 'language', 'vars']),
 
 
 

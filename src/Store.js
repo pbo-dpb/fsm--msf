@@ -15,7 +15,7 @@ export default defineStore('fsm', {
         language: document.documentElement.lang,
         errors: null,
         capabilities: null,
-        meta: null,
+        vars: {},
         environments: Object.fromEntries(environments.map(i => [i.id, new Environment(i)])),
         settings_perUnitDisplay: false,
         settings_selectedAspect: "cost",
@@ -39,6 +39,24 @@ export default defineStore('fsm', {
                 }
                 return;
             }
+
+            /**
+            * Vars
+            */
+            let vars = await readXlsxFile(blob, { sheet: 'VARS' });
+            this.vars = vars.reduce((accumulator, item) => {
+                if (item[2]) {
+                    accumulator[item[0]] = { en: item[1], fr: item[2] };
+                } else {
+                    let accumulatorContent = item[1];
+                    // Strings can be casted to bool for vars.
+                    if (accumulatorContent === "TRUE") accumulatorContent = true;
+                    if (accumulatorContent === "FALSE") accumulatorContent = false;
+                    accumulator[item[0]] = accumulatorContent
+                }
+                return accumulator;
+            }, {});
+
 
             this.capabilities = capabilities.capabilities
 

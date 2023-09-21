@@ -19,7 +19,10 @@
         <div class="pl-4">
             <ForcesBreakdown :facets-of-interest="facetsOfInterest"></ForcesBreakdown>
         </div>
-
+        <p class="border-l-2 border-gray-200 dark:border-gray-700 dark:border-blue-700 pl-2 text-gray-700 text-sm">{{
+            vars[`overhead_and_totals_rounding_note_${settings_selectedAspect}`][language]
+        }}
+        </p>
 
 
 
@@ -42,7 +45,7 @@ import OverheadChart from '../Charts/OverheadChart/OverheadChart.vue';
 
 export default {
     computed: {
-        ...mapState(store, ["strings", "settings_selectedAspect"]),
+        ...mapState(store, ["strings", "settings_selectedAspect", "language", "vars"]),
     },
     data() {
         return {
