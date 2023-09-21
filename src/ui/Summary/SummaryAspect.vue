@@ -1,14 +1,12 @@
 <template>
-    <div class="flex flex-col gap-2 border-gray-300 dark:border-gray-700 " :class="{
-        'border-l-2 pl-2': group,
-    }">
-
-        <div class="flex flex-row justify-between items-center">
-
-
+    <tr :class="{ 'bg-purple-100 dark:bg-purple-900': highlight }">
+        <th scope="row" class="w-1/2 border border-gray-300 dark:border-gray-900 px-1 py-.5">
             <slot></slot>
+        </th>
 
-            <div v-if="facetsOfInterest.length === 1" class="col-span-2 lining-nums inline-flex gap-2">
+        <td v-if="facetsOfInterest.length === 1"
+            class="w-1/2 border border-gray-300 dark:border-gray-900 px-1 py-.5 tabular-nums">
+            <div class="inline-flex gap-1">
                 <span :class="{ 'line-through decoration-gray-500': shouldDisplayImpactDiff }">{{
                     getValForFacet(facetsOfInterest[0], false)
                 }}</span>
@@ -16,27 +14,9 @@
                     {{ getValForFacet(facetsOfInterest[0], true) }}
                 </span>
             </div>
-        </div>
+        </td>
 
-        <dl class="grid grid-cols-3 gap-1" v-if="facetsOfInterest.length > 1">
-            <template v-for="(facet, key) in summaryCurrentAspects[aspect]">
-                <template v-if="facetsOfInterest.includes(key)">
-                    <dt class="font-semibold text-gray-800 dark:text-gray-200 overflow-x-hidden">{{
-                        strings[`impact_facet_label_${key}`] }}</dt>
-                    <dd class="col-span-2 lining-nums inline-flex gap-2">
-                        <span :class="{ 'line-through decoration-gray-500': shouldDisplayImpactDiff }">{{
-                            getValForFacet(key, false)
-                        }}</span>
-                        <span v-if="shouldDisplayImpactDiff" class="text-red-800 dark:text-red-200">
-                            {{ getValForFacet(key, true) }}
-                        </span>
-
-                    </dd>
-                </template>
-
-            </template>
-        </dl>
-    </div>
+    </tr>
 </template>
 <script>
 import { mapState } from 'pinia'
@@ -58,6 +38,10 @@ export default {
         facetsOfInterest: {
             type: Array,
             required: true,
+        },
+        highlight: {
+            type: Boolean,
+            default: false
         }
     },
     computed: {

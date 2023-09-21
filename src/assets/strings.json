@@ -55,9 +55,13 @@
         "en": "Total",
         "fr": "Total"
     },
-    "summary_title": {
+    "impact_chart_title": {
         "en": "Impact",
         "fr": "Impact"
+    },
+    "summary_title": {
+        "en": "Summary",
+        "fr": "Résumé"
     },
     "general_overhead_label": {
         "en": "Institutional Overhead",

@@ -1,13 +1,22 @@
 <template>
-    <section class="flex flex-col gap-4 w-full ">
-        <ForcesBreakdownEnvironment v-for="group in groupedCapabilities" :group="group"
-            :facets-of-interest="facetsOfInterest"></ForcesBreakdownEnvironment>
-    </section>
+    <table class="border border-gray-300 dark:border-gray-900">
+
+        <SummaryAspect v-for="group in groupedCapabilities" :group="group" :aspect="settings_selectedAspect"
+            :facets-of-interest="facetsOfInterest">
+            {{
+                environmentForGroup(group)?.[`display_name_${language}`] }}
+        </SummaryAspect>
+
+        <SummaryAspect :aspect="settings_selectedAspect" :facets-of-interest="facetsOfInterest" :highlight="true">
+            {{
+                strings[`impact_facet_label_${facetsOfInterest[0]}`] }}
+        </SummaryAspect>
+    </table>
 </template>
 <script>
 import { mapState } from 'pinia'
 import store from '../../Store'
-import ForcesBreakdownEnvironment from './ForcesBreakdownEnvironment.vue';
+import SummaryAspect from './SummaryAspect.vue';
 
 export default {
     computed: {
@@ -19,6 +28,11 @@ export default {
             required: true,
         }
     },
-    components: { ForcesBreakdownEnvironment }
+    components: { SummaryAspect },
+    methods: {
+        environmentForGroup(group) {
+            return group[0]?.environment ?? null;
+        }
+    }
 }
 </script>

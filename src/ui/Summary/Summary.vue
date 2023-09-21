@@ -2,23 +2,18 @@
     <div class="flex flex-col gap-4">
 
         <h2 class="text-2xl font-thin flex flex-col gap-1 -mt-4">{{
-            strings[`summary_title`] }}
+            strings[`impact_chart_title`] }}
         </h2>
 
         <Charts></Charts>
 
-        <div>
-            <SummaryAspect :aspect="settings_selectedAspect" :facets-of-interest="facetsOfInterest">
-                <h3 class="text-xl font-thin ">{{
-                    strings[`impact_facet_label_${facetsOfInterest[0]}`] }}
-                </h3>
-            </SummaryAspect>
 
-        </div>
+        <h2 class="text-2xl font-thin flex flex-col gap-1">{{
+            strings[`summary_title`] }}
+        </h2>
+        <ForcesBreakdown :facets-of-interest="facetsOfInterest"></ForcesBreakdown>
 
-        <div class="pl-4">
-            <ForcesBreakdown :facets-of-interest="facetsOfInterest"></ForcesBreakdown>
-        </div>
+
         <p class="border-l-2 border-gray-200 dark:border-gray-700 dark:border-blue-700 pl-2 text-gray-700 text-sm">{{
             vars[`overhead_and_totals_rounding_note_${settings_selectedAspect}`][language]
         }}
