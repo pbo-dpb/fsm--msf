@@ -14,6 +14,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Capability } from '../../models/Capability';
 import Localizer from "../../Localizer"
+import { mapState } from 'pinia'
+import store from '../../Store';
 
 export default {
     props: {
@@ -28,20 +30,21 @@ export default {
         }
     },
     computed: {
+        ...mapState(store, ['language']),
         ticks() {
 
             if (this.capability.current_unit === 'percent') {
                 return [
-                    Localizer.formatNumber(-this.capability.user_editable.range, this.capability.current_unit),
-                    Localizer.formatNumber(this.capability.current, this.capability.current_unit),
-                    `+${Localizer.formatNumber(this.capability.user_editable.range, this.capability.current_unit)}`,
+                    Localizer.formatNumber(-this.capability.user_editable.range, this.language, this.capability.current_unit),
+                    Localizer.formatNumber(this.capability.current, this.language, this.capability.current_unit),
+                    `+${Localizer.formatNumber(this.capability.user_editable.range, this.language, this.capability.current_unit)}`,
                 ]
             }
 
             return [
-                Localizer.formatNumber(this.capability.user_editable.range_min, this.capability.current_unit),
-                Localizer.formatNumber(this.capability.current, this.capability.current_unit),
-                Localizer.formatNumber(this.capability.user_editable.range_max, this.capability.current_unit),
+                Localizer.formatNumber(this.capability.user_editable.range_min, this.language, this.capability.current_unit),
+                Localizer.formatNumber(this.capability.current, this.language, this.capability.current_unit),
+                Localizer.formatNumber(this.capability.user_editable.range_max, this.language, this.capability.current_unit),
             ]
         }
     }

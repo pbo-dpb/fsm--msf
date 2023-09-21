@@ -14,9 +14,9 @@ export default class Localizer {
         return Math.round(number / multiplier) * multiplier;
     }
 
-    static formatNumber(number, style = "countable") {
+    static formatNumber(number, language, style = "countable") {
 
-        const locale = `${document.documentElement.lang}-CA`;
+        const locale = `${language}-CA`;
         switch (style) {
             case 'currency':
                 return new Intl.NumberFormat(locale, { style: 'currency', "currency": "CAD", maximumFractionDigits: 0, notation: 'compact' }).format(number);

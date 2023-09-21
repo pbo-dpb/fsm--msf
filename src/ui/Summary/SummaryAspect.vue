@@ -61,7 +61,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(store, ['strings', 'currentAspects', 'hasCustomUserTargets', 'userTargets']),
+        ...mapState(store, ['strings', 'currentAspects', 'hasCustomUserTargets', 'userTargets', 'language']),
 
         shouldDisplayImpactDiff() {
             return this.hasCustomUserTargets(this.group);
@@ -78,9 +78,9 @@ export default {
     methods: {
         formatValue(value) {
             if (this.aspect === 'cost') {
-                return Localizer.formatNumber(value, 'currency');
+                return Localizer.formatNumber(value, this.language, 'currency');
             }
-            return Localizer.formatNumber(value);
+            return Localizer.formatNumber(value, this.language);
         },
         getValForFacet(facet, userTarget = false) {
             return this.formatValue(userTarget ? this.summaryUserTargets[this.aspect][facet] :

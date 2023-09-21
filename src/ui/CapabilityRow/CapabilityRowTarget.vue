@@ -16,6 +16,9 @@
 <script>
 import Localizer from '../../Localizer';
 import { Capability } from '../../models/Capability';
+import { mapState } from 'pinia'
+import store from '../../Store';
+
 export default {
     props: {
         capability: {
@@ -24,11 +27,12 @@ export default {
         }
     },
     computed: {
+        ...mapState(store, ['language']),
         currentTarget() {
-            return this.capability.userTargetDiff ? Localizer.formatNumber(this.capability.current) : Localizer.formatNumber(this.capability.current, this.capability.current_unit)
+            return this.capability.userTargetDiff ? Localizer.formatNumber(this.capability.current, this.language) : Localizer.formatNumber(this.capability.current, this.language, this.capability.current_unit)
         },
         userTargetDiff() {
-            return (this.capability.userTargetDiff > 0 ? '+' : '') + Localizer.formatNumber(this.capability.userTargetDiff, this.capability.current_unit)
+            return (this.capability.userTargetDiff > 0 ? '+' : '') + Localizer.formatNumber(this.capability.userTargetDiff, this.language, this.capability.current_unit)
         }
     }
 }

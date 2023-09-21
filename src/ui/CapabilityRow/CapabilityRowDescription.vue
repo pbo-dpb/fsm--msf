@@ -7,6 +7,8 @@
 <script>
 import { Capability } from '../../models/Capability';
 
+import store from "../../Store"
+import { mapState } from 'pinia'
 
 export default {
 
@@ -18,6 +20,7 @@ export default {
     },
 
     computed: {
+        ...mapState(store, ['language']),
         description() {
 
             if (this.capability.description === undefined) {
@@ -25,7 +28,7 @@ export default {
                 return null;
             }
             if (this.capability.description === false) return null;
-            return this.capability.description[document.documentElement.lang];
+            return this.capability.description[this.language];
         }
     }
 

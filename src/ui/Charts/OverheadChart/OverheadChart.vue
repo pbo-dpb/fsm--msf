@@ -14,7 +14,7 @@ export default {
   name: 'BarChart',
   components: { Bar },
   computed: {
-    ...mapState(store, ["strings", 'capabilities', 'groupedCapabilities', 'settings_selectedAspect']),
+    ...mapState(store, ["strings", 'capabilities', 'groupedCapabilities', 'settings_selectedAspect', 'language']),
     labels() {
       return [
         this.strings.general_overhead_label,
@@ -53,7 +53,7 @@ export default {
           x: {
             ticks: {
               callback: function (value, index, ticks) {
-                const formatter = Intl.NumberFormat(document.documentElement.lang, { notation: 'compact' });
+                const formatter = Intl.NumberFormat(this.language, { notation: 'compact' });
                 return formatter.format(value);
               }
             }
@@ -79,7 +79,7 @@ export default {
         if (['Joint'].includes(environment.id))
           return;
 
-        let label = this.strings.per_environment_env_overhead_label.replace(':environment', environment?.[`display_name_${document.documentElement.lang}`]);
+        let label = this.strings.per_environment_env_overhead_label.replace(':environment', environment?.[`display_name_${this.language}`]);
 
         envKv[label] = gr.reduce((accumulator, capability) => {
           return accumulator + capability.userTargetImpact[this.settings_selectedAspect].env_overhead;

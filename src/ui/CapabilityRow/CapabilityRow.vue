@@ -29,6 +29,8 @@ import CapabilityRowDetails from './CapabilityRowDetails.vue';
 import CapabilityRowBreakdown from './CapabilityRowBreakdown.vue';
 import CapabilityRowTarget from './CapabilityRowTarget.vue';
 import { ChevronRightIcon, ChevronDownIcon } from '@heroicons/vue/24/solid'
+import store from "../../Store"
+import { mapState } from 'pinia'
 
 export default {
     data() {
@@ -43,8 +45,9 @@ export default {
         }
     },
     computed: {
+        ...mapState(store, ['language']),
         displayName() {
-            return this.capability[`display_name_${document.documentElement.lang}`];
+            return this.capability[`display_name_${this.language}`];
         }
     },
     components: {

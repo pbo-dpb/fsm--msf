@@ -1,15 +1,21 @@
 <template>
-  <section class="bg-blue-100 text-blue-800 font-semibold border border-blue-300 p-4 flex flex-col gap-4 rounded mb-16"
-    v-if="debug">{{
-      strings.debug_notice }}
+  <section class="font-semibold border border-gray-300 p-4 rounded mb-16 bg-gray-100 dark:bg-gray-950" v-if="debug">
+    <div class="font-mono mb-4 text-gray-800 dark:text-white text-center border-b border-gray-300 pb-2">DEBUG 🔧‍</div>
+    <div class="flex flex-row justify-between">
 
-    <legend>Select custom force structure model data (.csv).<br><input type="file" name="file"
-        @change="handleDebugTsvFile" /></legend>
+      <legend class="w-1/3"><a :href="payloadUrl">XLSX</a> overwrite<br><input type="file" name="file"
+          @change="handleDebugFile" ref="debugFileInput" /></legend>
 
+      <button @click="language = language == 'en' ? 'fr' : 'en'" class="w-12 border border-gray-800 p-2 rounded">{{
+        language ==
+        'en'
+        ? 'fr' : 'en' }}</button>
+    </div>
   </section>
 
 
-  <div class="flex flex-col lg:grid lg:grid-cols-3 gap-8 my-8 w-full ">
+  <LoadingIndicator v-if="!capabilities" class="h-8 w-8"></LoadingIndicator>
+  <div v-else class="flex flex-col lg:grid lg:grid-cols-3 gap-8 my-8 w-full ">
 
     <div class="col-span-1 flex flex-col gap-8">
       <CapabilityList v-if="capabilities"></CapabilityList>
@@ -35,22 +41,23 @@
 import store from './Store'
 
 import WrapperEventDispatcher from "./WrapperEventDispatcher.js"
-import PayloadCsvUrl from "./assets/payload.csv?url"
-import { mapState } from 'pinia'
+import PayloadUrl from "./assets/payload.xlsx?url"
+import { mapState, mapWritableState } from 'pinia'
 import CapabilityList from "./ui/CapabilityList.vue";
 import Summary from './ui/Summary/Summary.vue';
 import AspectSelector from "./ui/AspectSelector/AspectSelector.vue"
 
+import LoadingIndicator from "./ui/LoadingIndicator.vue";
 
-const language = document.documentElement.lang;
 
 export default {
   data() {
     return {
-      language: language,
+      payloadUrl: PayloadUrl
     };
   },
   computed: {
+    ...mapWritableState(store, ['language']),
     ...mapState(store, ['strings', 'capabilities', 'environments']),
     debug() {
       return this.$root.debug;
@@ -59,27 +66,34 @@ export default {
   components: {
     CapabilityList,
     Summary,
-    AspectSelector
+    AspectSelector,
+    LoadingIndicator
   },
   mounted() {
-    const pageTitle = this.language === 'fr' ? 'MSF' : 'FSM';
-    (new WrapperEventDispatcher(pageTitle, null)).dispatch();
-    if (true || !this.debug) {
-      fetch(PayloadCsvUrl)
-        .then(response => response.text())
-        .then(data => {
-          store().instanciateCapabilitiesFromCsv(data)
-        })
-    }
+    Promise.all(
+      [this.payloadUrl].map(spreadsheetUrl => {
+        return new Promise((resolve, reject) => {
+          fetch(spreadsheetUrl)
+            .then(response => response.blob())
+            .then(blob => store().instanciateStore(blob))
+            .then(() => {
+              resolve();
+            })
+        });
+      }));
+
+    this.updatePageTitle()
   },
 
   methods: {
-    async handleDebugTsvFile(e) {
-
-      let rawText = await e.target.files[0].text();
-      store().instanciateCapabilitiesFromCsv(rawText)
+    handleDebugFile(e) {
+      store().instanciateStore(e.target.files[0])
+      this.$refs.debugFileInput.value = null;
     },
-
+    updatePageTitle() {
+      const pageTitle = this.language === 'fr' ? 'MSF' : 'FSM';
+      (new WrapperEventDispatcher(pageTitle, null)).dispatch();
+    }
   }
 };
 </script>

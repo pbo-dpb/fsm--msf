@@ -42,7 +42,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(store, ['strings', 'settings_perUnitDisplay']),
+        ...mapState(store, ['strings', 'settings_perUnitDisplay', 'language']),
 
         shouldDisplayImpactDiff() {
             return this.capability.hasUserTarget && !this.settings_perUnitDisplay;
@@ -51,9 +51,9 @@ export default {
     methods: {
         formatValue(value) {
             if (this.aspect === 'cost') {
-                return Localizer.formatNumber(value, 'currency');
+                return Localizer.formatNumber(value, this.language, 'currency');
             }
-            return Localizer.formatNumber(value);
+            return Localizer.formatNumber(value, this.language);
         },
         getValForFacet(facet, userTarget = false) {
             if (this.settings_perUnitDisplay) {

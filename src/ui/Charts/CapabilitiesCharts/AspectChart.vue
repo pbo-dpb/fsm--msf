@@ -34,7 +34,7 @@ export default {
     },
     components: { Bar, AspectChartTextualDescription },
     computed: {
-        ...mapState(store, ["strings", 'capabilities', 'groupedCapabilities']),
+        ...mapState(store, ["strings", 'capabilities', 'groupedCapabilities', 'language']),
 
 
 
@@ -52,7 +52,7 @@ export default {
                         stacked: true,
                         ticks: {
                             callback: function (value, index, ticks) {
-                                const formatter = Intl.NumberFormat(document.documentElement.lang, { notation: 'compact' });
+                                const formatter = Intl.NumberFormat(this.language, { notation: 'compact' });
                                 return formatter.format(value);
                             }
                         }
@@ -68,7 +68,7 @@ export default {
 
         sortedCapabilities() {
             let stack = Object.values(this.groupedCapabilities).map(caps => {
-                return caps.sort((a, b) => a[`display_name_${document.documentElement.lang}`].localeCompare(b[`display_name_${document.documentElement.lang}`]))
+                return caps.sort((a, b) => a[`display_name_${this.language}`].localeCompare(b[`display_name_${this.language}`]))
             }).flat();
             return stack;
         },
@@ -100,7 +100,7 @@ export default {
         chartData() {
             let chartData = {
                 labels: this.sortedCapabilities.map(capability => {
-                    return (capability.environment ? capability.environment[`display_name_${document.documentElement.lang}`] + ' - ' : '') + capability[`display_name_${document.documentElement.lang}`]
+                    return (capability.environment ? capability.environment[`display_name_${this.language}`] + ' - ' : '') + capability[`display_name_${this.language}`]
                 }),
                 datasets: this.datasets
             };

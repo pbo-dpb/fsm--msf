@@ -1,6 +1,5 @@
 // Adapted from https://stackoverflow.com/questions/69808113/how-to-use-vue-router-and-vuex-inside-custom-element-from-root
 import { defineCustomElement, h, createApp, getCurrentInstance } from 'vue'
-const language = document.documentElement.lang;
 import stl from './index.css?inline'
 import { createPinia } from 'pinia'
 const pinia = createPinia()
@@ -21,8 +20,5 @@ export const defineCustomForceStructureModelElement = (component, { plugins = []
             const inst = getCurrentInstance()
             Object.assign(inst.appContext, app._context)
             Object.assign(inst.provides, app._context.provides)
-            return {
-                language
-            }
         }
     })
