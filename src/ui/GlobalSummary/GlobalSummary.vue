@@ -2,10 +2,11 @@
     <div class="flex flex-col gap-4">
 
 
-
         <h2 class="text-2xl font-thin flex flex-col gap-1">{{
             strings[`summary_title`] }}
         </h2>
+
+        <GlobalSummaryChart></GlobalSummaryChart>
 
         <h3 class="text-xl font-thin flex flex-col gap-1">{{
             strings[`impact_cost_title`] }}
@@ -35,7 +36,7 @@ import { mapState } from 'pinia'
 import store from '../../Store';
 import TotalsTable from './TotalsTable.vue';
 import Charts from "../Charts/CapabilitiesCharts/Charts.vue"
-import OverheadChart from '../Charts/OverheadChart/OverheadChart.vue';
+import GlobalSummaryChart from '../Charts/GlobalSummaryChart/GlobalSummaryChart.vue';
 
 export default {
     computed: {
@@ -46,7 +47,7 @@ export default {
             facetsOfInterest: ['total']
         }
     },
-    components: { TotalsTable, OverheadChart, Charts }
+    components: { TotalsTable, GlobalSummaryChart, Charts }
 }
 
 </script>

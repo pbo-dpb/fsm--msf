@@ -7,6 +7,10 @@
         "en": "About this tool",
         "fr": "À propos de cet outil"
     },
+    "empty_cell": {
+        "en": "Empty cell",
+        "fr": "Cellule vide"
+    },
     "capability_label": {
         "en": "Capability",
         "fr": "Capacité"
@@ -30,6 +34,10 @@
     "tab_cost_title": {
         "en": "Cost",
         "fr": "Coût"
+    },
+    "global_summary_chart_scale": {
+        "en": "Billions CAD",
+        "fr": "Milliards de dollars CAD"
     },
     "tab_personnel_title": {
         "en": "Personnel",

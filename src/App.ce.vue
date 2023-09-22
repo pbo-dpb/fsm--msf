@@ -19,9 +19,7 @@
 
     <div class="flex flex-col gap-4">
       <CollapsibleIntro></CollapsibleIntro>
-
       <GlobalSummary></GlobalSummary>
-
     </div>
 
 
@@ -32,7 +30,7 @@
       </div>
 
       <div
-        class="col-span-2 lg:border-l border-gray-100 bg-gray-100 dark:bg-gray-900 flex flex-col gap-4 w-full h-full border border-gray-300">
+        class="col-span-2 lg:border-l  bg-gray-100 dark:bg-gray-900 flex flex-col gap-4 w-full h-full border border-gray-300">
 
         <div class="flex flex-row justify-center bg-gray-50 p-4 border-b border-gray-300">
           <AspectSelector></AspectSelector>

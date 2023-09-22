@@ -3,11 +3,6 @@
         <Bar v-if="datasets" :options="chartOptions" :data="chartData" />
     </div>
     <AspectChartTextualDescription :data="chartData" :id="`${uid}-description`"></AspectChartTextualDescription>
-
-    <p class="border-l-2 border-gray-200 dark:border-gray-700 dark:border-blue-700 pl-2 text-gray-700 text-sm">{{
-        vars[`capabilities_rounding_note_${aspect}`][language]
-    }}
-    </p>
 </template>
   
 <script>
@@ -67,7 +62,9 @@ export default {
                                 const formatter = Intl.NumberFormat(this.language, { notation: 'compact' });
                                 return formatter.format(value);
                             }
-                        }
+                        },
+                        min: 0,
+                        max: this.aspect === 'cost' ? 1800000000 : 20000
                     },
                     y: {
                         stacked: true
