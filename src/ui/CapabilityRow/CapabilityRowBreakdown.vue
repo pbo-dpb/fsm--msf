@@ -8,20 +8,11 @@
         <div class="flex flex-col gap-1">
             <CapabilityRowBreakdownAspect :capability="capability" aspect="cost">
             </CapabilityRowBreakdownAspect>
-            <p class="ml-2 pl-2 py-1 text-gray-700 text-xs border-l-2 border-gray-100">{{
-                vars.capabilities_rounding_note_cost[language]
-            }}
-            </p>
         </div>
 
         <div class="flex flex-col gap-1">
             <CapabilityRowBreakdownAspect :capability="capability" aspect="personnel"></CapabilityRowBreakdownAspect>
-            <p class="ml-2 pl-2 py-1 text-gray-700 text-xs border-l-2 border-gray-100">{{
-                vars.capabilities_rounding_note_personnel[language]
-            }}
-            </p>
         </div>
-
 
 
 

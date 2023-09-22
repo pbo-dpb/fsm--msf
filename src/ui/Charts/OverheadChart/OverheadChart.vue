@@ -5,10 +5,7 @@
 
 
     </div>
-    <p class="border-l-2 border-gray-200 dark:border-gray-700 dark:border-blue-700 pl-2 text-gray-700 text-sm">{{
-      vars[`overhead_and_totals_rounding_note_${settings_selectedAspect}`][language]
-    }}
-    </p>
+
   </div>
 </template>
 <script>

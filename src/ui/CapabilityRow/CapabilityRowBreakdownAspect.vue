@@ -5,7 +5,11 @@
 
         <dl class="grid grid-cols-2 gap-1 text-sm pl-4">
             <template v-for="(facet, key) in capability[aspect]">
-                <template v-if="['direct', 'indirect'].includes(key)">
+                <template v-if="[
+                    'direct',
+                    'indirect',
+                    aspect === 'cost' ? 'env_overhead' : null
+                ].includes(key)">
                     <dt class="font-semibold text-gray-800 dark:text-gray-200">{{ strings[`impact_facet_label_${key}`] }}
                     </dt>
                     <dd class="lining-nums inline-flex gap-2">
