@@ -3,6 +3,10 @@
         "en": "This tool is running in debug mode.",
         "fr": "Cet outil est en mode debug."
     },
+    "intro_toggle": {
+        "en": "About this tool",
+        "fr": "À propos de cet outil"
+    },
     "capability_label": {
         "en": "Capability",
         "fr": "Capacité"

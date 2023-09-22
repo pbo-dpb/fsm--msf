@@ -16,9 +16,8 @@
 
   <LoadingIndicator v-if="!capabilities" class="h-8 w-8"></LoadingIndicator>
   <div v-else>
-    <div class="border-b border-gray-300 pb-4 mb-4 text-lg prose dark:prose-invert max-w-none">
-      <p class="max-w-none">{{ vars.intro[language] }}</p>
-    </div>
+
+    <CollapsibleIntro></CollapsibleIntro>
 
     <div class="flex flex-col lg:grid lg:grid-cols-3 gap-8 my-8 w-full ">
 
@@ -52,7 +51,7 @@ import { mapState, mapWritableState } from 'pinia'
 import CapabilityList from "./ui/CapabilityList.vue";
 import Summary from './ui/Summary/Summary.vue';
 import AspectSelector from "./ui/AspectSelector/AspectSelector.vue"
-
+import CollapsibleIntro from './ui/CollapsibleIntro.vue';
 import LoadingIndicator from "./ui/LoadingIndicator.vue";
 
 
@@ -73,7 +72,8 @@ export default {
     CapabilityList,
     Summary,
     AspectSelector,
-    LoadingIndicator
+    LoadingIndicator,
+    CollapsibleIntro
   },
   mounted() {
     Promise.all(
