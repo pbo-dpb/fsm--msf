@@ -10,7 +10,7 @@
             </button>
         </h3>
         <section :id="uid + '-panel'" :aria-labelledby="uid + '-header'" :hidden="shouldCollapse"
-            class="p-5 pb-0 prose dark:prose-invert max-w-none prose-headings:mt-0 prose-headings:font-light">
+            class="p-5 pb-0 prose dark:prose-invert max-w-none prose-headings:mt-0 prose-headings:font-light prose-a:text-blue-800 prose-a:dark:text-blue-200">
             <div v-if="introContent" v-html="introContent"></div>
             <LoadingIndicator class="w-6 h-6 mb-5" v-else></LoadingIndicator>
         </section>
