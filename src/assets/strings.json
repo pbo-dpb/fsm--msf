@@ -27,13 +27,29 @@
         "en": "Royal Canadian Navy",
         "fr": "Marine royale canadienne"
     },
-    "impact_cost_title": {
-        "en": "Cost ",
-        "fr": "Coûts"
+    "tab_cost_title": {
+        "en": "Cost",
+        "fr": "Coût"
     },
-    "impact_personnel_title": {
+    "tab_personnel_title": {
         "en": "Personnel",
         "fr": "Personnel"
+    },
+    "impact_cost_title": {
+        "en": "Total Cost",
+        "fr": "Coût total"
+    },
+    "impact_personnel_title": {
+        "en": "Total Personnel",
+        "fr": "Personnel total"
+    },
+    "impact_user_diff_title": {
+        "en": "Difference",
+        "fr": "Différence"
+    },
+    "impact_user_total_title": {
+        "en": "User total",
+        "fr": "Total par l'utilisateur"
     },
     "impact_facet_label_direct": {
         "en": "Direct",

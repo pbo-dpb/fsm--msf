@@ -17,7 +17,13 @@
   <LoadingIndicator v-if="!capabilities" class="h-8 w-8"></LoadingIndicator>
   <div v-else>
 
-    <CollapsibleIntro></CollapsibleIntro>
+    <div class="flex flex-col gap-4">
+      <CollapsibleIntro></CollapsibleIntro>
+
+      <GlobalSummary></GlobalSummary>
+
+    </div>
+
 
     <div class="flex flex-col lg:grid lg:grid-cols-3 gap-8 my-8 w-full ">
 
@@ -33,7 +39,7 @@
         </div>
 
         <div class="p-4">
-          <Summary></Summary>
+          <CapabilitiesSummary></CapabilitiesSummary>
         </div>
 
       </div>
@@ -49,10 +55,11 @@ import WrapperEventDispatcher from "./WrapperEventDispatcher.js"
 import PayloadUrl from "./assets/payload.xlsx?url"
 import { mapState, mapWritableState } from 'pinia'
 import CapabilityList from "./ui/CapabilityList.vue";
-import Summary from './ui/Summary/Summary.vue';
+import CapabilitiesSummary from './ui/CapabilitiesSummary/CapabilitiesSummary.vue';
 import AspectSelector from "./ui/AspectSelector/AspectSelector.vue"
 import CollapsibleIntro from './ui/CollapsibleIntro.vue';
 import LoadingIndicator from "./ui/LoadingIndicator.vue";
+import GlobalSummary from "./ui/GlobalSummary/GlobalSummary.vue"
 
 
 export default {
@@ -70,10 +77,11 @@ export default {
   },
   components: {
     CapabilityList,
-    Summary,
+    CapabilitiesSummary,
     AspectSelector,
     LoadingIndicator,
-    CollapsibleIntro
+    CollapsibleIntro,
+    GlobalSummary
   },
   mounted() {
     Promise.all(

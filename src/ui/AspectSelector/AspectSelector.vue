@@ -1,11 +1,11 @@
 <template>
     <div class="flex flex-row">
         <AspectSelectorTabsButton @click="settings_selectedAspect = 'cost'" :active="settings_selectedAspect === 'cost'">{{
-            strings.impact_cost_title }}
+            strings.tab_cost_title }}
         </AspectSelectorTabsButton>
         <AspectSelectorTabsButton @click="settings_selectedAspect = 'personnel'"
             :active="settings_selectedAspect === 'personnel'">{{
-                strings.impact_personnel_title }}
+                strings.tab_personnel_title }}
         </AspectSelectorTabsButton>
     </div>
 </template>
