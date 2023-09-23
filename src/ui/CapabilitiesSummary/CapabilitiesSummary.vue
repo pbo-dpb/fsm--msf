@@ -5,7 +5,7 @@
             strings[`impact_chart_title`] }}
         </h2>
 
-        <Charts></Charts>
+        <CapabilitiesCharts></CapabilitiesCharts>
 
 
         <!--<h2 class="text-2xl font-thin flex flex-col gap-1 pt-4">{{
@@ -20,7 +20,7 @@
 
 import { mapState } from 'pinia'
 import store from '../../Store';
-import Charts from "../Charts/CapabilitiesCharts/Charts.vue"
+import CapabilitiesCharts from "../Charts/CapabilitiesCharts/CapabilitiesCharts.vue"
 /*import OverheadChart from '../Charts/OverheadChart/OverheadChart.vue';*/
 
 export default {
@@ -32,7 +32,7 @@ export default {
             facetsOfInterest: ['total']
         }
     },
-    components: { /*OverheadChart,*/ Charts }
+    components: { /*OverheadChart,*/ CapabilitiesCharts }
 }
 
 </script>

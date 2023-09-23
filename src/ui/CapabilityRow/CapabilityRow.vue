@@ -5,7 +5,7 @@
 
             <ChevronDownIcon class="h-4 w-4 " v-if="expanded"></ChevronDownIcon>
             <ChevronRightIcon class="h-4 w-4" v-else></ChevronRightIcon>
-            <div class="inline-flex gap-4 overflow-x-ellipsis w-full">
+            <div class="inline-flex gap-4 overflow-x-ellipsis w-full items-center">
                 {{ displayName }}
                 <CapabilityRowTarget :capability="capability" v-if="capability.user_editable"></CapabilityRowTarget>
             </div>
@@ -15,7 +15,7 @@
         </div>
 
 
-        <div class="pl-4 flex flex-col gap-2" v-if="expanded">
+        <div class="pl-4 flex flex-col gap-2 border-l-2 border-gray-300 dark:border-gray-700 ml-4 my-2" v-if="expanded">
             <CapabilityRowDetails :capability="capability"></CapabilityRowDetails>
             <CapabilityRowBreakdown :capability="capability"></CapabilityRowBreakdown>
 

@@ -16,7 +16,7 @@
                         <span :class="{ 'line-through decoration-gray-500': shouldDisplayImpactDiff }">{{
                             getValForFacet(key, false)
                         }}</span>
-                        <span v-if="shouldDisplayImpactDiff" class="text-red-800 dark:text-red-200">
+                        <span v-if="shouldDisplayImpactDiff" class="text-blue-800 dark:text-blue-200">
                             {{ getValForFacet(key, true) }}
                         </span>
 

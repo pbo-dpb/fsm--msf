@@ -22,12 +22,6 @@
 
 
 
-        <!--<h2 class="text-2xl font-thin flex flex-col gap-1 pt-4">{{
-            strings[`impact_facet_label_env_overhead`] }}
-        </h2>
-        <OverheadChart></OverheadChart>-->
-
-
     </div>
 </template>
 <script>
@@ -35,7 +29,6 @@
 import { mapState } from 'pinia'
 import store from '../../Store';
 import TotalsTable from './TotalsTable.vue';
-import Charts from "../Charts/CapabilitiesCharts/Charts.vue"
 import GlobalSummaryChart from '../Charts/GlobalSummaryChart/GlobalSummaryChart.vue';
 
 export default {
@@ -47,7 +40,7 @@ export default {
             facetsOfInterest: ['total']
         }
     },
-    components: { TotalsTable, GlobalSummaryChart, Charts }
+    components: { TotalsTable, GlobalSummaryChart }
 }
 
 </script>
