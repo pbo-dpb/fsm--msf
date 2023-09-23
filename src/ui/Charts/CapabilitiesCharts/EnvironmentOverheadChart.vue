@@ -1,38 +1,36 @@
 <template>
     <div role="img" :aria-labelledby="`${uid}-description`" class="w-full h-16 -mt-8">
-        <Bar v-if="datasets" :options="chartOptions" :data="chartData" />
+        <Bar v-if="chartData" :options="chartOptions" :data="chartData" />
     </div>
 </template>
   
 <script>
 import { mapState } from 'pinia'
 import { Bar } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
-import { colorForIndex } from "../ColorPalettes";
+import { Chart as ChartJS, Tooltip, Legend, BarElement, LinearScale, CategoryScale } from 'chart.js'
 import store from '../../../Store';
 import { v4 as uuidv4 } from 'uuid';
-import { Environment } from '../../../models/Environment';
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+ChartJS.register(Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 export default {
     props: {
-        aspect: {
-            type: String,
-            required: true,
-            validator: (value) => {
-                return ['personnel', 'cost'].includes(value);
-            }
+
+        chartData: {
+            type: Object,
+            required: true
         },
-        environment: {
-            type: Environment,
-            required: true,
+
+
+        xMax: {
+            type: Number,
+            required: true
         }
 
     },
     data() {
         return {
-            uid: `aspectchart-${uuidv4()}`
+            uid: `envoverchart-${uuidv4()}`
         }
     },
     components: { Bar, /*AspectChartTextualDescription*/ },
@@ -67,7 +65,7 @@ export default {
                             }
                         },
                         min: 0,
-                        max: this.aspect === 'cost' ? 2500000000 : 25000,
+                        max: this.xMax,
 
                     },
                     y: {
@@ -89,39 +87,9 @@ export default {
         },
 
 
-        sortedCapabilities() {
-            let stack = Object.values(this.groupedCapabilities).flat().filter(c => c.environment == this.environment);
-            return stack;
-        },
 
-        datasets() {
 
-            return [
-                {
-                    label: this.strings[`impact_facet_label_env_overhead`],
-                    backgroundColor: colorForIndex(2),
-                    data: [
-                        this.sortedCapabilities.reduce((acc, capability) => {
-                            return acc + capability.userTargetImpact[this.aspect]['env_overhead']
-                        }, 0)
-                    ],
-                    barThickness: 16
-                }
-            ]
-        },
 
-        chartData() {
-            let chartData = {
-                labels: [this.strings.impact_facet_label_env_overhead],
-                datasets: this.datasets
-            };
-            return chartData;
-        },
-
-        chartHeight() {
-            const countOfCapabilities = this.sortedCapabilities.length;
-            return 4 + countOfCapabilities * 2;
-        }
     }
 }
 
