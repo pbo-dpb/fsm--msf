@@ -2,7 +2,7 @@
     <div class="w-full flex flex-col gap-2">
         <h3 class="text-xl font-thin flex flex-col gap-1">{{ environment[`display_name_${language}`] }}</h3>
 
-        <div role="img" :aria-labelledby="`${uid}-description`" class="w-full flex flex-col gap-2">
+        <div role="img" :aria-describedby="`${uid}-description`" class="w-full flex flex-col gap-2">
             <EnvironmentCapabilitiesAspectChart :x-max="xMax" :chart-data="environmentCapabilitiesChartData">
             </EnvironmentCapabilitiesAspectChart>
 
