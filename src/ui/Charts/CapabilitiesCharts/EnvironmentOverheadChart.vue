@@ -1,12 +1,10 @@
 <template>
-    <div role="img" :aria-labelledby="`${uid}-description`" class="w-full" :style="{ height: `${chartHeight}rem` }">
+    <div role="img" :aria-labelledby="`${uid}-description`" class="w-full h-16 -mt-8">
         <Bar v-if="datasets" :options="chartOptions" :data="chartData" />
     </div>
-    <!--<AspectChartTextualDescription :data="chartData" :id="`${uid}-description`"></AspectChartTextualDescription>-->
 </template>
   
 <script>
-//import AspectChartTextualDescription from './AspectChartTextualDescription.vue';
 import { mapState } from 'pinia'
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
@@ -39,7 +37,7 @@ export default {
     },
     components: { Bar, /*AspectChartTextualDescription*/ },
     computed: {
-        ...mapState(store, ["strings", 'capabilities', 'groupedCapabilities', 'language', 'vars']),
+        ...mapState(store, ["strings", 'capabilities', 'groupedCapabilities', 'language', 'vars', "userTargets"]),
 
 
 
@@ -49,7 +47,7 @@ export default {
                 indexAxis: 'y',
                 plugins: {
                     legend: {
-                        position: "top"
+                        position: false
                     },
                     tooltip: {
                         callbacks: {
@@ -64,11 +62,9 @@ export default {
                         stacked: true,
                         ticks: {
                             callback: function (value, index, ticks) {
-                                //return ''
                                 const formatter = Intl.NumberFormat(this.language, { notation: 'compact' });
                                 return formatter.format(value);
-                            },
-                            color: "rgba(255,255,255,0)"
+                            }
                         },
                         min: 0,
                         max: this.aspect === 'cost' ? 2500000000 : 25000,
@@ -76,11 +72,16 @@ export default {
                     },
                     y: {
                         stacked: true,
-
+                        ticks: {
+                            font: {
+                                weight: "bold"
+                            }
+                        },
                         afterFit: function (scaleInstance) {
                             const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
                             scaleInstance.width = vw < 768 ? 150 : 250;
-                        }
+                        },
+
                     }
                 },
                 responsive: true,
@@ -89,44 +90,29 @@ export default {
 
 
         sortedCapabilities() {
-            let stack = Object.values(this.groupedCapabilities).map(caps => {
-                return caps.sort((a, b) => a[`display_name_${this.language}`].localeCompare(b[`display_name_${this.language}`]))
-            }).flat().filter(c => c.environment == this.environment);
+            let stack = Object.values(this.groupedCapabilities).flat().filter(c => c.environment == this.environment);
             return stack;
         },
 
         datasets() {
-            let datasets = {};
-            let i = 0;
-            this.sortedCapabilities.forEach(capability => {
 
-                for (const [facet, impactForFacet] of Object.entries(capability.userTargetImpact[this.aspect])) {
-                    if (['total', 'env_overhead', 'inst_overhead'].includes(facet)) continue;
-
-                    if (!datasets[facet]) {
-                        datasets[facet] = {
-                            label: this.strings[`impact_facet_label_${facet}`],
-                            backgroundColor: colorForIndex(i),
-                            data: [],
-                            barThickness: 16
-                        };
-                    }
-                    datasets[facet].data.push(impactForFacet);
-                    i = i + 1;
+            return [
+                {
+                    label: this.strings[`impact_facet_label_env_overhead`],
+                    backgroundColor: colorForIndex(2),
+                    data: [
+                        this.sortedCapabilities.reduce((acc, capability) => {
+                            return acc + capability.userTargetImpact[this.aspect]['env_overhead']
+                        }, 0)
+                    ],
+                    barThickness: 16
                 }
-
-            });
-
-
-            return Object.values(datasets);
+            ]
         },
 
         chartData() {
             let chartData = {
-                labels: this.sortedCapabilities.map(capability => {
-                    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-                    return capability[`display_name_${this.language}`].substring(0, vw < 640 ? 20 : 200)
-                }),
+                labels: [this.strings.impact_facet_label_env_overhead],
                 datasets: this.datasets
             };
             return chartData;
