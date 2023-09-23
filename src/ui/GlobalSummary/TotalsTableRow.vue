@@ -90,7 +90,7 @@ export default {
         },
         getFormattedDiffForFacet(facet) {
             const rawDiff = this.getDiffForFacet(facet)
-            return `${rawDiff > 0 ? '+' : '-'} ${this.formatValue(rawDiff, 0)}`
+            return `${rawDiff > 0 ? '+' : ''}${this.formatValue(rawDiff, 0)}`
         },
         getValForFacet(facet, userTarget = false) {
             return this.formatValue(userTarget ? this.summaryUserTargets[this.aspect][facet] :

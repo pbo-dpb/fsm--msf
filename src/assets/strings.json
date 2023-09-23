@@ -84,8 +84,8 @@
         "fr": "Total"
     },
     "impact_chart_title": {
-        "en": "Impact",
-        "fr": "Impact"
+        "en": "Detailed impact per environment",
+        "fr": "Impact détaillé par environnement"
     },
     "summary_title": {
         "en": "Summary",
