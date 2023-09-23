@@ -98,5 +98,13 @@
     "chart_alt_text_label": {
         "en": "Text version",
         "fr": "Version textuelle"
+    },
+    "unlocked_capability": {
+        "en": "Move the slider below to the left to decrease capacity, or to the right to increase it.",
+        "fr": "Déplacer le curseur ci dessous vers la gauche pour réduire la capacité, ou vers la droite pour l'augmenter."
+    },
+    "locked_capability": {
+        "en": "This capability cannot be modified in the tool as it cannot feasibly be increased or decreased in the medium term (~5 years).",
+        "fr": "Cette capacité ne peut être modifiée dans l'outil car il n'est pas possible de l'augmenter ou de la diminuer à moyen terme (~5 ans)."
     }
 }

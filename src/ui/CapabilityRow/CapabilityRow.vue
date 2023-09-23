@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col justify-start odd:bg-gray-50 odd:dark:bg-gray-900 py-2 gap-2 -mx-2 px-2">
+    <div class="flex flex-col justify-start odd:bg-gray-50 odd:dark:bg-gray-900 py-2 gap-2 -mx-2 px-2" ref="row">
         <button @click="expanded = !expanded"
             class="col-span-6 text-lg font-thin inline-flex gap-2 items-center text-blue-800 dark:text-blue-200 select-none text-left ">
 
@@ -9,6 +9,14 @@
                 {{ displayName }}
                 <CapabilityRowTarget :capability="capability" v-if="capability.user_editable"></CapabilityRowTarget>
             </div>
+
+            <span class="__tooltip hidden md:block text-gray-500" :id="`tip-${uid}`" :aria-describedby="`${uid}-tippy`">
+                <QuestionMarkCircleIcon v-if="capability.user_editable" class=" w-4 h-4"></QuestionMarkCircleIcon>
+                <LockClosedIcon v-else class=" w-4 h-4"></LockClosedIcon>
+            </span>
+            <span :id="`${uid}-tippy`" class="sr-only" data-tippy-root>
+                {{ capability.user_editable ? strings.unlocked_capability : strings.locked_capability }}
+            </span>
         </button>
         <div class="col-span-4 pl-4">
             <CapabilityRowRange :capability="capability" v-if="capability.user_editable" />
@@ -28,14 +36,19 @@ import CapabilityRowRange from './CapabilityRowRange.vue';
 import CapabilityRowDetails from './CapabilityRowDetails.vue';
 import CapabilityRowBreakdown from './CapabilityRowBreakdown.vue';
 import CapabilityRowTarget from './CapabilityRowTarget.vue';
-import { ChevronRightIcon, ChevronDownIcon } from '@heroicons/vue/24/solid'
+import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
+import { ChevronRightIcon, ChevronDownIcon, LockClosedIcon, QuestionMarkCircleIcon } from '@heroicons/vue/24/solid'
 import store from "../../Store"
 import { mapState } from 'pinia'
+import { v4 as uuidv4 } from 'uuid';
+
 
 export default {
     data() {
         return {
-            expanded: false
+            expanded: false,
+            uid: `crrange-${uuidv4()}`
         }
     },
     props: {
@@ -45,7 +58,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(store, ['language']),
+        ...mapState(store, ['language', 'strings']),
         displayName() {
             return this.capability[`display_name_${this.language}`];
         }
@@ -56,7 +69,27 @@ export default {
         ChevronDownIcon,
         CapabilityRowDetails,
         CapabilityRowBreakdown,
-        CapabilityRowTarget
-    }
+        CapabilityRowTarget,
+        LockClosedIcon,
+        QuestionMarkCircleIcon
+    },
+    mounted() {
+        this.parseTooltips();
+
+    },
+    methods: {
+        parseTooltips() {
+            this.$nextTick(() => {
+                this.$refs.row.querySelectorAll('.__tooltip').forEach((tooltipEl) => {
+                    let describedByEl = this.$refs.row.querySelector(`#${tooltipEl.getAttribute("aria-describedby")}`);
+                    if (!describedByEl) return;
+                    tippy(tooltipEl, {
+                        content: describedByEl.innerText,
+                    });
+
+                })
+            })
+        }
+    },
 }
 </script>
