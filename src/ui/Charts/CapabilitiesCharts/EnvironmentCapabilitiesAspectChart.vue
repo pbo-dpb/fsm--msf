@@ -1,18 +1,20 @@
 <template>
-    <div role="img" :aria-labelledby="`${uid}-description`" class="h-[48rem] w-full">
+    <h3 class="text-xl font-thin flex flex-col gap-1">{{ environment[`display_name_${language}`] }}</h3>
+    <div role="img" :aria-labelledby="`${uid}-description`" class="w-full" :style="{ height: `${chartHeight}rem` }">
         <Bar v-if="datasets" :options="chartOptions" :data="chartData" />
     </div>
-    <AspectChartTextualDescription :data="chartData" :id="`${uid}-description`"></AspectChartTextualDescription>
+    <!--<AspectChartTextualDescription :data="chartData" :id="`${uid}-description`"></AspectChartTextualDescription>-->
 </template>
   
 <script>
-import AspectChartTextualDescription from './AspectChartTextualDescription.vue';
+//import AspectChartTextualDescription from './AspectChartTextualDescription.vue';
 import { mapState } from 'pinia'
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 import { colorForIndex } from "../ColorPalettes";
 import store from '../../../Store';
 import { v4 as uuidv4 } from 'uuid';
+import { Environment } from '../../../models/Environment';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
@@ -25,6 +27,10 @@ export default {
                 return ['personnel', 'cost'].includes(value);
             }
         },
+        environment: {
+            type: Environment,
+            required: true,
+        }
 
     },
     data() {
@@ -32,7 +38,7 @@ export default {
             uid: `aspectchart-${uuidv4()}`
         }
     },
-    components: { Bar, AspectChartTextualDescription },
+    components: { Bar, /*AspectChartTextualDescription*/ },
     computed: {
         ...mapState(store, ["strings", 'capabilities', 'groupedCapabilities', 'language', 'vars']),
 
@@ -64,10 +70,16 @@ export default {
                             }
                         },
                         min: 0,
-                        max: this.aspect === 'cost' ? 1800000000 : 20000
+                        max: this.aspect === 'cost' ? 1800000000 : 20000,
+
                     },
                     y: {
-                        stacked: true
+                        stacked: true,
+
+                        afterFit: function (scaleInstance) {
+                            const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+                            scaleInstance.width = vw < 768 ? 150 : 250;
+                        }
                     }
                 },
                 responsive: true,
@@ -78,7 +90,7 @@ export default {
         sortedCapabilities() {
             let stack = Object.values(this.groupedCapabilities).map(caps => {
                 return caps.sort((a, b) => a[`display_name_${this.language}`].localeCompare(b[`display_name_${this.language}`]))
-            }).flat();
+            }).flat().filter(c => c.environment == this.environment);
             return stack;
         },
 
@@ -95,6 +107,7 @@ export default {
                             label: this.strings[`impact_facet_label_${facet}`],
                             backgroundColor: colorForIndex(i),
                             data: [],
+                            barThickness: 16
                         };
                     }
                     datasets[facet].data.push(impactForFacet);
@@ -109,11 +122,17 @@ export default {
         chartData() {
             let chartData = {
                 labels: this.sortedCapabilities.map(capability => {
-                    return (capability.environment ? capability.environment[`display_name_${this.language}`] + ' - ' : '') + capability[`display_name_${this.language}`]
+                    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+                    return capability[`display_name_${this.language}`].substring(0, vw < 640 ? 20 : 200)
                 }),
                 datasets: this.datasets
             };
             return chartData;
+        },
+
+        chartHeight() {
+            const countOfCapabilities = this.sortedCapabilities.length;
+            return 4 + countOfCapabilities * 2;
         }
     }
 }

@@ -1,18 +1,19 @@
 <template>
     <div class="w-full flex flex-col gap-2">
-        <AspectChart :aspect="settings_selectedAspect"></AspectChart>
+        <EnvironmentCapabilitiesAspectChart v-for="environment in environments" :environment="environment"
+            :aspect="settings_selectedAspect"></EnvironmentCapabilitiesAspectChart>
     </div>
 </template>
   
 <script>
 import { mapState } from 'pinia'
 import store from '../../../Store';
-import AspectChart from './AspectChart.vue';
+import EnvironmentCapabilitiesAspectChart from './EnvironmentCapabilitiesAspectChart.vue';
 
 export default {
-    components: { AspectChart },
+    components: { EnvironmentCapabilitiesAspectChart },
     computed: {
-        ...mapState(store, ["strings", "settings_selectedAspect"]),
+        ...mapState(store, ["strings", "settings_selectedAspect", "environments"]),
     },
 
 }
