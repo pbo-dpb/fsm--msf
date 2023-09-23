@@ -2,13 +2,17 @@
     <div class="w-full flex flex-col gap-2">
         <h3 class="text-xl font-thin flex flex-col gap-1">{{ environment[`display_name_${language}`] }}</h3>
 
-        <EnvironmentCapabilitiesAspectChart :x-max="xMax" :chart-data="environmentCapabilitiesChartData">
-        </EnvironmentCapabilitiesAspectChart>
+        <div role="img" :aria-labelledby="`${uid}-description`" class="w-full flex flex-col gap-2">
+            <EnvironmentCapabilitiesAspectChart :x-max="xMax" :chart-data="environmentCapabilitiesChartData">
+            </EnvironmentCapabilitiesAspectChart>
 
-        <EnvironmentOverheadChart :x-max="xMax" :chart-data="environmentOverheadChartData">
-        </EnvironmentOverheadChart>
+            <EnvironmentOverheadChart :x-max="xMax" :chart-data="environmentOverheadChartData">
+            </EnvironmentOverheadChart>
+        </div>
 
-        <CapabilitiesChartTextualDescription :environment-overhead-chart-data="environmentOverheadChartData"
+
+        <CapabilitiesChartTextualDescription :id="`${uid}-description`"
+            :environment-overhead-chart-data="environmentOverheadChartData"
             :environment-capabilities-chart-data="environmentCapabilitiesChartData"></CapabilitiesChartTextualDescription>
 
     </div>
@@ -18,6 +22,7 @@
 import { mapState } from 'pinia'
 import store from '../../../Store';
 import { colorForIndex } from "../ColorPalettes";
+import { v4 as uuidv4 } from 'uuid';
 
 import EnvironmentCapabilitiesAspectChart from './EnvironmentCapabilitiesAspectChart.vue';
 import EnvironmentOverheadChart from './EnvironmentOverheadChart.vue';
@@ -34,6 +39,7 @@ export default {
     data() {
         return {
             barThickness: 16,
+            uid: `capenvcharts-${uuidv4()}`
         }
     },
     computed: {

@@ -1,5 +1,5 @@
 <template>
-    <div role="img" :aria-labelledby="`${uid}-description`" class="w-full" :style="{ height: `${chartHeight}rem` }">
+    <div class="w-full" :style="{ height: `${chartHeight}rem` }">
         <Bar v-if="chartData" :options="chartOptions" :data="chartData" />
     </div>
 </template>
@@ -9,7 +9,6 @@ import { mapState } from 'pinia'
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Tooltip, Legend, BarElement, LinearScale, CategoryScale } from 'chart.js'
 import store from '../../../Store';
-import { v4 as uuidv4 } from 'uuid';
 
 ChartJS.register(Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
@@ -26,11 +25,7 @@ export default {
         }
 
     },
-    data() {
-        return {
-            uid: `aspectchart-${uuidv4()}`
-        }
-    },
+
     components: { Bar, /*AspectChartTextualDescription*/ },
     computed: {
         ...mapState(store, ["strings", 'capabilities', 'groupedCapabilities', 'language', 'vars']),

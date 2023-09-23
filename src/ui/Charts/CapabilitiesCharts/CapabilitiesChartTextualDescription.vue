@@ -49,6 +49,8 @@
 import { ArrowRightIcon } from '@heroicons/vue/24/solid';
 import store from '../../../Store';
 import { mapState } from 'pinia'
+import { v4 as uuidv4 } from 'uuid';
+
 
 export default {
     props: {
