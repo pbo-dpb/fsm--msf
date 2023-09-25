@@ -11,6 +11,9 @@ export class Capability {
         this.display_name_en = payload.display_name_en;
         this.display_name_fr = payload.display_name_fr;
 
+        this.specific_note_en = payload.specific_note_en;
+        this.specific_note_fr = payload.specific_note_fr;
+
         this.environment = useStore().environments[payload.environment_id];
 
         this.personnel = {
@@ -117,6 +120,14 @@ export class Capability {
             'display_name_fr': {
                 required: true,
                 prop: 'display_name_fr'
+            },
+            'specific_note_en': {
+                required: false,
+                prop: 'specific_note_en',
+            },
+            'specific_note_fr': {
+                required: false,
+                prop: 'specific_note_fr'
             },
             'environment_id': {
                 prop: 'environment_id',

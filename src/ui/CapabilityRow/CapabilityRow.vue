@@ -6,7 +6,8 @@
             <ChevronDownIcon class="h-4 w-4 " v-if="expanded"></ChevronDownIcon>
             <ChevronRightIcon class="h-4 w-4" v-else></ChevronRightIcon>
             <div class="inline-flex gap-4 overflow-x-ellipsis w-full items-center">
-                {{ displayName }}
+                <span>{{ displayName }}<span class="font-semibold"
+                        v-if="capability[`specific_note_${language}`]">*</span></span>
                 <CapabilityRowTarget :capability="capability" v-if="capability.user_editable"></CapabilityRowTarget>
             </div>
 
