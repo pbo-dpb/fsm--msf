@@ -11,10 +11,10 @@
             </div>
 
             <span class="__tooltip hidden md:block text-gray-500" :id="`tip-${uid}`" :aria-describedby="`${uid}-tippy`">
-                <QuestionMarkCircleIcon v-if="capability.user_editable" class=" w-4 h-4"></QuestionMarkCircleIcon>
-                <LockClosedIcon v-else class=" w-4 h-4"></LockClosedIcon>
+                <QuestionMarkCircleIcon v-if="false && capability.user_editable" class=" w-4 h-4"></QuestionMarkCircleIcon>
+                <LockClosedIcon v-if="!capability.user_editable" class=" w-4 h-4"></LockClosedIcon>
             </span>
-            <span :id="`${uid}-tippy`" class="sr-only" data-tippy-root>
+            <span :id="`${uid}-tippy`" class="sr-only" data-tippy-root v-if="false">
                 {{ capability.user_editable ? strings.unlocked_capability : strings.locked_capability }}
             </span>
         </button>
