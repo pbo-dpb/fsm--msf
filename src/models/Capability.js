@@ -64,7 +64,11 @@ export class Capability {
                 impact[aspect] = {};
             }
             for (const [facet, impactForFacet] of Object.entries(aspectFacets)) {
-                impact[aspect][facet] = this[aspect][facet] + userTargetDiff * impactForFacet;
+
+                let value = this[aspect][facet] + userTargetDiff * impactForFacet;
+                let roundedNum = aspect === 'cost' ? (Math.round(value / 10000000) * 10000000) : (Math.round(value / 100) * 100);
+
+                impact[aspect][facet] = roundedNum;
             }
 
         }

@@ -69,7 +69,7 @@ export default {
                         ]
                     },
                     {
-                        label: this.strings.impact_facet_label_env_overhead,
+                        label: this.strings.generic_overhead,
                         data: [
                             ...this.groups.map((gr) => gr.costs.env_overhead),
                             this.generalOverhead

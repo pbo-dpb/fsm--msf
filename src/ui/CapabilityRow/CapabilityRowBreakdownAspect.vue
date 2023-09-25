@@ -8,7 +8,7 @@
                 <template v-if="[
                     'direct',
                     'indirect',
-                    aspect === 'cost' ? 'env_overhead' : null
+                    'env_overhead'
                 ].includes(key)">
                     <dt class="font-semibold text-gray-800 dark:text-gray-200">{{ strings[`impact_facet_label_${key}`] }}
                     </dt>
@@ -61,8 +61,11 @@ export default {
         },
         getValForFacet(facet, userTarget = false) {
             if (this.settings_perUnitDisplay) {
+
                 return this.formatValue(this.capability.impactPerUnit[this.aspect][facet])
+
             }
+
             return this.formatValue(userTarget ? this.capability.userTargetImpact[this.aspect][facet] :
                 this.capability[this.aspect][facet])
         }

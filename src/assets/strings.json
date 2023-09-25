@@ -11,6 +11,10 @@
         "en": "Empty cell",
         "fr": "Cellule vide"
     },
+    "generic_overhead": {
+        "en": "Overhead",
+        "fr": "Surcharge"
+    },
     "capability_label": {
         "en": "Capability",
         "fr": "Capacité"
@@ -68,7 +72,7 @@
         "fr": "Indirect"
     },
     "impact_facet_label_env_overhead": {
-        "en": "Overhead",
+        "en": "Contribution to overhead",
         "fr": "Surcharge"
     },
     "impact_facet_label_inst_overhead": {

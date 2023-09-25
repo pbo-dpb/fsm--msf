@@ -59,10 +59,10 @@ export default {
 
         environmentOverheadChartData() {
             let chartData = {
-                labels: [this.strings.impact_facet_label_env_overhead],
+                labels: [this.strings.generic_overhead],
                 datasets: [
                     {
-                        label: this.strings[`impact_facet_label_env_overhead`],
+                        label: this.strings[`generic_overhead`],
                         backgroundColor: colorForIndex(2),
                         data: [
                             this.sortedCapabilities.reduce((acc, capability) => {
