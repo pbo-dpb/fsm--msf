@@ -73,15 +73,15 @@
     },
     "impact_facet_label_env_overhead": {
         "en": "Contribution to overhead",
-        "fr": "Surcharge"
+        "fr": "Frais généraux"
     },
     "impact_facet_label_inst_overhead": {
         "en": "Institutional Overhead",
-        "fr": "Surcharge institutionnelle"
+        "fr": "frais généraux institutionnels"
     },
     "per_environment_env_overhead_label": {
         "en": ":environment overhead",
-        "fr": "Surcharge : :environment"
+        "fr": "Frais généraux : :environment"
     },
     "impact_facet_label_total": {
         "en": "Total",
@@ -97,7 +97,7 @@
     },
     "general_overhead_label": {
         "en": "Institutional Overhead",
-        "fr": "Surcharge institutionnelle"
+        "fr": "Frais généraux institutionnels"
     },
     "chart_alt_text_label": {
         "en": "Text version",
