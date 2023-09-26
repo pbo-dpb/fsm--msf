@@ -46,8 +46,10 @@ export default {
                     tooltip: {
                         callbacks: {
                             label: (context) => {
-                                if (this.settings_selectedAspect === "cost")
-                                    return new Intl.NumberFormat(`${this.language}-CA`, { style: 'currency', "currency": "CAD", maximumFractionDigits: 0, notation: 'compact' }).format(context.raw);
+                                if (this.settings_selectedAspect === "cost") {
+                                    return new Intl.NumberFormat(`${this.language}-CA`, { style: 'currency', "currency": "CAD", minimumFractionDigits: context.raw >= 1000000000 ? 1 : 0, maximumFractionDigits: context.raw >= 1000000000 ? 2 : 0, notation: 'compact' }).format(context.raw);
+                                }
+
                                 return new Intl.NumberFormat(`${this.language}-CA`).format(context.parsed.x)
                             }
                         }
