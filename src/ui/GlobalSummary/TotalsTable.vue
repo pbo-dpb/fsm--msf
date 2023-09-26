@@ -14,6 +14,12 @@
                 environmentForGroup(group)?.[`display_name_${language}`] }}
         </TotalsTableRow>
 
+        <OthersTableRow :aspect="aspect" :facets-of-interest="facetsOfInterest"
+            :should-display-impact-diff="shouldDisplayImpactDiff">
+            {{
+                strings[`impact_facet_label_other`] }}
+        </OthersTableRow>
+
         <TotalsTableRow :aspect="aspect" :facets-of-interest="facetsOfInterest" :highlight="true"
             :should-display-impact-diff="shouldDisplayImpactDiff">
             {{
@@ -25,12 +31,12 @@
 import { mapState } from 'pinia'
 import store from '../../Store'
 import TotalsTableRow from './TotalsTableRow.vue';
+import OthersTableRow from './OthersTableRow.vue';
 
 export default {
     computed: {
         ...mapState(store, ["strings", "groupedCapabilities", "hasCustomUserTargets", "language", "vars"]),
         shouldDisplayImpactDiff() {
-
             return Object.values(this.groupedCapabilities).find(g => this.hasCustomUserTargets(g)) ? true : false;
         },
     },
@@ -47,7 +53,7 @@ export default {
             }
         },
     },
-    components: { TotalsTableRow },
+    components: { TotalsTableRow, OthersTableRow },
     methods: {
         environmentForGroup(group) {
             return group[0]?.environment ?? null;

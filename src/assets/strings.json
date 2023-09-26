@@ -83,6 +83,10 @@
         "en": ":environment overhead",
         "fr": "Frais généraux : :environment"
     },
+    "impact_facet_label_other": {
+        "en": "Other",
+        "fr": "Autre"
+    },
     "impact_facet_label_total": {
         "en": "Total",
         "fr": "Total"

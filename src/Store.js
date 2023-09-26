@@ -8,9 +8,6 @@ import readXlsxFile from 'read-excel-file'
 
 
 let loc = {}
-let environements = {
-
-}
 
 
 export default defineStore('fsm', {
@@ -79,7 +76,7 @@ export default defineStore('fsm', {
 
             if (!state.capabilities || state.capabilities.length === 0) return [];
 
-            let groups = {};
+            let groups = Object.fromEntries(state.environments.map(i => [i.id, []]));
 
             state.capabilities.forEach((capability) => {
                 if (!capability.environment) return;
@@ -89,8 +86,8 @@ export default defineStore('fsm', {
                 }
                 groups[key].push(capability);
                 return groups;
-
             })
+
             return groups
 
         },
