@@ -13,8 +13,7 @@ export class Capability {
 
         this.specific_note_en = payload.specific_note_en;
         this.specific_note_fr = payload.specific_note_fr;
-
-        this.environment = useStore().environments[payload.environment_id];
+        this.environment = useStore().environments.find(env => env.id === payload.environment_id);
 
         this.personnel = {
             direct: payload.personnel_direct,
@@ -131,7 +130,7 @@ export class Capability {
             },
             'environment_id': {
                 prop: 'environment_id',
-                oneOf: Object.keys(useStore().environments)
+                oneOf: useStore().environments.map(e => e.id)
             },
             'personnel_direct': {
                 required: true,

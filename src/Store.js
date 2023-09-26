@@ -8,6 +8,9 @@ import readXlsxFile from 'read-excel-file'
 
 
 let loc = {}
+let environements = {
+
+}
 
 
 export default defineStore('fsm', {
@@ -16,14 +19,12 @@ export default defineStore('fsm', {
         errors: null,
         capabilities: null,
         vars: {},
-        environments: Object.fromEntries(environments.map(i => [i.id, new Environment(i)])),
+        environments: environments.map(i => new Environment(i)),
         settings_perUnitDisplay: false,
         settings_selectedAspect: "cost",
     }),
     actions: {
-        instanciateCapabilities(capabilities) {
-            this.capabilities = capabilities.map(capObj => new Capability(capObj)).filter(x => x.id)
-        },
+
         async instanciateStore(blob) {
             this.errors = null;
 
