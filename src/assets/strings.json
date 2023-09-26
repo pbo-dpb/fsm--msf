@@ -13,7 +13,7 @@
     },
     "generic_overhead": {
         "en": "Overhead",
-        "fr": "Surcharge"
+        "fr": "Frais généraux"
     },
     "capability_label": {
         "en": "Capability",
@@ -77,7 +77,7 @@
     },
     "impact_facet_label_inst_overhead": {
         "en": "Institutional Overhead",
-        "fr": "frais généraux institutionnels"
+        "fr": "Frais généraux institutionnels"
     },
     "per_environment_env_overhead_label": {
         "en": ":environment overhead",
