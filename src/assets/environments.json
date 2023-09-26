@@ -7,12 +7,12 @@
     {
         "id": "RCAF",
         "display_name_en": "Royal Canadian Air Force",
-        "display_name_fr": "Armée de l'air royale canadienne"
+        "display_name_fr": "Aviation royale canadienne"
     },
     {
         "id": "RCN",
-        "display_name_en": "Navy",
-        "display_name_fr": "Marine"
+        "display_name_en": "Royal Canadian Navy",
+        "display_name_fr": "Marine royale canadienne"
     },
     {
         "id": "Joint",
