@@ -1,22 +1,22 @@
 [
     {
         "id": "CA",
-        "display_name_en": "Army",
-        "display_name_fr": "Armée"
-    },
-    {
-        "id": "Joint",
-        "display_name_en": "Joint",
-        "display_name_fr": "Interarmées"
+        "display_name_en": "Canadian Army",
+        "display_name_fr": "Armée canadienne"
     },
     {
         "id": "RCAF",
-        "display_name_en": "Air Force",
-        "display_name_fr": "Aviation"
+        "display_name_en": "Royal Canadian Air Force",
+        "display_name_fr": "Armée de l'air royale canadienne"
     },
     {
         "id": "RCN",
         "display_name_en": "Navy",
         "display_name_fr": "Marine"
+    },
+    {
+        "id": "Joint",
+        "display_name_en": "Joint",
+        "display_name_fr": "Interarmées"
     }
 ]

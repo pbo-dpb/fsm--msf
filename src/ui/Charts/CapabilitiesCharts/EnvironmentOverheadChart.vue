@@ -9,6 +9,7 @@ import { mapState } from 'pinia'
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Tooltip, Legend, BarElement, LinearScale, CategoryScale } from 'chart.js'
 import store from '../../../Store';
+import Localizer from '../../../Localizer';
 
 ChartJS.register(Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
@@ -30,7 +31,7 @@ export default {
 
     components: { Bar, /*AspectChartTextualDescription*/ },
     computed: {
-        ...mapState(store, ["strings", 'capabilities', 'groupedCapabilities', 'language', 'vars', "userTargets"]),
+        ...mapState(store, ["strings", 'capabilities', 'groupedCapabilities', 'language', 'vars', "userTargets", "settings_selectedAspect"]),
 
 
 
@@ -45,6 +46,8 @@ export default {
                     tooltip: {
                         callbacks: {
                             label: (context) => {
+                                if (this.settings_selectedAspect === "cost")
+                                    return new Intl.NumberFormat(`${this.language}-CA`, { style: 'currency', "currency": "CAD", maximumFractionDigits: 0, notation: 'compact' }).format(context.raw);
                                 return new Intl.NumberFormat(`${this.language}-CA`).format(context.parsed.x)
                             }
                         }
@@ -54,10 +57,11 @@ export default {
                     x: {
                         stacked: true,
                         ticks: {
-                            callback: function (value, index, ticks) {
-                                const formatter = Intl.NumberFormat(this.language, { notation: 'compact' });
-                                return formatter.format(value);
-                            }
+                            callback: (value, index, ticks) => {
+                                if (this.settings_selectedAspect === "cost")
+                                    return new Intl.NumberFormat(`${this.language}-CA`, { style: 'currency', "currency": "CAD", maximumFractionDigits: 0, notation: 'compact' }).format(value);
+                                return new Intl.NumberFormat(`${this.language}-CA`, { notation: 'compact' }).format(value)
+                            },
                         },
                         min: 0,
                         max: this.xMax,

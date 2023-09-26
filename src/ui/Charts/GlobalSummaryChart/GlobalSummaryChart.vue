@@ -89,7 +89,13 @@ export default {
                     legend: {
                         position: "bottom"
                     },
-
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => {
+                                return new Intl.NumberFormat(`${this.language}-CA`, { style: 'currency', "currency": "CAD", maximumFractionDigits: 1, notation: 'compact' }).format((Math.round(context.raw / 1000000) * 1000000));
+                            }
+                        }
+                    }
                 },
                 responsive: true,
                 scales: {
