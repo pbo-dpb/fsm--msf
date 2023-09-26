@@ -77,7 +77,7 @@
     },
     "impact_facet_label_inst_overhead": {
         "en": "Institutional Overhead",
-        "fr": "Frais généraux institutionnels"
+        "fr": "Frais généraux"
     },
     "per_environment_env_overhead_label": {
         "en": ":environment overhead",
