@@ -1,89 +1,151 @@
 <template>
-    <div class="w-full" :style="{ height: `${chartHeight}rem` }">
-        <Bar v-if="chartData" :options="chartOptions" :data="chartData" />
+  <div class="w-full" :style="{ height: `${chartHeight}rem` }">
+    <Bar
+      v-if="isDataValid"
+      :options="chartOptions"
+      :data="chartData"
+      :aria-label="strings?.chart_aria_label"
+    />
+    <div
+      v-else
+      class="w-full h-full flex items-center justify-center text-gray-500"
+    >
+      {{ strings?.no_data_message }}
     </div>
+  </div>
 </template>
-  
-<script>
-import { mapState } from 'pinia'
-import { Bar } from 'vue-chartjs'
-import { Chart as ChartJS, Tooltip, Legend, BarElement, LinearScale, CategoryScale } from 'chart.js'
-import store from '../../../Store';
-import Localizer from '../../../Localizer';
-ChartJS.register(Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
-export default {
-    props: {
+<script setup>
+import { computed, watch, onMounted, onUnmounted } from "vue";
+import { storeToRefs } from "pinia";
+import { Bar } from "vue-chartjs";
+import {
+  Chart as ChartJS,
+  Tooltip,
+  Legend,
+  BarElement,
+  LinearScale,
+  CategoryScale,
+} from "chart.js";
+import { useStore } from "../../../stores/index";
+import { useImpactStore } from "../../../stores/impactStore";
+import Localizer from "../../../Localizer";
 
-        xMax: {
-            type: Number,
-            required: true
-        },
-        chartData: {
-            type: Object,
-            required: true,
-        }
+// Register Chart.js components
+ChartJS.register(CategoryScale, LinearScale, BarElement, Legend, Tooltip);
 
+// Props with validation
+const props = defineProps({
+  chartData: {
+    type: Object,
+    required: true,
+    validator: (value) => {
+      return (
+        value.datasets &&
+        Array.isArray(value.datasets) &&
+        value.labels &&
+        Array.isArray(value.labels)
+      );
     },
+  },
+  xMax: {
+    type: Number,
+    required: true,
+    validator: (value) => value > 0,
+  },
+});
 
-    components: { Bar, /*AspectChartTextualDescription*/ },
-    computed: {
-        ...mapState(store, ["strings", 'capabilities', 'groupedCapabilities', 'language', 'vars', 'settings_selectedAspect']),
+// Store setup
+const store = useStore();
+const impactStore = useImpactStore();
 
-        chartOptions() {
-            return {
-                maintainAspectRatio: false,
-                indexAxis: 'y',
-                plugins: {
-                    legend: {
-                        position: "top"
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: (context) => {
-                                if (this.settings_selectedAspect === "cost")
-                                    return new Intl.NumberFormat(`${this.language}-CA`, { style: 'currency', "currency": "CAD", minimumFractionDigits: context.raw >= 1000000000 ? 1 : 0, maximumFractionDigits: context.raw >= 1000000000 ? 2 : 0, notation: 'compact' }).format(context.raw);
-                                return new Intl.NumberFormat(`${this.language}-CA`).format(context.parsed.x)
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        stacked: true,
-                        ticks: {
-                            callback: (value, index, ticks) => {
-                                if (this.settings_selectedAspect === "cost")
-                                    return new Intl.NumberFormat(`${this.language}-CA`, { style: 'currency', "currency": "CAD", maximumFractionDigits: 0, notation: 'compact' }).format(value);
-                                return new Intl.NumberFormat(`${this.language}-CA`, { notation: 'compact' }).format(value)
-                            },
-                            color: "rgba(255,255,255,0)"
-                        },
-                        min: 0,
-                        max: this.xMax,
+// Store refs
+const { strings, language } = storeToRefs(store);
+const { settings_selectedAspect } = storeToRefs(impactStore);
 
-                    },
-                    y: {
-                        stacked: true,
+// Formatting functions
+const formatCurrency = (value, isCompact = true) => {
+  return new Intl.NumberFormat(`${language.value}-CA`, {
+    style: "currency",
+    currency: "CAD",
+    minimumFractionDigits: value >= 1000000000 ? 1 : 0,
+    maximumFractionDigits: value >= 1000000000 ? 2 : 0,
+    notation: isCompact ? "compact" : "standard",
+  }).format(value);
+};
 
-                        afterFit: function (scaleInstance) {
-                            const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-                            scaleInstance.width = vw < 768 ? 150 : 250;
-                        }
-                    }
-                },
-                responsive: true,
-            };
+const formatNumber = (value, isCompact = true) => {
+  return new Intl.NumberFormat(`${language.value}-CA`, {
+    notation: isCompact ? "compact" : "standard",
+  }).format(value);
+};
+
+// Computed properties
+const isDataValid = computed(() => {
+  return (
+    props.chartData?.datasets?.length > 0 &&
+    props.chartData.datasets[0]?.data?.length > 0
+  );
+});
+
+const chartHeight = computed(() => {
+  return 4 + (props.chartData?.datasets[0]?.data?.length || 0) * 2;
+});
+
+// Chart options
+const chartOptions = computed(() => ({
+  maintainAspectRatio: false,
+  indexAxis: "y",
+  plugins: {
+    legend: {
+      position: "top",
+    },
+    tooltip: {
+      callbacks: {
+        label: (context) => {
+          return settings_selectedAspect.value === "cost"
+            ? formatCurrency(context.raw)
+            : formatNumber(context.parsed.x);
         },
+      },
+    },
+  },
+  scales: {
+    x: {
+      stacked: true,
+      ticks: {
+        callback: (value) => {
+          return settings_selectedAspect.value === "cost"
+            ? formatCurrency(value, true)
+            : formatNumber(value, true);
+        },
+        color: "rgba(255,255,255,0)",
+      },
+      min: 0,
+      max: props.xMax,
+    },
+    y: {
+      stacked: true,
+      afterFit: function (scaleInstance) {
+        const vw = Math.max(
+          document.documentElement.clientWidth || 0,
+          window.innerWidth || 0
+        );
+        scaleInstance.width = vw < 768 ? 150 : 250;
+      },
+    },
+  },
+  responsive: true,
+}));
 
-
-
-
-
-        chartHeight() {
-            return 4 + this.chartData?.datasets[0]?.data?.length * 2;
-        }
+// Watch for data issues
+watch(
+  () => props.chartData,
+  (newData) => {
+    if (!newData?.datasets?.length) {
+      console.warn("Empty or invalid chart data provided");
     }
-}
-
+  },
+  { immediate: true }
+);
 </script>
