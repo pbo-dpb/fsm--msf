@@ -13,7 +13,7 @@ export const useImpactStore = defineStore("impact", {
         const capabilityStore = useCapabilityStore();
         let capabilities = group ? group : capabilityStore.capabilities;
 
-        return capabilities.reduce(
+        const results = capabilities.reduce(
           (acc, capability) => {
             for (const [facet, impactForFacet] of Object.entries(
               capability.personnel
@@ -41,6 +41,19 @@ export const useImpactStore = defineStore("impact", {
             cost: {},
           }
         );
+
+        // Add totals if not in a group
+        if (!group) {
+          results.personnel.total = Object.entries(results.personnel)
+            .filter(([key]) => key !== "total")
+            .reduce((sum, [_, value]) => sum + value, 0);
+
+          results.cost.total = Object.entries(results.cost)
+            .filter(([key]) => key !== "total")
+            .reduce((sum, [_, value]) => sum + value, 0);
+        }
+
+        return results;
       };
     },
 
@@ -49,7 +62,7 @@ export const useImpactStore = defineStore("impact", {
         const capabilityStore = useCapabilityStore();
         let capabilities = group ? group : capabilityStore.capabilities;
 
-        return capabilities.reduce(
+        const results = capabilities.reduce(
           (acc, capability) => {
             for (const [facet, impactForFacet] of Object.entries(
               capability.userTargetImpact.personnel
@@ -79,6 +92,19 @@ export const useImpactStore = defineStore("impact", {
             cost: {},
           }
         );
+
+        // Add totals if not in a group
+        if (!group) {
+          results.personnel.total = Object.entries(results.personnel)
+            .filter(([key]) => key !== "total")
+            .reduce((sum, [_, value]) => sum + value, 0);
+
+          results.cost.total = Object.entries(results.cost)
+            .filter(([key]) => key !== "total")
+            .reduce((sum, [_, value]) => sum + value, 0);
+        }
+
+        return results;
       };
     },
   },
