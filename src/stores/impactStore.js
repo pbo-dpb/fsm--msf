@@ -11,10 +11,12 @@ export const useImpactStore = defineStore("impact", {
     currentAspects() {
       return (group) => {
         const capabilityStore = useCapabilityStore();
+        // If no group is provided, use all capabilities (including Compliance)
         let capabilities = group ? group : capabilityStore.capabilities;
 
-        const results = capabilities.reduce(
+        return capabilities.reduce(
           (acc, capability) => {
+            // Sum up personnel aspects
             for (const [facet, impactForFacet] of Object.entries(
               capability.personnel
             )) {
@@ -25,6 +27,7 @@ export const useImpactStore = defineStore("impact", {
                 acc.personnel[facet] + capability.personnel[facet];
             }
 
+            // Sum up cost aspects
             for (const [facet, impactForFacet] of Object.entries(
               capability.cost
             )) {
@@ -37,33 +40,22 @@ export const useImpactStore = defineStore("impact", {
             return acc;
           },
           {
-            personnel: {},
-            cost: {},
+            personnel: { total: 0 },
+            cost: { total: 0 },
           }
         );
-
-        // Add totals if not in a group
-        if (!group) {
-          results.personnel.total = Object.entries(results.personnel)
-            .filter(([key]) => key !== "total")
-            .reduce((sum, [_, value]) => sum + value, 0);
-
-          results.cost.total = Object.entries(results.cost)
-            .filter(([key]) => key !== "total")
-            .reduce((sum, [_, value]) => sum + value, 0);
-        }
-
-        return results;
       };
     },
 
     userTargets() {
       return (group) => {
         const capabilityStore = useCapabilityStore();
+        // If no group is provided, use all capabilities (including Compliance)
         let capabilities = group ? group : capabilityStore.capabilities;
 
-        const results = capabilities.reduce(
+        return capabilities.reduce(
           (acc, capability) => {
+            // Sum up personnel target aspects
             for (const [facet, impactForFacet] of Object.entries(
               capability.userTargetImpact.personnel
             )) {
@@ -75,6 +67,7 @@ export const useImpactStore = defineStore("impact", {
                 capability.userTargetImpact.personnel[facet];
             }
 
+            // Sum up cost target aspects
             for (const [facet, impactForFacet] of Object.entries(
               capability.userTargetImpact.cost
             )) {
@@ -88,23 +81,10 @@ export const useImpactStore = defineStore("impact", {
             return acc;
           },
           {
-            personnel: {},
-            cost: {},
+            personnel: { total: 0 },
+            cost: { total: 0 },
           }
         );
-
-        // Add totals if not in a group
-        if (!group) {
-          results.personnel.total = Object.entries(results.personnel)
-            .filter(([key]) => key !== "total")
-            .reduce((sum, [_, value]) => sum + value, 0);
-
-          results.cost.total = Object.entries(results.cost)
-            .filter(([key]) => key !== "total")
-            .reduce((sum, [_, value]) => sum + value, 0);
-        }
-
-        return results;
       };
     },
   },
