@@ -19,9 +19,11 @@
     >
       <div class="inline-flex gap-1">
         <span
-          :class="{
-            'decoration-gray-500': hasDifference,
-          }"
+          :class="[
+            hasDifference
+              ? 'line-through decoration-gray-500'
+              : 'decoration-gray-500',
+          ]"
         >
           {{ currentValue }}
         </span>
