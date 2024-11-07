@@ -1,101 +1,152 @@
 <template>
-    <tr :class="{ 'bg-purple-50 dark:bg-purple-950': highlight }">
-        <th scope="row" class=" border border-gray-300 dark:border-gray-900 px-1 py-.5"
-            :class="{ 'w-1/3': !shouldDisplayImpactDiff, 'w-1/4': shouldDisplayImpactDiff }">
-            <slot></slot>
-        </th>
+  <tr :class="{ 'bg-purple-50 dark:bg-purple-950': highlight }">
+    <!-- Template stays mostly the same -->
+    <th
+      scope="row"
+      class="border border-gray-300 dark:border-gray-900 px-1 py-.5"
+      :class="[
+        shouldDisplayImpactDiff ? 'w-1/4' : 'w-1/3',
+        { 'font-semibold': highlight },
+      ]"
+    >
+      <slot></slot>
+    </th>
 
-        <td v-if="facetsOfInterest.length === 1"
-            class="w-1/3 border border-gray-300 dark:border-gray-900 px-1 py-.5 tabular-nums text-center"
-            :class="{ 'w-1/3': !shouldDisplayImpactDiff, 'w-1/4': shouldDisplayImpactDiff }">
-            <div class="inline-flex gap-1">
-                <span :class="{ 'line-through decoration-gray-500': getDiffForFacet(facetsOfInterest[0]) != 0 }">{{
-                    getValForFacet(facetsOfInterest[0], false)
-                }}</span>
+    <td
+      v-if="facetsOfInterest.length === 1"
+      class="border border-gray-300 dark:border-gray-900 px-1 py-.5 tabular-nums text-center"
+      :class="[shouldDisplayImpactDiff ? 'w-1/4' : 'w-1/3']"
+    >
+      <div class="inline-flex gap-1">
+        <span
+          :class="[
+            hasDifference
+              ? 'line-through decoration-gray-500'
+              : 'decoration-gray-500',
+          ]"
+        >
+          {{ currentValue }}
+        </span>
+      </div>
+    </td>
 
-            </div>
-        </td>
+    <template v-if="shouldDisplayImpactDiff">
+      <td
+        class="border border-gray-300 dark:border-gray-900 px-1 py-.5 tabular-nums text-center w-1/4"
+        :class="[
+          highlight
+            ? 'bg-blue-100 dark:bg-blue-900'
+            : 'bg-blue-50 dark:bg-blue-950',
+        ]"
+      >
+        <span v-if="hasDifference">{{ formattedDifference }}</span>
+      </td>
 
-        <template v-if="shouldDisplayImpactDiff">
-            <td class="border border-gray-300 dark:border-gray-900 px-1 py-.5 tabular-nums text-center w-1/4" :class="{
-                'bg-blue-50 dark:bg-blue-950': !this.highlight,
-                'bg-blue-100 dark:bg-blue-900': this.highlight
-            }">
-                <span v-if="getDiffForFacet(facetsOfInterest[0]) != 0">{{ getFormattedDiffForFacet(facetsOfInterest[0])
-                }}</span>
-            </td>
-
-            <td class="border border-gray-300 dark:border-gray-900 px-1 py-.5 tabular-nums text-center w-1/4" :class="{
-                    'bg-blue-50 dark:bg-blue-950': !this.highlight,
-                    'bg-blue-100 dark:bg-blue-900': this.highlight
-                }">{{
-        getValForFacet(facetsOfInterest[0], true) }}</td>
-        </template>
-
-
-
-    </tr>
+      <td
+        class="border border-gray-300 dark:border-gray-900 px-1 py-.5 tabular-nums text-center w-1/4"
+        :class="[
+          highlight
+            ? 'bg-blue-100 dark:bg-blue-900'
+            : 'bg-blue-50 dark:bg-blue-950',
+        ]"
+      >
+        {{ targetValue }}
+      </td>
+    </template>
+  </tr>
 </template>
-<script>
-import { mapState } from 'pinia'
-import store from '../../Store';
-import Localizer from '../../Localizer';
-export default {
-    props: {
-        aspect: {
-            type: String,
-            required: true,
-            validator: (value) => {
-                return ['personnel', 'cost'].includes(value);
-            }
-        },
-        group: {
-            type: Array,
-            required: false
-        },
-        facetsOfInterest: {
-            type: Array,
-            required: true,
-        },
-        highlight: {
-            type: Boolean,
-            default: false
-        },
-        shouldDisplayImpactDiff: {
-            type: Boolean,
-            default: false
-        }
-    },
-    computed: {
-        ...mapState(store, ['strings', 'currentAspects', 'hasCustomUserTargets', 'userTargets', 'language']),
 
-        summaryCurrentAspects() {
-            return this.currentAspects(this.group);
-        },
+<script setup>
+import { computed } from "vue";
+import { storeToRefs } from "pinia";
+import { useStore } from "../../stores/index";
+import { useImpactStore } from "../../stores/impactStore";
+import Localizer from "../../Localizer";
 
-        summaryUserTargets() {
-            return this.userTargets(this.group);
-        }
-    },
-    methods: {
+const props = defineProps({
+  aspect: {
+    type: String,
+    required: true,
+    validator: (value) => ["personnel", "cost"].includes(value),
+  },
+  group: {
+    type: Array,
+    required: false,
+    default: () => [],
+  },
+  facetsOfInterest: {
+    type: Array,
+    required: true,
+    validator: (value) => Array.isArray(value) && value.length > 0,
+  },
+  highlight: {
+    type: Boolean,
+    default: false,
+  },
+  shouldDisplayImpactDiff: {
+    type: Boolean,
+    default: false,
+  },
+});
 
-        formatValue(value, digits = 2) {
-            if (this.aspect === 'cost') {
-                return new Intl.NumberFormat(`${this.language}-CA`, { style: 'currency', "currency": "CAD", minimumFractionDigits: digits, maximumFractionDigits: digits, notation: 'compact' }).format(value);
-            }
-            return Localizer.formatNumber(value, this.language);
-        },
-        getDiffForFacet(facet) {
-            return this.summaryUserTargets[this.aspect][facet] - this.summaryCurrentAspects[this.aspect][facet];
-        },
-        getFormattedDiffForFacet(facet) {
-            const rawDiff = this.getDiffForFacet(facet)
-            return `${rawDiff > 0 ? '+' : ''}${this.formatValue(rawDiff, 0)}`
-        },
-        getValForFacet(facet, userTarget = false) {
-            return this.formatValue(userTarget ? this.summaryUserTargets[this.aspect][facet] :
-                this.summaryCurrentAspects[this.aspect][facet])
-        }
+const store = useStore();
+const impactStore = useImpactStore();
+const { language } = storeToRefs(store);
+
+// Modified to handle both group and total cases
+const summaryCurrentAspects = computed(() => {
+  return impactStore.currentAspects(props.highlight ? null : props.group);
+});
+
+const summaryUserTargets = computed(() => {
+  return impactStore.userTargets(props.highlight ? null : props.group);
+});
+
+const formatValue = (value, digits = 2) => {
+  if (!value && value !== 0) return "";
+
+  try {
+    if (props.aspect === "cost") {
+      return new Intl.NumberFormat(`${language.value}-CA`, {
+        style: "currency",
+        currency: "CAD",
+        minimumFractionDigits: digits,
+        maximumFractionDigits: digits,
+        notation: "compact",
+      }).format(value);
     }
-}
+    return Localizer.formatNumber(value, language.value);
+  } catch (error) {
+    console.error("Error formatting value:", error);
+    return value.toString();
+  }
+};
+
+// Updated computeds to always use the first facet
+const currentValue = computed(() => {
+  const facet = props.facetsOfInterest[0];
+  return formatValue(summaryCurrentAspects.value[props.aspect][facet]);
+});
+
+const targetValue = computed(() => {
+  const facet = props.facetsOfInterest[0];
+  return formatValue(summaryUserTargets.value[props.aspect][facet]);
+});
+
+const getDifference = computed(() => {
+  const facet = props.facetsOfInterest[0];
+  return (
+    summaryUserTargets.value[props.aspect][facet] -
+    summaryCurrentAspects.value[props.aspect][facet]
+  );
+});
+
+const hasDifference = computed(() => {
+  return getDifference.value !== 0;
+});
+
+const formattedDifference = computed(() => {
+  const diff = getDifference.value;
+  return `${diff > 0 ? "+" : ""}${formatValue(diff, 0)}`;
+});
 </script>

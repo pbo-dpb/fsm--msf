@@ -1,29 +1,29 @@
 <template>
-    <div v-if="description" class="prose-sm dark:prose-invert max-w-none prose-p:leading-tight ">
-        {{ description }}
-    </div>
+  <div
+    v-if="description"
+    class="prose-sm dark:prose-invert max-w-none prose-p:leading-tight"
+  >
+    {{ description }}
+  </div>
 </template>
-<script>
-import { Capability } from '../../models/Capability';
 
-import store from "../../Store"
-import { mapState } from 'pinia'
+<script setup>
+import { computed } from 'vue';
+import { Capability } from "../../models/Capability";
+import { storeToRefs } from "pinia";
+import { useLanguageStore } from "../../stores/languageStore";
 
-export default {
+const props = defineProps({
+  capability: {
+    type: Capability,
+    required: true,
+  },
+});
 
-    props: {
-        capability: {
-            type: Capability,
-            required: true
-        }
-    },
+const languageStore = useLanguageStore();
+const { language } = storeToRefs(languageStore);
 
-    computed: {
-        ...mapState(store, ['language']),
-        description() {
-            return this.capability.description?.[this.language] ?? null;
-        }
-    }
-
-}
+const description = computed(() => {
+  return props.capability.description?.[language.value] ?? null;
+});
 </script>

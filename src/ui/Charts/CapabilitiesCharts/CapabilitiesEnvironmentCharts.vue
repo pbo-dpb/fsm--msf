@@ -1,119 +1,165 @@
 <template>
-    <div class="w-full flex flex-col gap-2">
-        <h3 class="text-xl font-thin flex flex-col gap-1">{{ environment[`display_name_${language}`] }}</h3>
+  <div class="w-full flex flex-col gap-2">
+    <h3 class="text-xl font-thin flex flex-col gap-1">
+      {{ environment[`display_name_${language}`] }}
+    </h3>
 
-        <div role="img" :aria-describedby="`${uid}-description`" class="w-full flex flex-col gap-2">
-            <EnvironmentCapabilitiesAspectChart :x-max="xMax" :chart-data="environmentCapabilitiesChartData">
-            </EnvironmentCapabilitiesAspectChart>
+    <div
+      role="img"
+      :aria-describedby="`${uid}-description`"
+      class="w-full flex flex-col gap-2"
+    >
+      <EnvironmentCapabilitiesAspectChart
+        :x-max="xMax"
+        :chart-data="environmentCapabilitiesChartData"
+      />
 
-            <EnvironmentOverheadChart :x-max="xMax" :chart-data="environmentOverheadChartData">
-            </EnvironmentOverheadChart>
-        </div>
-
-
-        <CapabilitiesChartTextualDescription :id="`${uid}-description`"
-            :environment-overhead-chart-data="environmentOverheadChartData"
-            :environment-capabilities-chart-data="environmentCapabilitiesChartData"></CapabilitiesChartTextualDescription>
-
+      <EnvironmentOverheadChart
+        :x-max="xMax"
+        :chart-data="environmentOverheadChartData"
+      />
     </div>
+
+    <CapabilitiesChartTextualDescription
+      :id="`${uid}-description`"
+      :environment-overhead-chart-data="environmentOverheadChartData"
+      :environment-capabilities-chart-data="environmentCapabilitiesChartData"
+    />
+  </div>
 </template>
-  
-<script>
-import { mapState } from 'pinia'
-import store from '../../../Store';
+
+<script setup>
+import { ref, computed, onMounted, watch, onUnmounted } from "vue";
+import { storeToRefs } from "pinia";
+import { v4 as uuidv4 } from "uuid";
+import { useStore } from "../../../stores/index";
+import { useCapabilityStore } from "../../../stores/capabilityStore";
+import { useImpactStore } from "../../../stores/impactStore";
 import { colorForIndex } from "../ColorPalettes";
-import { v4 as uuidv4 } from 'uuid';
+import { Environment } from "../../../models/Environment";
 
-import EnvironmentCapabilitiesAspectChart from './EnvironmentCapabilitiesAspectChart.vue';
-import EnvironmentOverheadChart from './EnvironmentOverheadChart.vue';
-import CapabilitiesChartTextualDescription from './CapabilitiesChartTextualDescription.vue';
+import EnvironmentCapabilitiesAspectChart from "./EnvironmentCapabilitiesAspectChart.vue";
+import EnvironmentOverheadChart from "./EnvironmentOverheadChart.vue";
+import CapabilitiesChartTextualDescription from "./CapabilitiesChartTextualDescription.vue";
 
-import { Environment } from '../../../models/Environment';
+// Props with validation
+const props = defineProps({
+  environment: {
+    type: Environment,
+    required: true,
+    validator: (value) => value instanceof Environment,
+  },
+});
 
-export default {
-    components: { EnvironmentCapabilitiesAspectChart, EnvironmentOverheadChart, CapabilitiesChartTextualDescription },
-    props: {
-        environment: Environment,
-        required: true
-    },
-    data() {
-        return {
-            barThickness: 16,
-            uid: `capenvcharts-${uuidv4()}`
+// Store setup
+const store = useStore();
+const capabilityStore = useCapabilityStore();
+const impactStore = useImpactStore();
+
+// Store refs
+const { strings, language } = storeToRefs(store);
+const { groupedCapabilities } = storeToRefs(capabilityStore);
+const { settings_selectedAspect: selectedAspect } = storeToRefs(impactStore);
+
+// Component state
+const barThickness = ref(16);
+const uid = ref(`capenvcharts-${uuidv4()}`);
+
+// Computed properties
+const sortedCapabilities = computed(() => {
+  return Object.values(groupedCapabilities.value)
+    .map((caps) => {
+      return caps.sort((a, b) =>
+        a[`display_name_${language.value}`].localeCompare(
+          b[`display_name_${language.value}`]
+        )
+      );
+    })
+    .flat()
+    .filter((c) => {
+      return c.environment?.id === props.environment?.id;
+    });
+});
+
+const xMax = computed(() => {
+  return selectedAspect.value === "cost" ? 2500000000 : 25000;
+});
+
+const environmentOverheadChartData = computed(() => {
+  return {
+    labels: [strings.value?.generic_overhead],
+    datasets: [
+      {
+        label: strings.value?.generic_overhead,
+        backgroundColor: colorForIndex(2),
+        data: [
+          sortedCapabilities.value.reduce((acc, capability) => {
+            return (
+              acc +
+              capability.userTargetImpact[selectedAspect.value].env_overhead
+            );
+          }, 0),
+        ],
+        barThickness: barThickness.value,
+      },
+    ],
+  };
+});
+
+const environmentCapabilitiesChartData = computed(() => {
+  const datasets = {};
+  let colorIndex = 0;
+
+  sortedCapabilities.value.forEach((capability) => {
+    Object.entries(capability.userTargetImpact[selectedAspect.value]).forEach(
+      ([facet, impactValue]) => {
+        // Skip special facets
+        if (["total", "env_overhead", "inst_overhead"].includes(facet)) return;
+
+        // Initialize dataset if needed
+        if (!datasets[facet]) {
+          datasets[facet] = {
+            label: strings.value?.[`impact_facet_label_${facet}`],
+            backgroundColor: colorForIndex(colorIndex++),
+            data: [],
+            barThickness: barThickness.value,
+          };
         }
-    },
-    computed: {
-        ...mapState(store, ["strings", "settings_selectedAspect", "environments", 'capabilities', 'groupedCapabilities', 'language', 'vars', "userTargets"]),
 
-        sortedCapabilities() {
-            let stack = Object.values(this.groupedCapabilities).map(caps => {
-                return caps.sort((a, b) => a[`display_name_${this.language}`].localeCompare(b[`display_name_${this.language}`]))
-            }).flat().filter(c => c.environment == this.environment);
-            return stack;
-        },
+        datasets[facet].data.push(impactValue);
+      }
+    );
+  });
 
-        xMax() {
-            return this.settings_selectedAspect === 'cost' ? 2500000000 : 25000;
-        },
+  return {
+    labels: sortedCapabilities.value.map((capability) => {
+      const vw = Math.max(
+        document.documentElement.clientWidth || 0,
+        window.innerWidth || 0
+      );
+      return capability[`display_name_${language.value}`].substring(
+        0,
+        vw < 640 ? 20 : 200
+      );
+    }),
+    datasets: Object.values(datasets),
+  };
+});
 
+// Data validation
+const validateCapabilityData = computed(() => {
+  return sortedCapabilities.value.every(
+    (capability) =>
+      capability.userTargetImpact &&
+      capability.userTargetImpact[selectedAspect.value]
+  );
+});
 
-        environmentOverheadChartData() {
-            let chartData = {
-                labels: [this.strings.generic_overhead],
-                datasets: [
-                    {
-                        label: this.strings[`generic_overhead`],
-                        backgroundColor: colorForIndex(2),
-                        data: [
-                            this.sortedCapabilities.reduce((acc, capability) => {
-                                return acc + capability.userTargetImpact[this.settings_selectedAspect]['env_overhead']
-                            }, 0)
-                        ],
-                        barThickness: this.barThickness
-                    }
-                ]
-            };
-            return chartData;
-        },
+// Watch for data issues
+watch(validateCapabilityData, (isValid) => {
+  if (!isValid) {
+    console.warn("Invalid capability data detected");
+  }
+});
 
-
-        environmentCapabilitiesChartData() {
-
-
-            let datasets = {};
-            let i = 0;
-            this.sortedCapabilities.forEach(capability => {
-
-                for (const [facet, impactForFacet] of Object.entries(capability.userTargetImpact[this.settings_selectedAspect])) {
-                    if (['total', 'env_overhead', 'inst_overhead'].includes(facet)) continue;
-
-                    if (!datasets[facet]) {
-                        datasets[facet] = {
-                            label: this.strings[`impact_facet_label_${facet}`],
-                            backgroundColor: colorForIndex(i),
-                            data: [],
-                            barThickness: 16
-                        };
-                    }
-                    datasets[facet].data.push(impactForFacet);
-                    i = i + 1;
-                }
-
-            });
-
-
-            return {
-                labels: this.sortedCapabilities.map(capability => {
-                    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-                    return capability[`display_name_${this.language}`].substring(0, vw < 640 ? 20 : 200)
-                }),
-                datasets: Object.values(datasets)
-            };
-
-
-
-        }
-    },
-
-}
 </script>
