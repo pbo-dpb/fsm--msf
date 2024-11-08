@@ -19,8 +19,9 @@
     </section>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { storeToRefs } from "pinia";
+import WrapperEventDispatcher from "../WrapperEventDispatcher.js";
 
 import PayloadUrl from "../assets/payload.xlsx?url";
 
@@ -36,6 +37,15 @@ const debugFileInput = ref(null);
 const payloadUrl = ref(PayloadUrl);
 const currentDebugFileModifiedDate = ref(null);
 
+
+
+const updatePageTitle = () => {
+    const pageTitle = language.value === "fr" ? "MSF" : "FSM";
+    new WrapperEventDispatcher(pageTitle, null).dispatch();
+};
+
+// Watchers
+watch(language, updatePageTitle);
 
 // Methods
 const toggleLanguage = () => {
@@ -56,5 +66,11 @@ const handleDebugFile = async (e) => {
         debugFileInput.value.value = null;
     }
 };
+
+
+// Lifecycle hooks
+onMounted(async () => {
+    updatePageTitle();
+});
 
 </script>

@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, defineAsyncComponent } from "vue";
+import { ref, onMounted, defineAsyncComponent } from "vue";
 import { storeToRefs } from "pinia";
 import PayloadUrl from "./assets/payload.xlsx?url";
 import CapabilityList from "./ui/CapabilityList.vue";
@@ -41,23 +41,19 @@ import AspectSelector from "./ui/AspectSelector/AspectSelector.vue";
 import CollapsibleIntro from "./ui/CollapsibleIntro.vue";
 import LoadingIndicator from "./ui/LoadingIndicator.vue";
 import GlobalSummary from "./ui/GlobalSummary/GlobalSummary.vue";
-import WrapperEventDispatcher from "./WrapperEventDispatcher.js";
 const DebugBar = defineAsyncComponent(() =>
   import('./ui/DebugBar.vue')
 )
 
 // Import individual stores
-import { useLanguageStore } from "./stores/languageStore";
 import { useCapabilityStore } from "./stores/capabilityStore";
 import { useMainStore } from "./stores/mainStore";
 
 // Initialize stores
-const languageStore = useLanguageStore();
 const capabilityStore = useCapabilityStore();
 const mainStore = useMainStore();
 
 // Get store refs
-const { language } = storeToRefs(languageStore);
 const { capabilities } = storeToRefs(capabilityStore);
 
 
@@ -68,17 +64,8 @@ const payloadUrl = ref(PayloadUrl);
 const isLoading = ref(true);
 
 
-const updatePageTitle = () => {
-  const pageTitle = language.value === "fr" ? "MSF" : "FSM";
-  new WrapperEventDispatcher(pageTitle, null).dispatch();
-};
-
-// Watchers
-watch(language, updatePageTitle);
-
 // Lifecycle hooks
 onMounted(async () => {
-
 
   shouldDisplayDebugBar.value = root.value.getRootNode().host.getAttribute("debug") === "true";
 
@@ -97,7 +84,7 @@ onMounted(async () => {
     isLoading.value = false;
   }
 
-  updatePageTitle();
+
 });
 </script>
 
