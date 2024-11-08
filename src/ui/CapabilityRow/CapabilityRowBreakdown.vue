@@ -6,10 +6,7 @@
     </div>
 
     <div class="flex flex-col gap-1">
-      <CapabilityRowBreakdownAspect
-        :capability="capability"
-        aspect="personnel"
-      ></CapabilityRowBreakdownAspect>
+      <CapabilityRowBreakdownAspect :capability="capability" aspect="personnel"></CapabilityRowBreakdownAspect>
     </div>
   </figure>
 </template>
@@ -21,7 +18,6 @@ import { useLanguageStore } from "../../stores/languageStore";
 import { useImpactStore } from "../../stores/impactStore";
 import { useVarsStore } from "../../stores/varsStore";
 import CapabilityRowBreakdownAspect from "./CapabilityRowBreakdownAspect.vue";
-import Switch from "../Switch.vue";
 
 const props = defineProps({
   capability: {
