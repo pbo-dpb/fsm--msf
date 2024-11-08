@@ -11,9 +11,6 @@ export const defineCustomForceStructureModelElement = (
   defineCustomElement({
     render: () => h(component),
     styles: [stl],
-    props: {
-      debug: { type: String, default: false },
-    },
     setup() {
       const app = createApp();
       app.use(pinia);

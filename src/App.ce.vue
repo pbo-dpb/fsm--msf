@@ -68,7 +68,6 @@ const isLoading = ref(true);
 onMounted(async () => {
 
   shouldDisplayDebugBar.value = root.value.getRootNode().host.getAttribute("debug") === "true";
-
   isLoading.value = true;
   try {
     const response = await fetch(payloadUrl.value);
