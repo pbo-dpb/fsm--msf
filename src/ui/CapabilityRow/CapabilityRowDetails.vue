@@ -3,7 +3,7 @@
 
   <div
     v-if="specificNote"
-    class="prose prose-sm font-semibold bg-yellow-50 border border-yellow-300 dark:bg-yellow-950 dark:border-yellow-700 rounded p-2"
+    class="prose prose-sm font-semibold bg-yellow-50 border border-solid border-yellow-300 dark:bg-yellow-950 dark:border-yellow-700 rounded-sm p-2"
   >
     <p>* {{ specificNote }}</p>
   </div>

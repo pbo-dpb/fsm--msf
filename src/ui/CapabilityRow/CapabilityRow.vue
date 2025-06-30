@@ -1,58 +1,29 @@
 <template>
-  <div
-    class="flex flex-col justify-start odd:bg-gray-50 odd:dark:bg-gray-900 py-2 gap-2 -mx-2 px-2"
-    ref="rowRef"
-  >
-    <button
-      @click="expanded = !expanded"
-      class="col-span-6 text-lg font-thin inline-flex gap-2 items-center text-blue-800 dark:text-blue-200 select-none text-left"
-    >
+  <div class="flex flex-col justify-start odd:bg-gray-50 dark:odd:bg-gray-900 py-2 gap-2 -mx-2 px-2" ref="rowRef">
+    <button @click="expanded = !expanded"
+      class="col-span-6 text-lg font-thin inline-flex gap-2 items-center text-blue-800 dark:text-blue-200 select-none text-left">
       <ChevronDownIcon class="h-4 w-4" v-if="expanded"></ChevronDownIcon>
       <ChevronRightIcon class="h-4 w-4" v-else></ChevronRightIcon>
       <div class="inline-flex gap-4 overflow-x-ellipsis w-full items-center">
-        <span
-          >{{ displayName
-          }}<span
-            class="font-semibold"
-            v-if="capability[`specific_note_${language}`]"
-            >*</span
-          ></span
-        >
-        <CapabilityRowTarget
-          :capability="capability"
-          v-if="capability.user_editable"
-        ></CapabilityRowTarget>
+        <span>{{ displayName
+          }}<span class="font-semibold" v-if="capability[`specific_note_${language}`]">*</span></span>
+        <CapabilityRowTarget :capability="capability" v-if="capability.user_editable"></CapabilityRowTarget>
       </div>
 
-      <span
-        class="__tooltip hidden md:block text-gray-500"
-        :id="`tip-${uid}`"
-        :aria-describedby="`${uid}-tippy`"
-      >
-        <QuestionMarkCircleIcon
-          v-if="false && capability.user_editable"
-          class="w-4 h-4"
-        ></QuestionMarkCircleIcon>
-        <LockClosedIcon
-          v-if="!capability.user_editable"
-          class="w-4 h-4"
-        ></LockClosedIcon>
+      <span class="__tooltip hidden md:block text-gray-500" :id="`tip-${uid}`" :aria-describedby="`${uid}-tippy`">
+        <QuestionMarkCircleIcon v-if="false && capability.user_editable" class="w-4 h-4"></QuestionMarkCircleIcon>
+        <LockClosedIcon v-if="!capability.user_editable" class="w-4 h-4"></LockClosedIcon>
       </span>
       <span :id="`${uid}-tippy`" class="sr-only" data-tippy-root v-if="false">
         {{ strings.unlocked_capability || strings.locked_capability }}
       </span>
     </button>
     <div class="col-span-4 pl-4">
-      <CapabilityRowRange
-        :capability="capability"
-        v-if="capability.user_editable"
-      />
+      <CapabilityRowRange :capability="capability" v-if="capability.user_editable" />
     </div>
 
-    <div
-      class="pl-4 flex flex-col gap-2 border-l-2 border-gray-300 dark:border-gray-700 ml-4 my-2"
-      v-if="expanded"
-    >
+    <div class="pl-4 flex flex-col gap-2 border-l-2 border-solid border-gray-300 dark:border-gray-700 my-2"
+      v-if="expanded">
       <CapabilityRowDetails :capability="capability"></CapabilityRowDetails>
       <CapabilityRowBreakdown :capability="capability"></CapabilityRowBreakdown>
     </div>

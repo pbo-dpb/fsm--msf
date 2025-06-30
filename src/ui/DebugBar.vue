@@ -1,6 +1,6 @@
 <template>
-    <section class="font-semibold border border-gray-300 p-4 rounded mb-16 bg-gray-100 dark:bg-gray-950">
-        <div class="font-mono mb-4 text-gray-800 dark:text-white text-center border-b border-gray-300 pb-2">
+    <section class="font-semibold border border-solid border-gray-300 p-4 rounded-sm mb-16 bg-gray-100 dark:bg-gray-950">
+        <div class="font-mono mb-4 text-gray-800 dark:text-white text-center border-b border-solid border-gray-300 pb-2">
             DEBUG 🔧
         </div>
         <div class="flex flex-row justify-between">
@@ -12,7 +12,7 @@
                     }}</span>
                 <input type="file" name="file" @change="handleDebugFile" ref="debugFileInput" />
             </legend>
-            <button @click="toggleLanguage" class="w-12 border border-gray-800 p-2 rounded">
+            <button @click="toggleLanguage" class="w-12 border border-solid border-gray-800 p-2 rounded-sm">
                 {{ language === "en" ? "fr" : "en" }}
             </button>
         </div>

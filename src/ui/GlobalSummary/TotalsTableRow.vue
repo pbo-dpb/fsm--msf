@@ -1,55 +1,43 @@
 <template>
   <tr :class="{ 'bg-purple-50 dark:bg-purple-950': highlight }">
     <!-- Template stays mostly the same -->
-    <th
-      scope="row"
-      class="border border-gray-300 dark:border-gray-900 px-1 py-.5"
-      :class="[
-        shouldDisplayImpactDiff ? 'w-1/4' : 'w-1/3',
-        { 'font-semibold': highlight },
-      ]"
-    >
+    <th scope="row" class="border border-solid border-gray-300 dark:border-gray-900 px-1 py-.5" :class="[
+      shouldDisplayImpactDiff ? 'w-1/4' : 'w-1/3',
+      { 'font-semibold': highlight },
+    ]">
       <slot></slot>
     </th>
 
-    <td
-      v-if="facetsOfInterest.length === 1"
-      class="border border-gray-300 dark:border-gray-900 px-1 py-.5 tabular-nums text-center"
-      :class="[shouldDisplayImpactDiff ? 'w-1/4' : 'w-1/3']"
-    >
+    <td v-if="facetsOfInterest.length === 1"
+      class="border border-solid border-gray-300 dark:border-gray-900 px-1 py-.5 tabular-nums text-center"
+      :class="[shouldDisplayImpactDiff ? 'w-1/4' : 'w-1/3']">
       <div class="inline-flex gap-1">
-        <span
-          :class="[
-            hasDifference
-              ? 'line-through decoration-gray-500'
-              : 'decoration-gray-500',
-          ]"
-        >
+        <span :class="[
+          hasDifference
+            ? 'line-through decoration-gray-500'
+            : 'decoration-gray-500',
+        ]">
           {{ currentValue }}
         </span>
       </div>
     </td>
 
     <template v-if="shouldDisplayImpactDiff">
-      <td
-        class="border border-gray-300 dark:border-gray-900 px-1 py-.5 tabular-nums text-center w-1/4"
+      <td class="border border-solid border-gray-300 dark:border-gray-900 px-1 py-.5 tabular-nums text-center w-1/4"
         :class="[
           highlight
             ? 'bg-blue-100 dark:bg-blue-900'
             : 'bg-blue-50 dark:bg-blue-950',
-        ]"
-      >
+        ]">
         <span v-if="hasDifference">{{ formattedDifference }}</span>
       </td>
 
-      <td
-        class="border border-gray-300 dark:border-gray-900 px-1 py-.5 tabular-nums text-center w-1/4"
+      <td class="border border-solid border-gray-300 dark:border-gray-900 px-1 py-.5 tabular-nums text-center w-1/4"
         :class="[
           highlight
             ? 'bg-blue-100 dark:bg-blue-900'
             : 'bg-blue-50 dark:bg-blue-950',
-        ]"
-      >
+        ]">
         {{ targetValue }}
       </td>
     </template>

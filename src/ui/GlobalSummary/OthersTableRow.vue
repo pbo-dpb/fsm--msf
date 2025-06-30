@@ -1,20 +1,15 @@
 <template>
   <tr :class="{ 'bg-purple-50 dark:bg-purple-950': highlight }">
     <!-- Title cell -->
-    <th
-      scope="row"
-      class="font-normal border border-gray-300 dark:border-gray-900 px-1 py-.5"
-      :class="[shouldDisplayImpactDiff ? 'w-1/4' : 'w-1/3']"
-    >
+    <th scope="row" class="font-normal border border-solid border-gray-300 dark:border-gray-900 px-1 py-.5"
+      :class="[shouldDisplayImpactDiff ? 'w-1/4' : 'w-1/3']">
       <slot></slot>
     </th>
 
     <!-- Single facet case -->
-    <td
-      v-if="facetsOfInterest.length === 1"
-      class="border border-gray-300 dark:border-gray-900 px-1 py-.5 tabular-nums text-center"
-      :class="[shouldDisplayImpactDiff ? 'w-1/4' : 'w-1/3']"
-    >
+    <td v-if="facetsOfInterest.length === 1"
+      class="border border-solid border-gray-300 dark:border-gray-900 px-1 py-.5 tabular-nums text-center"
+      :class="[shouldDisplayImpactDiff ? 'w-1/4' : 'w-1/3']">
       <div class="inline-flex gap-1">
         <span>{{ formattedCapabilityValue }}</span>
       </div>
@@ -22,17 +17,13 @@
 
     <!-- Impact difference columns -->
     <template v-if="shouldDisplayImpactDiff">
-      <td
-        class="border border-gray-300 dark:border-gray-900 px-1 py-.5 tabular-nums text-center w-1/4"
-        :class="[highlight ? 'bg-blue-100 dark:bg-blue-900' : 'bg-blue-50 dark:bg-blue-950']"
-      >
+      <td class="border border-solid border-gray-300 dark:border-gray-900 px-1 py-.5 tabular-nums text-center w-1/4"
+        :class="[highlight ? 'bg-blue-100 dark:bg-blue-900' : 'bg-blue-50 dark:bg-blue-950']">
         <span class="sr-only">{{ strings?.empty_cell }}</span>
       </td>
 
-      <td
-        class="border border-gray-300 dark:border-gray-900 px-1 py-.5 tabular-nums text-center w-1/4"
-        :class="[highlight ? 'bg-blue-100 dark:bg-blue-900' : 'bg-blue-50 dark:bg-blue-950']"
-      >
+      <td class="border border-solid border-gray-300 dark:border-gray-900 px-1 py-.5 tabular-nums text-center w-1/4"
+        :class="[highlight ? 'bg-blue-100 dark:bg-blue-900' : 'bg-blue-50 dark:bg-blue-950']">
         {{ formattedImpactValue }}
       </td>
     </template>
@@ -40,7 +31,7 @@
 </template>
 
 <script setup>
-import { computed,watch } from "vue";
+import { computed, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useStore } from "../../stores/index";
 import { useCapabilityStore } from "../../stores/capabilityStore";
@@ -91,7 +82,7 @@ const capabilityVal = computed(() => {
 // Formatting functions
 const formatValue = (value, isImpact = false) => {
   if (!value && value !== 0) return '';
-  
+
   try {
     if (props.aspect === "cost") {
       return new Intl.NumberFormat(`${language.value}-CA`, {
@@ -147,8 +138,9 @@ tr {
   .border {
     @apply border-gray-400;
   }
-  
-  td, th {
+
+  td,
+  th {
     @apply p-1;
   }
 }

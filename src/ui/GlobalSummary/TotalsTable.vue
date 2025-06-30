@@ -1,5 +1,5 @@
 <template>
-  <table class="border border-gray-300 dark:border-gray-900 w-full">
+  <table class="border border-solid border-gray-300 dark:border-gray-900 w-full">
     <!-- Header row -->
     <thead>
       <tr>
@@ -21,33 +21,20 @@
     <!-- Table body -->
     <tbody>
       <!-- Group rows -->
-      <TotalsTableRow
-        v-for="group in groupedCapabilities"
-        :key="getGroupKey(group)"
-        :group="group"
-        :aspect="aspect"
-        :facets-of-interest="facetsOfInterest"
-        :should-display-impact-diff="shouldDisplayImpactDiff"
-      >
+      <TotalsTableRow v-for="group in groupedCapabilities" :key="getGroupKey(group)" :group="group" :aspect="aspect"
+        :facets-of-interest="facetsOfInterest" :should-display-impact-diff="shouldDisplayImpactDiff">
         {{ getGroupDisplayName(group) }}
       </TotalsTableRow>
 
       <!-- Others row -->
-      <OthersTableRow
-        :aspect="aspect"
-        :facets-of-interest="facetsOfInterest"
-        :should-display-impact-diff="shouldDisplayImpactDiff"
-      >
+      <OthersTableRow :aspect="aspect" :facets-of-interest="facetsOfInterest"
+        :should-display-impact-diff="shouldDisplayImpactDiff">
         {{ strings?.impact_facet_label_other }}
       </OthersTableRow>
 
       <!-- Total row -->
-      <TotalsTableRow
-        :aspect="aspect"
-        :facets-of-interest="facetsOfInterest"
-        :highlight="true"
-        :should-display-impact-diff="shouldDisplayImpactDiff"
-      >
+      <TotalsTableRow :aspect="aspect" :facets-of-interest="facetsOfInterest" :highlight="true"
+        :should-display-impact-diff="shouldDisplayImpactDiff">
         {{ strings?.[`impact_facet_label_${facetsOfInterest[0]}`] }}
       </TotalsTableRow>
     </tbody>

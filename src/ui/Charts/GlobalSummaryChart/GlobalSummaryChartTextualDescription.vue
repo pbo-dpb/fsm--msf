@@ -1,11 +1,7 @@
 <template>
-  <details
-    class="print:hidden flex flex-col gap-2 border-l-2 border-blue-200 dark:border-blue-700 pl-2"
-    :id="id"
-  >
+  <details class="print:hidden flex flex-col gap-2" :id="id">
     <summary
-      class="cursor-pointer text-blue-900 hover:text-blue-800 dark:text-blue-100 dark:hover:text-blue-200 text-sm font-semibold select-none"
-    >
+      class="cursor-pointer text-blue-900 hover:text-blue-800 dark:text-blue-100 dark:hover:text-blue-200 text-sm font-semibold select-none">
       {{ strings?.chart_alt_text_label }}
     </summary>
     <div>
@@ -14,28 +10,15 @@
           <thead>
             <tr>
               <th role="cell" class="w-1/4" scope="col"></th>
-              <th
-                v-for="dataset in data.datasets"
-                :key="dataset.label"
-                class="w-1/4"
-                scope="col"
-              >
+              <th v-for="dataset in data.datasets" :key="dataset.label" class="w-1/4" scope="col">
                 {{ dataset.label }}
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="(label, index) in data.labels"
-              :key="label"
-              class="even:bg-gray-50 dark:even:bg-gray-950"
-            >
+            <tr v-for="(label, index) in data.labels" :key="label" class="even:bg-gray-50 dark:even:bg-gray-950">
               <th scope="row">{{ label }}</th>
-              <td
-                v-for="(dataset, idx) in data.datasets"
-                :key="idx"
-                class="lining-nums tabular-nums"
-              >
+              <td v-for="(dataset, idx) in data.datasets" :key="idx" class="lining-nums tabular-nums">
                 <span v-if="formatValue(dataset.data[index])">
                   {{ formatValue(dataset.data[index]) }}
                 </span>
@@ -103,6 +86,8 @@ const hasValidData = computed(() => {
 </script>
 
 <style scoped>
+@reference "tailwindcss";
+
 /* Ensure table headers are properly aligned */
 .table th[scope="col"] {
   @apply text-left px-4 py-2;

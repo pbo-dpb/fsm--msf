@@ -5,7 +5,7 @@
     role="tab"
     :aria-selected="active ? true : null"
     :active="active ? true : null"
-    class="px-2 py-1 md:first:ml-0 ml-2 last:mr-2 rounded font-semibold whitespace-nowrap"
+    class="px-2 py-1 md:first:ml-0 ml-2 last:mr-2 rounded-sm font-semibold whitespace-nowrap"
   >
     <div class="flex flex-row gap-2 items-center">
       <slot></slot>
@@ -38,7 +38,7 @@ const classes = computed(() => {
   } else {
     classList.push(
       "hover:bg-blue-100",
-      "hover:dark:bg-blue-700",
+      "dark:hover:bg-blue-700",
       "dark:bg-blue-950",
       "text-blue-800",
       "dark:text-blue-200"

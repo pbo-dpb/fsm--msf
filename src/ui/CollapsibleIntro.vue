@@ -1,27 +1,15 @@
 <template>
-  <div class="border border-purple-100 rounded dark:border-purple-900 shadow">
-    <h3 class="p-4 border-b border-purple-100 flex flex-col">
-      <button
-        :id="uid + '-header'"
-        :aria-controls="(uid = '-panel')"
-        :aria-expanded="!shouldCollapse"
-        @click="toggle"
-        class="flex flex-row gap-2 items-center text-blue-800 dark:text-blue-200 font-semibold"
-      >
-        <ChevronRightIcon
-          class="w-6 h-6"
-          v-if="shouldCollapse"
-        ></ChevronRightIcon>
+  <div class="border border-solid border-purple-100 rounded-sm dark:border-purple-900 shadow-sm">
+    <h3 class="p-4 border-b border-solid border-purple-100 flex flex-col">
+      <button :id="uid + '-header'" :aria-controls="(uid = '-panel')" :aria-expanded="!shouldCollapse" @click="toggle"
+        class="flex flex-row gap-2 items-center text-blue-800 dark:text-blue-200 font-semibold">
+        <ChevronRightIcon class="w-6 h-6" v-if="shouldCollapse"></ChevronRightIcon>
         <ChevronDownIcon class="w-6 h-6" v-else></ChevronDownIcon>
         {{ strings.intro_toggle }}
       </button>
     </h3>
-    <section
-      :id="uid + '-panel'"
-      :aria-labelledby="uid + '-header'"
-      :hidden="shouldCollapse"
-      class="p-5 pb-0 prose dark:prose-invert max-w-none prose-headings:mt-0 prose-headings:font-light prose-a:text-blue-800 prose-a:dark:text-blue-200"
-    >
+    <section :id="uid + '-panel'" :aria-labelledby="uid + '-header'" :hidden="shouldCollapse"
+      class="p-5 pb-0 prose dark:prose-invert max-w-none prose-headings:mt-0 prose-headings:font-light prose-a:text-blue-800 dark:prose-a:text-blue-200">
       <div v-if="introContent" v-html="introContent"></div>
       <LoadingIndicator class="w-6 h-6 mb-5" v-else></LoadingIndicator>
     </section>
