@@ -24,7 +24,7 @@
         "@tailwindcss/postcss": "^4.1.11",
         "@tailwindcss/typography": "^0.5.15",
         "@vitejs/plugin-vue": "^6.0.0",
-        "postcss": "^8.4.47",
+        "postcss": "^8.5.16",
         "prettier": "^3.9.4",
         "prettier-plugin-tailwindcss": "^0.8.0",
         "tailwindcss": "^4.1.11",
