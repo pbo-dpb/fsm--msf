@@ -2,8 +2,6 @@ import { defineCustomForceStructureModelElement } from "./defineCustomForceStruc
 import App from "./App.ce.vue";
 
 customElements.define(
-  "pbotool-fsm",
-  defineCustomForceStructureModelElement(App, {
-    /*plugins: [store]*/
-  })
+    "pbotool-fsm",
+    defineCustomForceStructureModelElement(App, {/*plugins: [store]*/}),
 );

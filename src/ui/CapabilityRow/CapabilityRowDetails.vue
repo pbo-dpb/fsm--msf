@@ -1,32 +1,31 @@
 <template>
-  <CapabilityRowDescription :capability="capability" />
+    <CapabilityRowDescription :capability="capability" />
 
-  <div
-    v-if="specificNote"
-    class="prose prose-sm font-semibold bg-yellow-50 border border-solid border-yellow-300 dark:bg-yellow-950 dark:border-yellow-700 rounded-sm p-2"
-  >
-    <p>* {{ specificNote }}</p>
-  </div>
+    <div
+        v-if="specificNote"
+        class="prose prose-sm rounded-sm border border-solid border-yellow-300 bg-yellow-50 p-2 font-semibold dark:border-yellow-700 dark:bg-yellow-950">
+        <p>* {{ specificNote }}</p>
+    </div>
 </template>
 
 <script setup>
-import { computed } from "vue";
-import { storeToRefs } from "pinia";
-import { useLanguageStore } from "../../stores/languageStore";
-import CapabilityRowDescription from "./CapabilityRowDescription.vue";
-import { Capability } from "../../models/Capability";
+    import { computed } from "vue";
+    import { storeToRefs } from "pinia";
+    import { useLanguageStore } from "../../stores/languageStore";
+    import CapabilityRowDescription from "./CapabilityRowDescription.vue";
+    import { Capability } from "../../models/Capability";
 
-const props = defineProps({
-  capability: {
-    type: Capability,
-    required: true,
-  },
-});
+    const props = defineProps({
+        capability: {
+            type: Capability,
+            required: true,
+        },
+    });
 
-const languageStore = useLanguageStore();
-const { language } = storeToRefs(languageStore);
+    const languageStore = useLanguageStore();
+    const { language } = storeToRefs(languageStore);
 
-const specificNote = computed(
-  () => props.capability[`specific_note_${language.value}`] ?? null
-);
+    const specificNote = computed(
+        () => props.capability[`specific_note_${language.value}`] ?? null,
+    );
 </script>

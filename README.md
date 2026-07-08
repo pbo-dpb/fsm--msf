@@ -10,9 +10,10 @@ This template should help get you started developing with Vue 3 in Vite with the
 ### Français
 
 Ce code fournit un point de départ pour le développement d'outils de recherche/composants interactifs qui peuvent être intégrés au site Web principal du DPB.
-Ce modèle devrait vous aider à commencer à développer avec Vue 3 dans Vite avec l'intention de construire un [composant Web  (Web Component)](https://developer.mozilla.org/en-US/docs/Web/Web_Components) autonome.
+Ce modèle devrait vous aider à commencer à développer avec Vue 3 dans Vite avec l'intention de construire un [composant Web (Web Component)](https://developer.mozilla.org/en-US/docs/Web/Web_Components) autonome.
 
 ## Project setup // Mise en route
+
 ```
 npm install
 ```
@@ -20,11 +21,13 @@ npm install
 ## Compilation // Compilation
 
 ### Compiles and hot-reloads for development // Compilations et recharges à chaud pour le développement
+
 ```
 npm run dev
 ```
 
 ### Compiles and minifies for production // Compilation et miniaturisation pour la production
+
 ```
 npm run build
 ```

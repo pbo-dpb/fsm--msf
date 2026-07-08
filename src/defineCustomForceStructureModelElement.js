@@ -5,18 +5,18 @@ import { createPinia } from "pinia";
 const pinia = createPinia();
 
 export const defineCustomForceStructureModelElement = (
-  component,
-  { plugins = [] }
+    component,
+    { plugins = [] },
 ) =>
-  defineCustomElement({
-    render: () => h(component),
-    styles: [stl],
-    setup() {
-      const app = createApp();
-      app.use(pinia);
-      plugins.forEach(app.use);
-      const inst = getCurrentInstance();
-      Object.assign(inst.appContext, app._context);
-      Object.assign(inst.provides, app._context.provides);
-    },
-  });
+    defineCustomElement({
+        render: () => h(component),
+        styles: [stl],
+        setup() {
+            const app = createApp();
+            app.use(pinia);
+            plugins.forEach(app.use);
+            const inst = getCurrentInstance();
+            Object.assign(inst.appContext, app._context);
+            Object.assign(inst.provides, app._context.provides);
+        },
+    });
