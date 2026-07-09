@@ -32,5 +32,9 @@
     },
     "imports": {
         "#style.css": "./src/style.css"
+    },
+    "engineStrict": true,
+    "engines": {
+        "node": "24"
     }
 }
