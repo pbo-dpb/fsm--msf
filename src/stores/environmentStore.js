@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { Environment } from "../models/Environment";
-import environments from "../assets/environments.json?json";
+import environments from "../assets/environments.json";
 
 export const useEnvironmentStore = defineStore("environment", {
     state: () => ({

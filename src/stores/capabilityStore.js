@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { Capability } from "../models/Capability";
 import { useEnvironmentStore } from "./environmentStore";
-import readXlsxFile from "read-excel-file";
+import { readSheet } from "read-excel-file/browser";
 
 export const useCapabilityStore = defineStore("capability", {
     state: () => ({

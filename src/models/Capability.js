@@ -1,5 +1,5 @@
 import { useEnvironmentStore } from "../stores/environmentStore";
-import readXlsxFile from "read-excel-file";
+import { readSheet } from "read-excel-file/browser";
 
 export class Capability {
     constructor(payload) {
@@ -111,8 +111,8 @@ export class Capability {
         const environmentStore = useEnvironmentStore();
 
         const schema = {
-            capability_id: {
-                prop: "id",
+            id: {
+                column: "capability_id",
                 required: true,
                 type: (value) => {
                     const id = value.replace(/[^a-zA-Z0-9]+/g, "");
@@ -122,106 +122,122 @@ export class Capability {
                     return id;
                 },
             },
+
             display_name_en: {
+                column: "display_name_en",
                 required: true,
-                prop: "display_name_en",
             },
+
             display_name_fr: {
+                column: "display_name_fr",
                 required: true,
-                prop: "display_name_fr",
             },
+
             specific_note_en: {
+                column: "specific_note_en",
                 required: false,
-                prop: "specific_note_en",
             },
+
             specific_note_fr: {
+                column: "specific_note_fr",
                 required: false,
-                prop: "specific_note_fr",
             },
+
             environment_id: {
-                prop: "environment_id",
+                column: "environment_id",
                 oneOf: environmentStore.environments.map((e) => e.id),
             },
+
             personnel_direct: {
+                column: "personnel_direct",
                 required: true,
-                prop: "personnel_direct",
                 type: Number,
             },
+
             personnel_indirect: {
+                column: "personnel_indirect",
                 required: true,
-                prop: "personnel_indirect",
                 type: Number,
             },
+
             personnel_env_overhead: {
+                column: "personnel_env_overhead",
                 required: true,
-                prop: "personnel_env_overhead",
                 type: Number,
             },
+
             personnel_inst_overhead: {
+                column: "personnel_inst_overhead",
                 required: true,
-                prop: "personnel_inst_overhead",
                 type: Number,
             },
+
             personnel_total: {
+                column: "personnel_total",
                 required: true,
-                prop: "personnel_total",
                 type: Number,
             },
+
             cost_direct: {
+                column: "cost_direct",
                 required: true,
-                prop: "cost_direct",
                 type: Number,
             },
+
             cost_indirect: {
+                column: "cost_indirect",
                 required: true,
-                prop: "cost_indirect",
                 type: Number,
             },
+
             cost_env_overhead: {
+                column: "cost_env_overhead",
                 required: true,
-                prop: "cost_env_overhead",
                 type: Number,
             },
+
             cost_inst_overhead: {
+                column: "cost_inst_overhead",
                 required: true,
-                prop: "cost_inst_overhead",
                 type: Number,
             },
+
             cost_total: {
+                column: "cost_total",
                 required: true,
-                prop: "cost_total",
                 type: Number,
             },
+
             current: {
+                column: "current",
                 required: true,
-                prop: "current",
                 type: Number,
             },
+
             current_unit: {
+                column: "current_unit",
                 required: true,
-                prop: "current_unit",
                 oneOf: ["countable", "percent", "currency"],
             },
+
             user_editable_range: {
+                column: "user_editable_range",
                 required: true,
-                prop: "user_editable_range",
                 type: Number,
             },
+
             user_editable_step: {
+                column: "user_editable_step",
                 required: true,
-                prop: "user_editable_step",
                 type: Number,
             },
         };
 
-        let parsed = await readXlsxFile(blob, {
-            sheet: "CAPABILITIES",
-            schema,
-        });
+        let parsed = await readSheet(blob, "CAPABILITIES", { schema });
 
         const descSchema = {
-            capability_id: {
-                prop: "id",
+            id: {
+                column: "capability_id",
                 required: true,
                 type: (value) => {
                     const id = value.replace(/[^a-zA-Z0-9]+/g, "");
@@ -231,25 +247,26 @@ export class Capability {
                     return id;
                 },
             },
+
             en: {
-                prop: "en",
+                column: "en",
             },
+
             fr: {
-                prop: "fr",
+                column: "fr",
             },
         };
 
-        let descriptions = await readXlsxFile(blob, {
-            sheet: "DESCRIPTIONS",
-            schema: descSchema,
+        let descriptions = await readSheet(blob, "DESCRIPTIONS", {
+            descSchema,
         });
 
-        const capabilities = parsed.errors.length
+        const capabilities = parsed.errors?.length
             ? null
-            : parsed.rows.map((x) => {
+            : parsed.objects.map((x) => {
                   let cap = new Capability(x);
 
-                  const desc = descriptions.rows.find((x) => x.id == cap.id);
+                  const desc = descriptions.find((x) => x.id == cap.id);
                   if (desc)
                       cap.description = {
                           en: desc.en,
@@ -260,7 +277,7 @@ export class Capability {
 
         return {
             ...parsed,
-            errors: [...parsed.errors, ...descriptions.errors],
+            errors: [...(parsed.errors ?? []), ...(descriptions.errors ?? [])],
             capabilities,
         };
     }

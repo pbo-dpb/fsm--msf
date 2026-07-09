@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import blStrings from "../assets/strings.json?json";
+import blStrings from "../assets/strings.json";
 
 export const useLanguageStore = defineStore("language", {
     state: () => ({

@@ -138,6 +138,8 @@
 </script>
 
 <style scoped>
+    @reference "#style.css";
+
     /* Base styles for consistency */
     .tabular-nums {
         font-variant-numeric: tabular-nums;

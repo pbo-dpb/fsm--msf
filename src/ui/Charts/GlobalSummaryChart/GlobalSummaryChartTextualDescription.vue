@@ -107,7 +107,7 @@
 </script>
 
 <style scoped>
-    @reference "tailwindcss";
+    @reference "#style.css";
 
     /* Ensure table headers are properly aligned */
     .table th[scope="col"] {
