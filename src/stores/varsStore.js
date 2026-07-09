@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import readXlsxFile from "read-excel-file";
+import { readSheet } from "read-excel-file/browser";
 
 export const useVarsStore = defineStore("vars", {
     state: () => ({
@@ -8,7 +8,7 @@ export const useVarsStore = defineStore("vars", {
 
     actions: {
         async loadVars(blob) {
-            let vars = await readXlsxFile(blob, { sheet: "VARS" });
+            let vars = await readSheet(blob, "VARS");
             this.vars = vars.reduce((accumulator, item) => {
                 if (item[2]) {
                     accumulator[item[0]] = { en: item[1], fr: item[2] };
